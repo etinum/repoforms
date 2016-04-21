@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{09094F5C-036E-4A2A-A80D-E59A46823EF1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5D896638-EF63-4358-ACD6-A4467DFE3045}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "RepoFormsHelp", "src\RepoFormsHelp\RepoFormsHelp.xproj", "{75FC4EFC-23C5-4445-BB70-426C8D2A9DBF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{75FC4EFC-23C5-4445-BB70-426C8D2A9DBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75FC4EFC-23C5-4445-BB70-426C8D2A9DBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75FC4EFC-23C5-4445-BB70-426C8D2A9DBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75FC4EFC-23C5-4445-BB70-426C8D2A9DBF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{75FC4EFC-23C5-4445-BB70-426C8D2A9DBF} = {09094F5C-036E-4A2A-A80D-E59A46823EF1}
+	EndGlobalSection
+EndGlobal
