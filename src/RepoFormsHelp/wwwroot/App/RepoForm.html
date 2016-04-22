@@ -1,1 +1,48 @@
-<h2>The form will come soon... </h2>
+<form class="form-horizontal" name="repoForm" role="form" novalidate>
+
+    <fieldset>
+        <legend>Assignment Write-Up</legend>
+
+
+        <div class="form-group" show-errors>
+            <label for="investigator" class="col-sm-3 control-label">Investigator</label>
+            <div class="col-sm-9">
+                <input type="text" id="investigator" name="investigator" class="form-control"
+                       ng-model="orf.investigator" ng-required="true" minlength="1" />
+                <div class="help-block" ng-messages="repoForm.investigator.$error" ng-show="repoForm.investigator.$touched || submitted" class="errors">
+                    <div ng-messages-include="app/error-messages.html"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group" show-errors>
+            <label for="client" class="col-sm-3 control-label">Client</label>
+            <div class="col-sm-9">
+                <input type="text" id="client" name="client" class="form-control"
+                       ng-model="orf.client" ng-required="false" />
+                <div class="help-block" ng-messages="repoForm.client.$error" ng-show="repoForm.investigator.$touched || submitted" class="errors">
+                    <div ng-messages-include="app/error-messages.html"></div>
+                </div>
+            </div>
+        </div>
+
+
+    </fieldset>
+    <fieldset>
+        <legend>Police Department Info:</legend>
+        <div class="form-group">
+        </div>
+    </fieldset>
+
+
+    <div class="col-sm-offset-3 col-sm-9">
+        <input type="button" class="btn btn-default" value="Cancel"
+               ng-click="cancelForm()" />
+        <input type="submit" class="btn btn-primary" value="Submit"
+               ng-click="submitForm()" />
+        <input type="reset" class="btn btn-warning" value="Reset"
+               ng-click="resetForm()" />
+        <div class="alert alert-danger" ng-if="hasFormError">{{formErrors}}</div>
+    </div>
+
+</form>

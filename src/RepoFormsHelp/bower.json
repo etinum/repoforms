@@ -1,11 +1,14 @@
 {
-	"name": "ASP.NET",
-	"private": true,
+  "name": "ASP.NET",
+  "private": true,
   "dependencies": {
     "angular": "~1.5.5",
     "angular-ui": "~0.4.0",
     "angular-route": "~1.5.5",
+    "angular-messages": "~1.5.5",
     "bootstrap": "~3.3.6"
-
+  },
+  "resolutions": {
+    "angular": "1.5.6-build.4767+sha.253cb8d"
   }
 }
