@@ -3,73 +3,398 @@
     <fieldset>
         <legend>Assignment Write-Up</legend>
 
-        <!--<div class="form-group" show-errors>
-            <div>
-                <label class="col-sm-3 control-label">Date</label>
 
-                <div class="col-sm-6">
-                    <div class="form-control">{{rf.createdDate | date:'fullDate' }}</div>
+        <div class="panel panel-default">
+            <div class="panel-heading">General</div>
+            <div class="panel-body">
+
+                <div class="form-group" show-errors>
+                    <div>
+                        <label for="createdDate" class="col-sm-3 control-label">Date</label>
+                        <div class="col-sm-6">
+                            <p class="input-group">
+                                <input id="createdDate" name="createdDate" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.createdDate" is-open="createdDatePopup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="openCreateDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                            <div class="help-block" ng-messages="repoForm.createdDate.$error" ng-show="repoForm.createdDate.$touched || submitted" class="errors">
+                                <div ng-messages-include="app/error-messages.html"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-3">
-                    <button type="button" class="btn btn-default" ng-click="today()">Today</button>
+
+
+                <div class="form-group" show-errors>
+                    <div>
+                        <label for="repoDate" class="col-sm-3 control-label">Repo Date</label>
+                        <div class="col-sm-6">
+                            <p class="input-group">
+                                <input id="repoDate" name="repoDate" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.repoDate" is-open="repoDatePopup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly />
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="openRepoDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                            <div class="help-block" ng-messages="repoForm.repoDate.$error" ng-show="repoForm.repoDate.$touched || submitted" class="errors">
+                                <div ng-messages-include="app/error-messages.html"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-sm-offset-3 col-sm-9">
-                <div style="display: inline-block; min-height: 290px;">
-                    <br/>
-                    <uib-datepicker ng-model="rf.createdDate" class="well well-sm" datepicker-options="options"></uib-datepicker>
+
+
+                <div class="form-group" show-errors>
+                    <label for="accountNumber" class="col-sm-3 control-label">Account #</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="accountNumber" name="accountNumber" class="form-control"
+                               ng-model="rf.investigator" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.accountNumber.$error" ng-show="repoForm.accountNumber.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>-->
+
+                <div class="form-group" show-errors>
+                    <label for="investigator" class="col-sm-3 control-label">Investigator</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="investigator" name="investigator" class="form-control"
+                               ng-model="rf.investigator" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.investigator.$error" ng-show="repoForm.investigator.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" show-errors>
+                    <label for="client" class="col-sm-3 control-label">Client</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="client" name="client" class="form-control"
+                               ng-model="rf.client" ng-required="false" />
+                        <div class="help-block" ng-messages="repoForm.client.$error" ng-show="repoForm.investigator.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" show-errors>
+                    <label for="closeType" class="col-sm-3 control-label">Close Type</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="closeType" name="closeType" class="form-control"
+                               ng-model="rf.closeType" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.closeType.$error" ng-show="repoForm.closeType.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" show-errors>
+                    <label for="customerName" class="col-sm-3 control-label">Customer</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="customerName" name="customerName" class="form-control"
+                               ng-model="rf.customerName" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.customerName.$error" ng-show="repoForm.customerName.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" show-errors>
+                    <label for="points" class="col-sm-3 control-label">Points</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="points" name="points" class="form-control"
+                               ng-model="rf.points" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.points.$error" ng-show="repoForm.points.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
 
 
-        <div class="form-group" show-errors>
-            <div>
-                <label for="createdDate" class="col-sm-3 control-label">Date</label>
+                <div class="form-group" show-errors>
+                    <label for="recoveryAgent" class="col-sm-3 control-label">Recovery Agent</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="recoveryAgent" name="recoveryAgent" class="form-control"
+                               ng-model="rf.recoveryAgent" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.recoveryAgent.$error" ng-show="repoForm.recoveryAgent.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
 
-                <div class="col-sm-6">
-                    <p class="input-group">
-                        <input id="createdDate" name="createdDate" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.createdDate" is-open="createdDatePopup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly/>
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="openCreateDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
-                        </span>
-                    </p>
-                    <div class="help-block" ng-messages="repoForm.createdDate.$error" ng-show="repoForm.createdDate.$touched || submitted" class="errors">
-                        <div ng-messages-include="app/error-messages.html"></div>
+                <div class="form-group" show-errors>
+                    <label for="notes" class="col-sm-3 control-label">Notes</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="notes" name="notes" class="form-control"
+                               ng-model="rf.notes" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.notes.$error" ng-show="repoForm.notes.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
 
-        <div class="form-group" show-errors>
-            <label for="investigator" class="col-sm-3 control-label">Investigator</label>
-            <div class="col-sm-9">
-                <input type="text" id="investigator" name="investigator" class="form-control"
-                       ng-model="rf.investigator" ng-required="true" minlength="1" />
-                <div class="help-block" ng-messages="repoForm.investigator.$error" ng-show="repoForm.investigator.$touched || submitted" class="errors">
-                    <div ng-messages-include="app/error-messages.html"></div>
+        <div class="panel panel-default">
+            <div class="panel-heading">Recovery Address</div>
+            <div class="panel-body">
+
+                <div class="form-group" show-errors>
+                    <label for="recoveryAddress" class="col-sm-3 control-label">Address</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="recoveryAddress" name="recoveryAddress" class="form-control"
+                               ng-model="rf.recoveryAddress" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.recoveryAddress.$error" ng-show="repoForm.recoveryAddress.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" show-errors>
+                    <label for="recoveryCity" class="col-sm-3 control-label">City</label>
+                    <div class="col-sm-5">
+                        <input type="text" id="recoveryCity" name="recoveryCity" class="form-control"
+                               ng-model="rf.recoveryCity" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.recoveryCity.$error" ng-show="repoForm.recoveryCity.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" show-errors>
+                    <label for="recoveryState" class="col-sm-3 control-label">State</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="recoveryState" name="recoveryState" class="form-control"
+                               ng-model="rf.recoveryState" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.recoveryState.$error" ng-show="repoForm.recoveryState.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" show-errors>
+                    <label for="recoveryZip" class="col-sm-3 control-label">ZIP</label>
+                    <div class="col-sm-3">
+                        <input type="text" id="recoveryZip" name="recoveryZip" class="form-control"
+                               ng-model="rf.recoveryZip" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.recoveryZip.$error" ng-show="repoForm.recoveryZip.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="form-group" show-errors>
-            <label for="client" class="col-sm-3 control-label">Client</label>
-            <div class="col-sm-9">
-                <input type="text" id="client" name="client" class="form-control"
-                       ng-model="rf.client" ng-required="false" />
-                <div class="help-block" ng-messages="repoForm.client.$error" ng-show="repoForm.investigator.$touched || submitted" class="errors">
-                    <div ng-messages-include="app/error-messages.html"></div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Storage Address</div>
+            <div class="panel-body">
+
+                <div class="form-group" show-errors>
+                    <label for="storageAddress" class="col-sm-3 control-label">Address</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="storageAddress" name="storageAddress" class="form-control"
+                               ng-model="rf.storageAddress" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.storageAddress.$error" ng-show="repoForm.storageAddress.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" show-errors>
+                    <label for="storageCity" class="col-sm-3 control-label">City</label>
+                    <div class="col-sm-5">
+                        <input type="text" id="storageCity" name="storageCity" class="form-control"
+                               ng-model="rf.storageCity" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.storageCity.$error" ng-show="repoForm.storageCity.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group" show-errors>
+                    <label for="storageState" class="col-sm-3 control-label">State</label>
+                    <div class="col-sm-4">
+                        <input type="text" id="storageState" name="storageState" class="form-control"
+                               ng-model="rf.storageState" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.storageState.$error" ng-show="repoForm.storageState.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" show-errors>
+                    <label for="storageZip" class="col-sm-3 control-label">ZIP</label>
+                    <div class="col-sm-3">
+                        <input type="text" id="storageZip" name="storageZip" class="form-control"
+                               ng-model="rf.storageZip" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.storageZip.$error" ng-show="repoForm.storageZip.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Police Department Info</div>
+            <div class="panel-body">
+
+
+                <div class="form-group" show-errors>
+                    <label for="policeDept" class="col-sm-3 control-label">Dept</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="policeDept" name="policeDept" class="form-control"
+                               ng-model="rf.policeDept" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.policeDept.$error" ng-show="repoForm.policeDept.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" show-errors>
+                    <label for="policeNumber" class="col-sm-3 control-label">Phone #</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="policeNumber" name="policeNumber" class="form-control"
+                               ng-model="rf.policeNumber" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.policeNumber.$error" ng-show="repoForm.policeNumber.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group" show-errors>
+                    <label for="policeBadgeNumber" class="col-sm-3 control-label">Badge #</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="policeBadgeNumber" name="policeBadgeNumber" class="form-control"
+                               ng-model="rf.policeBadgeNumber" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.policeBadgeNumber.$error" ng-show="repoForm.policeBadgeNumber.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
 
-    </fieldset>
-    <fieldset>
-        <legend>Police Department Info:</legend>
-        <div class="form-group">
+        <div class="panel panel-default">
+            <div class="panel-heading">Vehicle Info</div>
+            <div class="panel-body">
+
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                       ng-model="rf.keysChecked" />Keys
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                       ng-model="rf.drivableChecked" />Drivable
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group" show-errors>
+                    <label for="personals" class="col-sm-3 control-label">Personals</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="personals" name="personals" class="form-control"
+                               ng-model="rf.personals" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.personals.$error" ng-show="repoForm.personals.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Department confirmation</div>
+            <div class="panel-body">
+                <div class="form-group" show-errors>
+                    <label for="iPRUpdated" class="col-sm-3 control-label">IPR Updated</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="iPRUpdated" name="iPRUpdated" class="form-control"
+                               ng-model="rf.iPRUpdated" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.iPRUpdated.$error" ng-show="repoForm.iPRUpdated.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" show-errors>
+                    <label for="repoProcessing" class="col-sm-3 control-label">Repo Processing</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="repoProcessing" name="repoProcessing" class="form-control"
+                               ng-model="rf.repoProcessing" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.repoProcessing.$error" ng-show="repoForm.repoProcessing.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group" show-errors>
+                    <label for="billing" class="col-sm-3 control-label">Billing</label>
+                    <div class="col-sm-9">
+                        <input type="text" id="billing" name="billing" class="form-control"
+                               ng-model="rf.billing" ng-required="true" minlength="1" />
+                        <div class="help-block" ng-messages="repoForm.billing.$error" ng-show="repoForm.billing.$touched || submitted" class="errors">
+                            <div ng-messages-include="app/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group" show-errors>
+                    <div>
+                        <label for="initialDate" class="col-sm-3 control-label">Date</label>
+                        <div class="col-sm-6">
+                            <p class="input-group">
+                                <input id="initialDate" name="initialDate" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.initialDate" is-open="initialDatePopup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly/>
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="openRepoDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                </span>
+                            </p>
+                            <div class="help-block" ng-messages="repoForm.initialDate.$error" ng-show="repoForm.initialDate.$touched || submitted" class="errors">
+                                <div ng-messages-include="app/error-messages.html"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group" show-errors>
+                    <label class="col-sm-3 control-label">Signature</label>
+                    <div class="col-sm-9">
+                        <div style="border: 2px solid; height: 220px; width: 500px">
+                            <signature-pad accept="accept" clear="clear"  height="220" width="500"></signature-pad>
+                        </div>
+                        <button ng-click="clear()">Clear signature</button>
+                        <button ng-click="signature = accept()">Sign</button>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+
+
+
     </fieldset>
 
 

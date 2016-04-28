@@ -38,6 +38,7 @@ app.controller('repoCtrl', ['$scope', function ($scope) {
 
     $scope.today = function () {
         $scope.rf.createdDate = new Date();
+        $scope.rf.repoDate = new Date();
     };
     $scope.today();
 
@@ -48,6 +49,15 @@ app.controller('repoCtrl', ['$scope', function ($scope) {
     $scope.createdDatePopup = {
         opened: false
     };
+
+    $scope.openRepoDatePopup = function () {
+        $scope.repoDatePopup.opened = true;
+    };
+
+    $scope.repoDatePopup = {
+        opened: false
+    };
+
 
 }]);
 
