@@ -1,4 +1,4 @@
-var app = angular.module('repoFormsApp', ['ngRoute', 'ngMessages']);
+var app = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap']);
 
 app.config(["$routeProvider", "$locationProvider",
     function ($routeProvider, $locationProvider) {

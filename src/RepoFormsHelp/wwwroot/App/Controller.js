@@ -14,7 +14,7 @@ app.controller('repoCtrl', ['$scope', function ($scope) {
     $scope.submitted = false;
 
     $scope.rf = { id: 0 }; // repo form
-    $scope.orf = angular.copy($scope.repoForm); // original repo form
+    $scope.orf = angular.copy($scope.repoForm); // original repo form, shouldn't be changed... 
 
     $scope.submitForm = function () {
 
@@ -25,7 +25,29 @@ app.controller('repoCtrl', ['$scope', function ($scope) {
             return;
     };
     $scope.cancelForm = function() {};
-    $scope.resetForm = function() {};
+    $scope.resetForm = function () { };
+
+
+
+
+    // DATE configurations
+
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[0];
+    $scope.altInputFormats = ['M!/d!/yyyy'];
+
+    $scope.today = function () {
+        $scope.rf.createdDate = new Date();
+    };
+    $scope.today();
+
+    $scope.openCreateDatePopup = function () {
+        $scope.createdDatePopup.opened = true;
+    };
+
+    $scope.createdDatePopup = {
+        opened: false
+    };
 
 }]);
 
