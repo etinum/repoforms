@@ -13,9 +13,9 @@
                         <label for="createdDate" class="col-sm-3 control-label">Date</label>
                         <div class="col-sm-6">
                             <p class="input-group">
-                                <input id="createdDate" name="createdDate" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.createdDate" is-open="createdDatePopup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly />
+                                <input id="createdDate" name="createdDate" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.createdDate" is-open="datePopupStatus.created" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly />
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="openCreateDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="openDatePopup(enumPopupType.CREATED)"><i class="glyphicon glyphicon-calendar"></i></button>
                                 </span>
                             </p>
                             <div class="help-block" ng-messages="repoForm.createdDate.$error" ng-show="repoForm.createdDate.$touched || submitted" class="errors">
@@ -31,9 +31,9 @@
                         <label for="repoDate" class="col-sm-3 control-label">Repo Date</label>
                         <div class="col-sm-6">
                             <p class="input-group">
-                                <input id="repoDate" name="repoDate" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.repoDate" is-open="repoDatePopup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly />
+                                <input id="repoDate" name="repoDate" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.repoDate" is-open="datePopupStatus.repo" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly />
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="openRepoDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="openDatePopup(enumPopupType.REPO)"><i class="glyphicon glyphicon-calendar"></i></button>
                                 </span>
                             </p>
                             <div class="help-block" ng-messages="repoForm.repoDate.$error" ng-show="repoForm.repoDate.$touched || submitted" class="errors">
@@ -144,7 +144,11 @@
                     <label for="recoveryAddress" class="col-sm-3 control-label">Address</label>
                     <div class="col-sm-9">
                         <input type="text" id="recoveryAddress" name="recoveryAddress" class="form-control"
-                               ng-model="rf.recoveryAddress" ng-required="true" minlength="1" />
+                               ng-model="rf.recoveryAddress" ng-required="true" minlength="1" placeholder="Type ahead enabled" uib-typeahead="item.formatted_address for item in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-on-select="onSelect($item,'recovery')" typeahead-no-results="noResults" class="form-control"/>
+                        <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+                        <div ng-show="noResults">
+                            <i class="glyphicon glyphicon-remove"></i> No Results Found
+                        </div>
                         <div class="help-block" ng-messages="repoForm.recoveryAddress.$error" ng-show="repoForm.recoveryAddress.$touched || submitted" class="errors">
                             <div ng-messages-include="app/error-messages.html"></div>
                         </div>
@@ -204,7 +208,7 @@
                     <label for="storageAddress" class="col-sm-3 control-label">Address</label>
                     <div class="col-sm-9">
                         <input type="text" id="storageAddress" name="storageAddress" class="form-control"
-                               ng-model="rf.storageAddress" ng-required="true" minlength="1" ng-model="asyncSelected" placeholder="Type ahead enabled" uib-typeahead="item.formatted_address for item in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-on-select="onSelect($item, $model, $label)" typeahead-no-results="noResults" class="form-control"/>
+                               ng-model="rf.storageAddress" ng-required="true" minlength="1" placeholder="Type ahead enabled" uib-typeahead="item.formatted_address for item in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-on-select="onSelect($item,'storage')" typeahead-no-results="noResults" class="form-control"/>
                         <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
                         <div ng-show="noResults">
                             <i class="glyphicon glyphicon-remove"></i> No Results Found
@@ -375,9 +379,9 @@
                         <label for="initialDate" class="col-sm-3 control-label">Date</label>
                         <div class="col-sm-6">
                             <p class="input-group">
-                                <input id="initialDate" name="initialDate" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.initialDate" is-open="initialDatePopup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly/>
+                                <input id="initialDate" name="initialDate" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.initialDate" is-open="datePopupStatus.signed" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly/>
                                 <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="openRepoDatePopup()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="openDatePopup(enumPopupType.SIGNED)"><i class="glyphicon glyphicon-calendar"></i></button>
                                 </span>
                             </p>
                             <div class="help-block" ng-messages="repoForm.initialDate.$error" ng-show="repoForm.initialDate.$touched || submitted" class="errors">
