@@ -9,7 +9,43 @@ app.controller('homeCtrl', ['$scope', '$location', function ($scope, $location) 
 }]);
 
 
-app.controller('repoCtrl', ['$scope', function ($scope) {
+app.controller('repoCtrl', ['$scope', '$http', function ($scope, $http) {
+
+
+    $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+
+    $scope.getLocation = function (val) {
+        return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
+            params: {
+                address: val,
+                sensor: false
+            }
+        }).then(function (response) {
+            return response.data.results.map(function (item) {
+                return item;
+            });
+        });
+    };
+
+    $scope.onSelect = function ($item) {
+        var item = $item;
+
+        var street = '';
+        var stnumber = '';
+        for (var ac = 0; ac < item.address_components.length; ac++) {
+            if (item.address_components[ac].types[0] === "street_number") { stnumber = item.address_components[ac].long_name }
+            if (item.address_components[ac].types[0] === "route") { street = item.address_components[ac].short_name }
+            if (item.address_components[ac].types[0] === "locality") { $scope.rf.storageCity = item.address_components[ac].long_name }
+            if (item.address_components[ac].types[0] === "administrative_area_level_1") { $scope.rf.storageState = item.address_components[ac].short_name }
+            if (item.address_components[ac].types[0] === "postal_code") { $scope.rf.storageZip = item.address_components[ac].long_name }
+        }
+
+        if (stnumber !== null && street !== null) {
+            $scope.rf.storageAddress = (stnumber + ' ' + street).trim();
+            
+        }
+
+    };
 
     $scope.submitted = false;
 

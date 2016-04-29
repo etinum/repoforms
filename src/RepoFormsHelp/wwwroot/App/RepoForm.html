@@ -187,7 +187,16 @@
         </div>
 
 
-        <div class="panel panel-default">
+        <!--<h4>Asynchronous results</h4>
+        <pre>Model: {{asyncSelected | json}}</pre>
+        <input type="text" ng-model="asyncSelected" placeholder="Type Ahead" uib-typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
+        <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+        <div ng-show="noResults">
+            <i class="glyphicon glyphicon-remove"></i> No Results Found
+        </div>-->
+
+
+    <div class="panel panel-default">
             <div class="panel-heading">Storage Address</div>
             <div class="panel-body">
 
@@ -195,7 +204,11 @@
                     <label for="storageAddress" class="col-sm-3 control-label">Address</label>
                     <div class="col-sm-9">
                         <input type="text" id="storageAddress" name="storageAddress" class="form-control"
-                               ng-model="rf.storageAddress" ng-required="true" minlength="1" />
+                               ng-model="rf.storageAddress" ng-required="true" minlength="1" ng-model="asyncSelected" placeholder="Type ahead enabled" uib-typeahead="item.formatted_address for item in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-on-select="onSelect($item, $model, $label)" typeahead-no-results="noResults" class="form-control"/>
+                        <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
+                        <div ng-show="noResults">
+                            <i class="glyphicon glyphicon-remove"></i> No Results Found
+                        </div>
                         <div class="help-block" ng-messages="repoForm.storageAddress.$error" ng-show="repoForm.storageAddress.$touched || submitted" class="errors">
                             <div ng-messages-include="app/error-messages.html"></div>
                         </div>
@@ -375,7 +388,7 @@
                 </div>
 
 
-                <div class="form-group" show-errors>
+                <!--<div class="form-group" show-errors>
                     <label class="col-sm-3 control-label">Signature</label>
                     <div class="col-sm-9">
                         <div style="border: 2px solid; height: 220px; width: 500px">
@@ -384,11 +397,7 @@
                         <button ng-click="clear()">Clear signature</button>
                         <button ng-click="signature = accept()">Sign</button>
                     </div>
-                </div>
-
-
-
-
+                </div>-->
 
             </div>
         </div>
