@@ -14,7 +14,7 @@ namespace RepoFormsHelp
     {
         public Startup(IHostingEnvironment env)
         {
-            // Set up configuration sources. --test
+            // Set up configuration sources. 
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables();
