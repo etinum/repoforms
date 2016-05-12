@@ -4,15 +4,15 @@ app.config(["$routeProvider", "$locationProvider",
     function ($routeProvider, $locationProvider) {
         $routeProvider
             .when("/home", {
-                templateUrl: "app/Home.html",
+                templateUrl: "app/html/Home.html",
                 controller: "homeCtrl"
             })
             .when("/repoform", {
-                templateUrl: "app/RepoForm.html",
+                templateUrl: "app/html/RepoForm.html",
                 controller: "repoCtrl"
             })
             .when("/viewReports", {
-                templateUrl: "app/ViewReports.html",
+                templateUrl: "app/html/ViewReports.html",
                 controller: "viewCtrl"
             })
             .otherwise({

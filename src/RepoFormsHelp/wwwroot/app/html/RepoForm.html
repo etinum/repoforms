@@ -19,7 +19,7 @@
                                 </span>
                             </p>
                             <div class="help-block" ng-messages="repoForm.createdDate.$error" ng-show="repoForm.createdDate.$touched || submitted" class="errors">
-                                <div ng-messages-include="app/error-messages.html"></div>
+                                <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
                                 </span>
                             </p>
                             <div class="help-block" ng-messages="repoForm.repoDate.$error" ng-show="repoForm.repoDate.$touched || submitted" class="errors">
-                                <div ng-messages-include="app/error-messages.html"></div>
+                                <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                         <input type="text" id="accountNumber" name="accountNumber" class="form-control"
                                ng-model="rf.investigator" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.accountNumber.$error" ng-show="repoForm.accountNumber.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                         <input type="text" id="investigator" name="investigator" class="form-control"
                                ng-model="rf.investigator" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.investigator.$error" ng-show="repoForm.investigator.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                         <input type="text" id="client" name="client" class="form-control"
                                ng-model="rf.client" ng-required="false" />
                         <div class="help-block" ng-messages="repoForm.client.$error" ng-show="repoForm.investigator.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -83,7 +83,7 @@
                         <input type="text" id="closeType" name="closeType" class="form-control"
                                ng-model="rf.closeType" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.closeType.$error" ng-show="repoForm.closeType.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                         <input type="text" id="customerName" name="customerName" class="form-control"
                                ng-model="rf.customerName" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.customerName.$error" ng-show="repoForm.customerName.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -105,7 +105,7 @@
                         <input type="text" id="points" name="points" class="form-control"
                                ng-model="rf.points" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.points.$error" ng-show="repoForm.points.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -117,7 +117,7 @@
                         <input type="text" id="recoveryAgent" name="recoveryAgent" class="form-control"
                                ng-model="rf.recoveryAgent" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.recoveryAgent.$error" ng-show="repoForm.recoveryAgent.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -128,7 +128,7 @@
                         <input type="text" id="notes" name="notes" class="form-control"
                                ng-model="rf.notes" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.notes.$error" ng-show="repoForm.notes.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -150,7 +150,7 @@
                             <i class="glyphicon glyphicon-remove"></i> No Results Found
                         </div>
                         <div class="help-block" ng-messages="repoForm.recoveryAddress.$error" ng-show="repoForm.recoveryAddress.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -161,7 +161,7 @@
                         <input type="text" id="recoveryCity" name="recoveryCity" class="form-control"
                                ng-model="rf.recoveryCity" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.recoveryCity.$error" ng-show="repoForm.recoveryCity.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -172,7 +172,7 @@
                         <input type="text" id="recoveryState" name="recoveryState" class="form-control"
                                ng-model="rf.recoveryState" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.recoveryState.$error" ng-show="repoForm.recoveryState.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -183,7 +183,7 @@
                         <input type="text" id="recoveryZip" name="recoveryZip" class="form-control"
                                ng-model="rf.recoveryZip" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.recoveryZip.$error" ng-show="repoForm.recoveryZip.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -214,7 +214,7 @@
                             <i class="glyphicon glyphicon-remove"></i> No Results Found
                         </div>
                         <div class="help-block" ng-messages="repoForm.storageAddress.$error" ng-show="repoForm.storageAddress.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -225,7 +225,7 @@
                         <input type="text" id="storageCity" name="storageCity" class="form-control"
                                ng-model="rf.storageCity" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.storageCity.$error" ng-show="repoForm.storageCity.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -237,7 +237,7 @@
                         <input type="text" id="storageState" name="storageState" class="form-control"
                                ng-model="rf.storageState" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.storageState.$error" ng-show="repoForm.storageState.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -248,7 +248,7 @@
                         <input type="text" id="storageZip" name="storageZip" class="form-control"
                                ng-model="rf.storageZip" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.storageZip.$error" ng-show="repoForm.storageZip.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -268,7 +268,7 @@
                         <input type="text" id="policeDept" name="policeDept" class="form-control"
                                ng-model="rf.policeDept" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.policeDept.$error" ng-show="repoForm.policeDept.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -279,7 +279,7 @@
                         <input type="text" id="policeNumber" name="policeNumber" class="form-control"
                                ng-model="rf.policeNumber" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.policeNumber.$error" ng-show="repoForm.policeNumber.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -291,7 +291,7 @@
                         <input type="text" id="policeBadgeNumber" name="policeBadgeNumber" class="form-control"
                                ng-model="rf.policeBadgeNumber" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.policeBadgeNumber.$error" ng-show="repoForm.policeBadgeNumber.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -328,7 +328,7 @@
                         <input type="text" id="personals" name="personals" class="form-control"
                                ng-model="rf.personals" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.personals.$error" ng-show="repoForm.personals.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -345,7 +345,7 @@
                         <input type="text" id="iPRUpdated" name="iPRUpdated" class="form-control"
                                ng-model="rf.iPRUpdated" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.iPRUpdated.$error" ng-show="repoForm.iPRUpdated.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -356,7 +356,7 @@
                         <input type="text" id="repoProcessing" name="repoProcessing" class="form-control"
                                ng-model="rf.repoProcessing" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.repoProcessing.$error" ng-show="repoForm.repoProcessing.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -368,7 +368,7 @@
                         <input type="text" id="billing" name="billing" class="form-control"
                                ng-model="rf.billing" ng-required="true" minlength="1" />
                         <div class="help-block" ng-messages="repoForm.billing.$error" ng-show="repoForm.billing.$touched || submitted" class="errors">
-                            <div ng-messages-include="app/error-messages.html"></div>
+                            <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
@@ -385,7 +385,7 @@
                                 </span>
                             </p>
                             <div class="help-block" ng-messages="repoForm.initialDate.$error" ng-show="repoForm.initialDate.$touched || submitted" class="errors">
-                                <div ng-messages-include="app/error-messages.html"></div>
+                                <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>
                         </div>
                     </div>
