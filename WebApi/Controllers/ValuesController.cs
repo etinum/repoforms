@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Data;
 
 namespace WebApi.Controllers
 {
@@ -14,10 +15,12 @@ namespace WebApi.Controllers
         public IEnumerable<string> Get()
         {
 
-            
+            var item = new Class1();
+
+            var investigator = item.GetAllRepoForms().Select(r => r.Investigator).FirstOrDefault();
             
 
-            return new string[] { $"{User.Identity.Name} boy", "value2" };
+            return new string[] { $"{User.Identity.Name} and {investigator} boy", "value2" };
         }
 
         // GET api/values/5
