@@ -74,4 +74,5 @@ _[Ss]cripts
 *.ncrunchsolution
 *.dot[Cc]over
 # Other
-# project.lock.json
+project.lock.json
+*.dbmdl
