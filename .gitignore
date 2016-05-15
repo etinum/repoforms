@@ -76,3 +76,4 @@ _[Ss]cripts
 # Other
 project.lock.json
 *.dbmdl
+*.swp

@@ -1,10 +1,16 @@
-app.controller('homeCtrl', ['$scope', '$location', function ($scope, $location) {
+app.controller('homeCtrl', ['$scope', '$location', '$http', function ($scope, $location, $http) {
     $scope.GotoRepoForm = function () {
         $location.path('/repoform');
     };
 
     $scope.ViewRepos = function () {
-        alert('If you build it, they will come');
+
+        var results = $http.get('http://localhost/webapi/api/values')
+            .then(function (response) {
+                alert(response.data);
+                return response.data;
+            });
+
     };
 }]);
 
