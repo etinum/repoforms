@@ -9,20 +9,48 @@ using Data;
 
 namespace WebApi.Controllers
 {
+
+    public class PersonTest
+    {
+        public int Id { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string AccountNumber { get; set; }
+        public int Age { get; set; }
+
+    }
+
+
+
     [Authorize]
     [EnableCors(origins: "http://localhost:8011", headers: "*", methods: "*")]
     public class ValuesController : ApiController
     {
         // GET api/values
-        public IEnumerable<string> Get()
+        public IEnumerable<PersonTest> Get()
         {
+            var plist = new List<PersonTest>();
 
-            var item = new Class1();
+            var p1 = new PersonTest
+            {
+                AccountNumber = "123ABCEEE",
+                Age = 26,
+                CreatedDate = DateTime.Today,
+                Id = 1
+            };
 
-            var investigator = item.GetAllRepoForms().Select(r => r.Investigator).FirstOrDefault();
-            
+            plist.Add(p1);
 
-            return new string[] { $"{User.Identity.Name} and {investigator} boy", "value2" };
+            var p2 = new PersonTest
+            {
+                AccountNumber = "789EFGZZZ",
+                Age = 39,
+                CreatedDate = DateTime.Now,
+                Id = 1
+            };
+
+            plist.Add(p2);
+
+            return plist;
         }
 
         // GET api/values/5
