@@ -1,5 +1,3 @@
-/// <reference path="../typings/persontest.cs.d.ts" />
-/// <reference path="App.ts" />
 app.controller('homeCtrl', ['$scope', '$location', '$http', function ($scope, $location, $http) {
         $scope.GotoRepoForm = function () {
             $location.path('/repoform');
@@ -7,7 +5,6 @@ app.controller('homeCtrl', ['$scope', '$location', '$http', function ($scope, $l
         $scope.ViewRepos = function () {
             alert('Build and they will come');
         };
-        // testing
         $scope.persons = {};
         $scope.TestClick = function () {
             $http.get('http://localhost/webapi/api/values')
@@ -31,14 +28,10 @@ app.controller('repoCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.getLocation = function (val) { return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
             params: {
                 address: val + ', USA',
-                //componentRestrictions: {
-                //    country: 'US'
-                //},
                 sensor: false
             }
-        }).then(function (response) { return response.data.results.map(function (item) { return item; }); }); };
+        }).then(function (response) { return response.data.results.map(function (r) { return r; }); }); };
         $scope.onSelect = function ($item, $type) {
-            // This is to cover the different address fields
             var item = $item;
             var street = '';
             var stnumber = '';
@@ -89,8 +82,8 @@ app.controller('repoCtrl', ['$scope', '$http', function ($scope, $http) {
             }
         };
         $scope.submitted = false;
-        $scope.rf = { id: 0 }; // repo form
-        $scope.orf = angular.copy($scope.repoForm); // original repo form, shouldn't be changed... 
+        $scope.rf = { id: 0 };
+        $scope.orf = angular.copy($scope.repoForm);
         $scope.submitForm = function () {
             $scope.submitted = true;
             $scope.$broadcast('show-errors-event');
@@ -99,7 +92,6 @@ app.controller('repoCtrl', ['$scope', '$http', function ($scope, $http) {
         };
         $scope.cancelForm = function () { };
         $scope.resetForm = function () { };
-        // DATE configurations
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
         $scope.altInputFormats = ['M!/d!/yyyy'];

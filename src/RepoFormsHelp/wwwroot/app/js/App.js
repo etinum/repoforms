@@ -1,5 +1,3 @@
-/// <reference path="../typings/angular.d.ts" />
-/// <reference path="../typings/angular-resource.d.ts" />
 var app = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'signature']);
 app.config(["$routeProvider", "$locationProvider",
     function ($routeProvider, $locationProvider) {
@@ -19,6 +17,5 @@ app.config(["$routeProvider", "$locationProvider",
             .otherwise({
             redirectTo: "/home"
         });
-        //$locationProvider.html5Mode(true);;
     }]);
 //# sourceMappingURL=App.js.map

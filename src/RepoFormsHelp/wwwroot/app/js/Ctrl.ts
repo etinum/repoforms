@@ -62,7 +62,7 @@ app.controller('repoCtrl', ['$scope', '$http', ($scope, $http) => {
             //},
             sensor: false
         }
-    }).then(response => response.data.results.map(item => item));
+    }).then(response => response.data.results.map(r => r));
 
     $scope.onSelect = ($item, $type) => {
 
