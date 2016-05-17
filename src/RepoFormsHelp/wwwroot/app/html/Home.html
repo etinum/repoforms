@@ -17,5 +17,13 @@
     <legend>Test Button</legend>
     <div class="form-group">
         <input type="button" class="btn btn-primary" value="Click me to do stuff" ng-click="TestClick()" />
+        <input type="text" ng-model="persons[1].age"/>
+        <span ng-bind="persons[1].age"></span>
     </div>
+
+    <div class="form-group">
+        <input type="button" class="btn btn-primary" value="Send Stuff" ng-click="SendClick()" />
+    </div>
+
+
 </fieldset>

@@ -1,9 +1,12 @@
+/// <reference path="../typings/persontest.cs.d.ts" />
 /// <reference path="App.ts" />
 
 app.controller('homeCtrl', ['$scope', '$location', '$http', ($scope, $location, $http) => {
+
     $scope.GotoRepoForm = () => {
         $location.path('/repoform');
     };
+
 
     $scope.ViewRepos = () => {
 
@@ -11,19 +14,36 @@ app.controller('homeCtrl', ['$scope', '$location', '$http', ($scope, $location, 
 
     };
 
-    //wow
-    $scope.TestClick = () => { 
+
+
+    // testing
+
+    $scope.persons = {};
+
+    $scope.TestClick = () => {
 
         $http.get('http://localhost/webapi/api/values')
             .then(response => {
-                    alert(response.data);
-                    return response.data;
-                },
-                response => {
-                    alert(response.data);
+                var persons = <modeltypings.IPersonTest[]>response.data;
+                $scope.persons = persons;
 
-                });
+            },
+            response => {
+                alert("Connection failed: " + response.status);
+            });
+
     };
+
+    $scope.SendClick = () => {
+
+        $http.post('http://localhost/webapi/api/values', $scope.persons[1])
+            .then(response => {
+            },
+            response => {
+                alert("Connection failed: " + response.status);
+
+            });
+    }
 
 
 }]);

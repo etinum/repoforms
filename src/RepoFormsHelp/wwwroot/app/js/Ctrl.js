@@ -1,3 +1,4 @@
+/// <reference path="../typings/persontest.cs.d.ts" />
 /// <reference path="App.ts" />
 app.controller('homeCtrl', ['$scope', '$location', '$http', function ($scope, $location, $http) {
         $scope.GotoRepoForm = function () {
@@ -6,13 +7,22 @@ app.controller('homeCtrl', ['$scope', '$location', '$http', function ($scope, $l
         $scope.ViewRepos = function () {
             alert('Build and they will come');
         };
+        // testing
+        $scope.persons = {};
         $scope.TestClick = function () {
             $http.get('http://localhost/webapi/api/values')
                 .then(function (response) {
-                alert(response.data);
-                return response.data;
+                var persons = response.data;
+                $scope.persons = persons;
             }, function (response) {
-                alert(response.data);
+                alert("Connection failed: " + response.status);
+            });
+        };
+        $scope.SendClick = function () {
+            $http.post('http://localhost/webapi/api/values', $scope.persons[1])
+                .then(function (response) {
+            }, function (response) {
+                alert("Connection failed: " + response.status);
             });
         };
     }]);
@@ -125,4 +135,4 @@ app.controller('repoCtrl', ['$scope', '$http', function ($scope, $http) {
     }]);
 app.controller('viewCtrl', function ($scope) {
 });
-//# sourceMappingURL=Controller.js.map
+//# sourceMappingURL=Ctrl.js.map

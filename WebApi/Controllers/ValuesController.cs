@@ -6,19 +6,10 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using Data;
+using WebApi.Models;
 
 namespace WebApi.Controllers
 {
-
-    public class PersonTest
-    {
-        public int Id { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public string AccountNumber { get; set; }
-        public int Age { get; set; }
-
-    }
-
 
 
     [Authorize]
@@ -60,8 +51,10 @@ namespace WebApi.Controllers
         }
 
         // POST api/values
-        public void Post([FromBody]string value)
+        public void Post([FromBody]PersonTest person)
         {
+            var test = person;
+
         }
 
         // PUT api/values/5
