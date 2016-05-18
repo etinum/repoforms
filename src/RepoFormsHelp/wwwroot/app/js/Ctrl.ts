@@ -110,6 +110,14 @@ app.controller('repoCtrl', ['$scope', '$http', ($scope, $http) => {
 
     $scope.submitForm = () => {
 
+
+        $scope.submitted = true;
+
+        $scope.$broadcast('show-errors-event');
+        if ($scope.repoForm.$invalid)
+            return;
+
+
         $http.post('http://localhost/webapi/api/RepoForm/SaveForm', $scope.rf)
             .then(response => {
             },
@@ -118,14 +126,7 @@ app.controller('repoCtrl', ['$scope', '$http', ($scope, $http) => {
 
             });
 
-        
 
-
-        $scope.submitted = true;
-
-        $scope.$broadcast('show-errors-event');
-        if ($scope.repoForm.$invalid)
-            return;
     };
     $scope.cancelForm = () => { };
     $scope.resetForm = () => { };

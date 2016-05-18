@@ -40,7 +40,7 @@
                     <label for="accountNumber" class="col-sm-3 control-label">Account #</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="accountNumber" name="accountNumber" class="form-control"
-                               ng-model="rf.accountNumber" ng-required="true" minlength="1" />
+                               ng-model="rf.accountNumber" ng-required="true" />
                         <div class="help-block" ng-messages="repoForm.accountNumber.$error" ng-show="repoForm.accountNumber.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -50,7 +50,7 @@
                     <label for="investigator" class="col-sm-3 control-label">Investigator</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="investigator" name="investigator" class="form-control"
-                               ng-model="rf.investigator" ng-required="true" minlength="1" />
+                               ng-model="rf.investigator" ng-required="true" />
                         <div class="help-block" ng-messages="repoForm.investigator.$error" ng-show="repoForm.investigator.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -70,7 +70,7 @@
                     <label for="closeType" class="col-sm-3 control-label">Close Type</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="closeType" name="closeType" class="form-control"
-                               ng-model="rf.closeType" ng-required="true" minlength="1" />
+                               ng-model="rf.closeType" ng-required="true" />
                         <div class="help-block" ng-messages="repoForm.closeType.$error" ng-show="repoForm.closeType.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -80,7 +80,7 @@
                     <label for="customerName" class="col-sm-3 control-label">Customer</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="customerName" name="customerName" class="form-control"
-                               ng-model="rf.customerName" ng-required="true" minlength="1" />
+                               ng-model="rf.customerName" ng-required="true" />
                         <div class="help-block" ng-messages="repoForm.customerName.$error" ng-show="repoForm.customerName.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -90,7 +90,7 @@
                     <label for="points" class="col-sm-3 control-label">Points</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="points" name="points" class="form-control"
-                               ng-model="rf.points" ng-required="true" minlength="1" />
+                               ng-model="rf.points" ng-required="true" />
                         <div class="help-block" ng-messages="repoForm.points.$error" ng-show="repoForm.points.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -100,7 +100,7 @@
                     <label for="recoveryAgent" class="col-sm-3 control-label">Recovery Agent</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryAgent" name="recoveryAgent" class="form-control"
-                               ng-model="rf.recoveryAgent" ng-required="true" minlength="1" />
+                               ng-model="rf.recoveryAgent" ng-required="true" />
                         <div class="help-block" ng-messages="repoForm.recoveryAgent.$error" ng-show="repoForm.recoveryAgent.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -110,7 +110,7 @@
                     <label for="notes" class="col-sm-3 control-label">Notes</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="1024" maxlength=1024 id="notes" name="notes" class="form-control"
-                               ng-model="rf.notes" ng-required="true" minlength="1" />
+                               ng-model="rf.notes" ng-required="false" />
                         <div class="help-block" ng-messages="repoForm.notes.$error" ng-show="repoForm.notes.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -125,7 +125,7 @@
                     <label for="recoveryAddress" class="col-sm-3 control-label">Address</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryAddress" name="recoveryAddress" class="form-control"
-                               ng-model="rf.recoveryAddress" ng-required="true" minlength="1" placeholder="Type ahead enabled" uib-typeahead="item.formatted_address for item in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-on-select="onSelect($item,'recovery')" typeahead-no-results="noResults" class="form-control" />
+                               ng-model="rf.recoveryAddress" ng-required="true" placeholder="Type ahead enabled" uib-typeahead="item.formatted_address for item in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-on-select="onSelect($item,'recovery')" typeahead-no-results="noResults" class="form-control" />
                         <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
                         <div ng-show="noResults">
                             <i class="glyphicon glyphicon-remove"></i> No Results Found
@@ -139,7 +139,7 @@
                     <label for="recoveryCity" class="col-sm-3 control-label">City</label>
                     <div class="col-sm-5">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryCity" name="recoveryCity" class="form-control"
-                               ng-model="rf.recoveryCity" ng-required="true" minlength="1" />
+                               ng-model="rf.recoveryCity" ng-required="true" />
                         <div class="help-block" ng-messages="repoForm.recoveryCity.$error" ng-show="repoForm.recoveryCity.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -149,7 +149,7 @@
                     <label for="recoveryState" class="col-sm-3 control-label">State</label>
                     <div class="col-sm-4">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryState" name="recoveryState" class="form-control"
-                               ng-model="rf.recoveryState" ng-required="true" minlength="1" />
+                               ng-model="rf.recoveryState" ng-required="true" />
                         <div class="help-block" ng-messages="repoForm.recoveryState.$error" ng-show="repoForm.recoveryState.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -159,7 +159,7 @@
                     <label for="recoveryZip" class="col-sm-3 control-label">ZIP</label>
                     <div class="col-sm-3">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryZip" name="recoveryZip" class="form-control"
-                               ng-model="rf.recoveryZip" ng-required="true" minlength="1" />
+                               ng-model="rf.recoveryZip" ng-required="true" />
                         <div class="help-block" ng-messages="repoForm.recoveryZip.$error" ng-show="repoForm.recoveryZip.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -181,7 +181,7 @@
                     <label for="storageAddress" class="col-sm-3 control-label">Address</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="storageAddress" name="storageAddress" class="form-control"
-                               ng-model="rf.storageAddress" ng-required="true" minlength="1" placeholder="Type ahead enabled" uib-typeahead="item.formatted_address for item in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-on-select="onSelect($item,'storage')" typeahead-no-results="noResults" class="form-control" />
+                               ng-model="rf.storageAddress" ng-required="false" placeholder="Type ahead enabled" uib-typeahead="item.formatted_address for item in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-on-select="onSelect($item,'storage')" typeahead-no-results="noResults" class="form-control" />
                         <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
                         <div ng-show="noResults">
                             <i class="glyphicon glyphicon-remove"></i> No Results Found
@@ -195,7 +195,7 @@
                     <label for="storageCity" class="col-sm-3 control-label">City</label>
                     <div class="col-sm-5">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="storageCity" name="storageCity" class="form-control"
-                               ng-model="rf.storageCity" ng-required="true" minlength="1" />
+                               ng-model="rf.storageCity" ng-required="false" />
                         <div class="help-block" ng-messages="repoForm.storageCity.$error" ng-show="repoForm.storageCity.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -205,7 +205,7 @@
                     <label for="storageState" class="col-sm-3 control-label">State</label>
                     <div class="col-sm-4">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="storageState" name="storageState" class="form-control"
-                               ng-model="rf.storageState" ng-required="true" minlength="1" />
+                               ng-model="rf.storageState" ng-required="false" />
                         <div class="help-block" ng-messages="repoForm.storageState.$error" ng-show="repoForm.storageState.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -215,18 +215,17 @@
                     <label for="storageZip" class="col-sm-3 control-label">ZIP</label>
                     <div class="col-sm-3">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="storageZip" name="storageZip" class="form-control"
-                               ng-model="rf.storageZip" ng-required="true" minlength="1"/>
+                               ng-model="rf.storageZip" ng-required="false" />
                         <div class="help-block" ng-messages="repoForm.storageZip.$error" ng-show="repoForm.storageZip.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group" show-errors>
                     <label for="storageAdditionalFees" class="col-sm-3 control-label">Additional Fees</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="storageAdditionalFees" name="storageAdditionalFees" class="form-control"
-                               ng-model="rf.storageAdditionalFees" ng-required="true" minlength="1" />
+                               ng-model="rf.storageAdditionalFees" ng-required="false" />
                         <div class="help-block" ng-messages="repoForm.storageAdditionalFees.$error" ng-show="repoForm.storageAdditionalFees.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -236,14 +235,12 @@
                     <label for="storageFeeReason" class="col-sm-3 control-label">Reason</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="storageFeeReason" name="storageFeeReason" class="form-control"
-                               ng-model="rf.storageFeeReason" ng-required="true" minlength="1" />
-                        <div class="help-block" ng-messages="repoForm.storageFeeReason.$error" ng-show="repoForm.storageFeeReason.$touched || submitted" >
+                               ng-model="rf.storageFeeReason" ng-required="false" />
+                        <div class="help-block" ng-messages="repoForm.storageFeeReason.$error" ng-show="repoForm.storageFeeReason.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
-
-
 
 
             </div>
@@ -255,7 +252,7 @@
                     <label for="policeDept" class="col-sm-3 control-label">Dept</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="policeDept" name="policeDept" class="form-control"
-                               ng-model="rf.policeDept" ng-required="true" minlength="1" />
+                               ng-model="rf.policeDept" ng-required="false" />
                         <div class="help-block" ng-messages="repoForm.policeDept.$error" ng-show="repoForm.policeDept.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -265,7 +262,7 @@
                     <label for="policeNumber" class="col-sm-3 control-label">Phone #</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="policeNumber" name="policeNumber" class="form-control"
-                               ng-model="rf.policeNumber" ng-required="true" minlength="1" />
+                               ng-model="rf.policeNumber" ng-required="false" />
                         <div class="help-block" ng-messages="repoForm.policeNumber.$error" ng-show="repoForm.policeNumber.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -275,7 +272,7 @@
                     <label for="policeBadgeNumber" class="col-sm-3 control-label">Badge #</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="policeBadgeNumber" name="policeBadgeNumber" class="form-control"
-                               ng-model="rf.policeBadgeNumber" ng-required="true" minlength="1" />
+                               ng-model="rf.policeBadgeNumber" ng-required="false" />
                         <div class="help-block" ng-messages="repoForm.policeBadgeNumber.$error" ng-show="repoForm.policeBadgeNumber.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -306,7 +303,7 @@
                     <label for="personals" class="col-sm-3 control-label">Personals</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="personals" name="personals" class="form-control"
-                               ng-model="rf.personals" ng-required="true" minlength="1" />
+                               ng-model="rf.personals" ng-required="false" />
                         <div class="help-block" ng-messages="repoForm.personals.$error" ng-show="repoForm.personals.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -321,7 +318,7 @@
                     <label for="iPRUpdated" class="col-sm-3 control-label">IPR Updated</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="iPRUpdated" name="iPRUpdated" class="form-control"
-                               ng-model="rf.iPRUpdated" ng-required="false" minlength="1" />
+                               ng-model="rf.iPRUpdated" ng-required="false" />
                         <div class="help-block" ng-messages="repoForm.iPRUpdated.$error" ng-show="repoForm.iPRUpdated.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -331,7 +328,7 @@
                     <label for="repoProcessing" class="col-sm-3 control-label">Repo Processing</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="repoProcessing" name="repoProcessing" class="form-control"
-                               ng-model="rf.repoProcessing" ng-required="false" minlength="1" />
+                               ng-model="rf.repoProcessing" ng-required="false" />
                         <div class="help-block" ng-messages="repoForm.repoProcessing.$error" ng-show="repoForm.repoProcessing.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -341,7 +338,7 @@
                     <label for="billing" class="col-sm-3 control-label">Billing</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="billing" name="billing" class="form-control"
-                               ng-model="rf.billing" ng-required="false" minlength="1" />
+                               ng-model="rf.billing" ng-required="false" />
                         <div class="help-block" ng-messages="repoForm.billing.$error" ng-show="repoForm.billing.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>

@@ -21,6 +21,8 @@ namespace WebApi.Models
         public string StorageCity { get; set; }
         public string StorageState { get; set; }
         public string StorageZip { get; set; }
+        public string StorageAdditionalFees { get; set; }
+        public string StorageFeeReason { get; set; }
         public string PoliceDept { get; set; }
         public string PoliceNumber { get; set; }
         public string PoliceBadgeNumber { get; set; }

@@ -12,30 +12,32 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="RepoDate" Type="datetime" />
-          <Property Name="AccountNumber" Type="nchar" MaxLength="50" />
-          <Property Name="Investigator" Type="nchar" MaxLength="50" />
-          <Property Name="CloseType" Type="nchar" MaxLength="50" />
-          <Property Name="CustomerName" Type="nchar" MaxLength="50" />
-          <Property Name="Points" Type="nchar" MaxLength="50" />
-          <Property Name="RecoveryAgent" Type="nchar" MaxLength="50" />
+          <Property Name="AccountNumber" Type="nchar" MaxLength="100" />
+          <Property Name="Investigator" Type="nchar" MaxLength="100" />
+          <Property Name="CloseType" Type="nchar" MaxLength="100" />
+          <Property Name="CustomerName" Type="nchar" MaxLength="100" />
+          <Property Name="Points" Type="nchar" MaxLength="100" />
+          <Property Name="RecoveryAgent" Type="nchar" MaxLength="100" />
           <Property Name="Notes" Type="nchar" MaxLength="1024" />
-          <Property Name="RecoveryAddress" Type="nchar" MaxLength="50" />
-          <Property Name="RecoveryCity" Type="nchar" MaxLength="50" />
-          <Property Name="RecoveryState" Type="nchar" MaxLength="50" />
-          <Property Name="RecoveryZip" Type="nchar" MaxLength="50" />
-          <Property Name="StorageAddress" Type="nchar" MaxLength="50" />
-          <Property Name="StorageCity" Type="nchar" MaxLength="50" />
-          <Property Name="StorageState" Type="nchar" MaxLength="50" />
-          <Property Name="StorageZip" Type="nchar" MaxLength="50" />
-          <Property Name="PoliceDept" Type="nchar" MaxLength="50" />
-          <Property Name="PoliceNumber" Type="nchar" MaxLength="50" />
-          <Property Name="PoliceBadgeNumber" Type="nchar" MaxLength="50" />
+          <Property Name="RecoveryAddress" Type="nchar" MaxLength="100" />
+          <Property Name="RecoveryCity" Type="nchar" MaxLength="100" />
+          <Property Name="RecoveryState" Type="nchar" MaxLength="100" />
+          <Property Name="RecoveryZip" Type="nchar" MaxLength="100" />
+          <Property Name="StorageAddress" Type="nchar" MaxLength="100" />
+          <Property Name="StorageCity" Type="nchar" MaxLength="100" />
+          <Property Name="StorageState" Type="nchar" MaxLength="100" />
+          <Property Name="StorageZip" Type="nchar" MaxLength="100" />
+          <Property Name="StorageAdditionalFees" Type="nchar" MaxLength="100" />
+          <Property Name="StorageFeeReason" Type="nchar" MaxLength="100" />
+          <Property Name="PoliceDept" Type="nchar" MaxLength="100" />
+          <Property Name="PoliceNumber" Type="nchar" MaxLength="100" />
+          <Property Name="PoliceBadgeNumber" Type="nchar" MaxLength="100" />
           <Property Name="KeysChecked" Type="bit" />
           <Property Name="DrivableChecked" Type="bit" />
-          <Property Name="Personals" Type="nchar" MaxLength="50" />
-          <Property Name="IPRUpdated" Type="nchar" MaxLength="50" />
-          <Property Name="RepoProcessing" Type="nchar" MaxLength="50" />
-          <Property Name="Billing" Type="nchar" MaxLength="50" />
+          <Property Name="Personals" Type="nchar" MaxLength="100" />
+          <Property Name="IPRUpdated" Type="nchar" MaxLength="100" />
+          <Property Name="RepoProcessing" Type="nchar" MaxLength="100" />
+          <Property Name="Billing" Type="nchar" MaxLength="100" />
           <Property Name="InitializedDate" Type="datetime" />
           <Property Name="OriginalUserId" Type="int" />
         </EntityType>
@@ -99,30 +101,32 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="RepoDate" Type="DateTime" Precision="3" />
-          <Property Name="AccountNumber" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="Investigator" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="CloseType" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="Points" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="RecoveryAgent" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="AccountNumber" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Investigator" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="CloseType" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Points" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="RecoveryAgent" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="Notes" Type="String" MaxLength="1024" FixedLength="true" Unicode="true" />
-          <Property Name="RecoveryAddress" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="RecoveryCity" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="RecoveryState" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="RecoveryZip" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="StorageAddress" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="StorageCity" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="StorageState" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="StorageZip" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="PoliceDept" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="PoliceNumber" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="PoliceBadgeNumber" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="RecoveryAddress" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="RecoveryCity" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="RecoveryState" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="RecoveryZip" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="StorageAddress" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="StorageCity" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="StorageState" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="StorageZip" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="StorageAdditionalFees" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="StorageFeeReason" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="PoliceDept" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="PoliceNumber" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="PoliceBadgeNumber" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="KeysChecked" Type="Boolean" />
           <Property Name="DrivableChecked" Type="Boolean" />
-          <Property Name="Personals" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="IPRUpdated" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="RepoProcessing" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="Billing" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Personals" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="IPRUpdated" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="RepoProcessing" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Billing" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="InitializedDate" Type="DateTime" Precision="3" />
           <Property Name="OriginalUserId" Type="Int32" />
           <NavigationProperty Name="User" Relationship="PLSFormsDBModel.FK_RepoForm_OriginalUserId_User_Userid" FromRole="RepoForm" ToRole="User" />
@@ -170,6 +174,8 @@
                 <ScalarProperty Name="PoliceBadgeNumber" ColumnName="PoliceBadgeNumber" />
                 <ScalarProperty Name="PoliceNumber" ColumnName="PoliceNumber" />
                 <ScalarProperty Name="PoliceDept" ColumnName="PoliceDept" />
+                <ScalarProperty Name="StorageFeeReason" ColumnName="StorageFeeReason" />
+                <ScalarProperty Name="StorageAdditionalFees" ColumnName="StorageAdditionalFees" />
                 <ScalarProperty Name="StorageZip" ColumnName="StorageZip" />
                 <ScalarProperty Name="StorageState" ColumnName="StorageState" />
                 <ScalarProperty Name="StorageCity" ColumnName="StorageCity" />

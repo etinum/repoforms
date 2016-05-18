@@ -17,6 +17,8 @@
         storageCity: string;
         storageState: string;
         storageZip: string;
+        storageAdditionalFees: string;
+        storageFeeReason: string;
         policeDept: string;
         policeNumber: string;
         policeBadgeNumber: string;

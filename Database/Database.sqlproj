@@ -68,4 +68,7 @@
     <Build Include="Security\etweb.sql" />
     <Build Include="Security\RoleMemberships.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="SqlSchemaCompare2.scmp" />
+  </ItemGroup>
 </Project>
