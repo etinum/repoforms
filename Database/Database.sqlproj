@@ -65,8 +65,6 @@
     <Build Include="dbo\Tables\RepoForm.sql" />
     <Build Include="dbo\Tables\User.sql" />
     <Build Include="Security\NT AUTHORITY_NETWORK SERVICE.sql" />
-    <Build Include="Security\etweb.sql" />
-    <Build Include="Security\RoleMemberships.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SqlSchemaCompare2.scmp" />

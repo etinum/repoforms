@@ -43,8 +43,6 @@ app.controller('homeCtrl', ['$scope', '$location', '$http', ($scope, $location, 
 
             });
     }
-
-
 }]);
 
 
@@ -109,6 +107,16 @@ app.controller('repoCtrl', ['$scope', '$http', ($scope, $http) => {
     $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed... 
 
     $scope.submitForm = () => {
+
+        $http.get('http://localhost/webapi/api/RepoForm/GetMe')
+            .then(response => {
+                    alert(response.data);
+                },
+            response => {
+                alert("Connection failed: " + response.status);
+
+            });
+
 
 
         $scope.submitted = true;

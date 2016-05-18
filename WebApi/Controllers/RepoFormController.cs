@@ -10,7 +10,7 @@ using WebApi.Models;
 namespace WebApi.Controllers 
 {
 
-    //[System.Web.Http.Authorize]
+    [Authorize]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class RepoFormController : ApiController
     {
@@ -33,7 +33,7 @@ namespace WebApi.Controllers
             return "hello";
         }
 
-        [System.Web.Http.HttpPost]
+        [HttpPost]
         public void SaveForm(RepoFormViewModel formViewModel)
         {
             var repoFormModel = _mapper.Map<RepoForm>(formViewModel);
@@ -41,7 +41,14 @@ namespace WebApi.Controllers
             // save the input values.. 
             using (var ctx = new PLSFormsDBEntities())
             {
-                var user = ctx.Users.FirstOrDefault();
+                var user = GetExistingUser() ?? new User()
+                {
+                    WinAuthName = User.Identity.Name,
+                    Investigator = repoFormModel.Investigator,
+                    FirstLoggedIn = DateTime.Now
+                };
+
+                user.LastLoggedIn = DateTime.Now;
 
                 repoFormModel.User = user;
 
@@ -53,10 +60,16 @@ namespace WebApi.Controllers
         }
 
 
+        private User GetExistingUser()
+        {
+            using (var ctx = new PLSFormsDBEntities())
+            {
+                var matchUser = ctx.Users.FirstOrDefault(r => r.WinAuthName == User.Identity.Name);
+                return matchUser;
 
+            }
 
-
-
+        }
 
     }
 }
