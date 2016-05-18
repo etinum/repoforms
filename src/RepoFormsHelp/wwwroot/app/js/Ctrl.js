@@ -5,7 +5,7 @@ app.controller('homeCtrl', ['$scope', '$location', '$http', function ($scope, $l
         $scope.ViewRepos = function () {
             alert('Build and they will come');
         };
-        $scope.persons = {};
+        var testlist = [];
         $scope.TestClick = function () {
             $http.get('http://localhost/webapi/api/values')
                 .then(function (response) {

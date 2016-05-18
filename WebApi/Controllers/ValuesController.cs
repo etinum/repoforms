@@ -5,7 +5,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using AutoMapper;
 using Data;
+using WebApi.Mapper;
 using WebApi.Models;
 
 namespace WebApi.Controllers
@@ -16,9 +18,50 @@ namespace WebApi.Controllers
     [EnableCors(origins: "http://localhost:8011", headers: "*", methods: "*")]
     public class ValuesController : ApiController
     {
+
+        private readonly IMapper _mapper;
+
+        public ValuesController()
+        {
+            var mapConfig = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile<MapperProfile>();
+            });
+
+            _mapper = mapConfig.CreateMapper();
+        }
+
         // GET api/values
         public IEnumerable<PersonTest> Get()
         {
+
+
+            using (var ctx = new PLSFormsDBEntities())
+            {
+
+
+                var list = ctx.RepoForms.ToList();
+
+
+
+                var myobj = new User
+                {
+                    Investigator = "Eric Tran",
+                    WinAuthName = "Prant_1/blah",
+                    LastLoggedIn = DateTime.Today,
+                    FirstLoggedIn = DateTime.Today
+                };
+
+                ctx.Users.Add(myobj);
+
+                ctx.SaveChanges();
+
+
+            }
+
+
+
+
             var plist = new List<PersonTest>();
 
             var p1 = new PersonTest
@@ -53,6 +96,7 @@ namespace WebApi.Controllers
         // POST api/values
         public void Post([FromBody]PersonTest person)
         {
+
             var test = person;
 
         }

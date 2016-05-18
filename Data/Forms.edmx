@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PLSFormsDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PLSFormsDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="RepoForm">
           <Key>
             <PropertyRef Name="Id" />
@@ -44,8 +44,10 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserName" Type="nchar" MaxLength="50" />
+          <Property Name="WinAuthName" Type="nchar" MaxLength="50" />
+          <Property Name="Investigator" Type="nchar" MaxLength="50" />
           <Property Name="LastLoggedIn" Type="datetime" />
+          <Property Name="FirstLoggedIn" Type="datetime" />
         </EntityType>
         <Association Name="FK_RepoForm_OriginalUserId_User_Userid">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
@@ -67,8 +69,7 @@
             <End Role="RepoForm" EntitySet="RepoForm" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PLSFormsDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -105,20 +106,30 @@
           <Property Name="Billing" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="InitializedDate" Type="DateTime" Precision="3" />
           <Property Name="OriginalUserId" Type="Int32" />
-          <NavigationProperty Name="User" Relationship="Self.FK_RepoForm_OriginalUserId_User_Userid" FromRole="RepoForm" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="PLSFormsDBModel.FK_RepoForm_OriginalUserId_User_Userid" FromRole="RepoForm" ToRole="User" />
         </EntityType>
+        <EntityContainer Name="PLSFormsDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="RepoForms" EntityType="Self.RepoForm" />
+          <EntitySet Name="Users" EntityType="PLSFormsDBModel.User" />
+          <AssociationSet Name="FK_RepoForm_OriginalUserId_User_Userid" Association="PLSFormsDBModel.FK_RepoForm_OriginalUserId_User_Userid">
+            <End Role="User" EntitySet="Users" />
+            <End Role="RepoForm" EntitySet="RepoForms" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="WinAuthName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Investigator" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="LastLoggedIn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="RepoForms" Relationship="Self.FK_RepoForm_OriginalUserId_User_Userid" FromRole="User" ToRole="RepoForm" />
+          <Property Name="FirstLoggedIn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="RepoForms" Relationship="PLSFormsDBModel.FK_RepoForm_OriginalUserId_User_Userid" FromRole="User" ToRole="RepoForm" />
         </EntityType>
         <Association Name="FK_RepoForm_OriginalUserId_User_Userid">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="RepoForm" Type="Self.RepoForm" Multiplicity="*" />
+          <End Type="PLSFormsDBModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="PLSFormsDBModel.RepoForm" Role="RepoForm" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Id" />
@@ -128,14 +139,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="PLSFormsDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="RepoForms" EntityType="Self.RepoForm" />
-          <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK_RepoForm_OriginalUserId_User_Userid" Association="Self.FK_RepoForm_OriginalUserId_User_Userid">
-            <End Role="User" EntitySet="Users" />
-            <End Role="RepoForm" EntitySet="RepoForms" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -180,9 +183,11 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="PLSFormsDBModel.User">
               <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="FirstLoggedIn" ColumnName="FirstLoggedIn" />
                 <ScalarProperty Name="LastLoggedIn" ColumnName="LastLoggedIn" />
+                <ScalarProperty Name="Investigator" ColumnName="Investigator" />
+                <ScalarProperty Name="WinAuthName" ColumnName="WinAuthName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

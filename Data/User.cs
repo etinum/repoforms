@@ -21,8 +21,10 @@ namespace Data
         }
     
         public int Id { get; set; }
-        public string UserName { get; set; }
+        public string WinAuthName { get; set; }
+        public string Investigator { get; set; }
         public Nullable<System.DateTime> LastLoggedIn { get; set; }
+        public Nullable<System.DateTime> FirstLoggedIn { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RepoForm> RepoForms { get; set; }

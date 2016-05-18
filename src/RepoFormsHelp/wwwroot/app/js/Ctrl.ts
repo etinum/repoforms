@@ -1,12 +1,13 @@
 /// <reference path="../typings/persontest.cs.d.ts" />
 /// <reference path="App.ts" />
 
+
 app.controller('homeCtrl', ['$scope', '$location', '$http', ($scope, $location, $http) => {
+
 
     $scope.GotoRepoForm = () => {
         $location.path('/repoform');
     };
-
 
     $scope.ViewRepos = () => {
 
@@ -14,12 +15,11 @@ app.controller('homeCtrl', ['$scope', '$location', '$http', ($scope, $location, 
 
     };
 
+    // if you want initialize some values... 
+    var testlist = <modeltypings.IPersonTest[]>[];
+    
 
-
-    // testing
-
-    $scope.persons = {};
-
+    
     $scope.TestClick = () => {
 
         $http.get('http://localhost/webapi/api/values')

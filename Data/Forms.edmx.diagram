@@ -6,8 +6,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="35f5716319c14fc79925df930369582a" Name="Diagram1">
         <EntityTypeShape EntityType="PLSFormsDBModel.RepoForm" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="PLSFormsDBModel.User" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
-        <AssociationConnector Association="PLSFormsDBModel.FK_RepoForm_OriginalUserId_User_Userid" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PLSFormsDBModel.User" Width="1.5" PointX="0.75" PointY="3.375" />
+        <AssociationConnector Association="PLSFormsDBModel.FK_RepoForm_OriginalUserId_User_Userid" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
