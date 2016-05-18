@@ -257,6 +257,9 @@
     <TypeScriptCompile Include="Models\PersonTest.cs.d.ts">
       <DependentUpon>PersonTest.cs</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Models\RepoFormViewModel.cs.d.ts">
+      <DependentUpon>RepoFormViewModel.cs</DependentUpon>
+    </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

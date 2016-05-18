@@ -82,9 +82,14 @@ app.controller('repoCtrl', ['$scope', '$http', function ($scope, $http) {
             }
         };
         $scope.submitted = false;
-        $scope.rf = { id: 0 };
-        $scope.orf = angular.copy($scope.repoForm);
+        $scope.rf = {};
+        $scope.orf = angular.copy($scope.rf);
         $scope.submitForm = function () {
+            $http.post('http://localhost/webapi/api/RepoForm/SaveForm', $scope.rf)
+                .then(function (response) {
+            }, function (response) {
+                alert("Connection failed: " + response.status);
+            });
             $scope.submitted = true;
             $scope.$broadcast('show-errors-event');
             if ($scope.repoForm.$invalid)

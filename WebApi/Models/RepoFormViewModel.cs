@@ -4,7 +4,6 @@ namespace WebApi.Models
 {
     public class RepoFormViewModel
     {
-        public int Id { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> RepoDate { get; set; }
         public string AccountNumber { get; set; }

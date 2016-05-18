@@ -1,4 +1,5 @@
 /// <reference path="../typings/persontest.cs.d.ts" />
+/// <reference path="../typings/repoformviewmodel.cs.d.ts" />
 /// <reference path="App.ts" />
 
 
@@ -17,8 +18,6 @@ app.controller('homeCtrl', ['$scope', '$location', '$http', ($scope, $location, 
 
     // if you want initialize some values... 
     var testlist = <modeltypings.IPersonTest[]>[];
-    
-
     
     $scope.TestClick = () => {
 
@@ -51,6 +50,8 @@ app.controller('homeCtrl', ['$scope', '$location', '$http', ($scope, $location, 
 
 app.controller('repoCtrl', ['$scope', '$http', ($scope, $http) => {
 
+
+    
 
     $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
 
@@ -100,10 +101,23 @@ app.controller('repoCtrl', ['$scope', '$http', ($scope, $http) => {
 
     $scope.submitted = false;
 
-    $scope.rf = { id: 0 }; // repo form
-    $scope.orf = angular.copy($scope.repoForm); // original repo form, shouldn't be changed... 
+
+    $scope.rf = <modeltypings.RepoFormViewModel>{};
+    
+    $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed... 
 
     $scope.submitForm = () => {
+
+        $http.post('http://localhost/webapi/api/RepoForm/SaveForm', $scope.rf)
+            .then(response => {
+            },
+            response => {
+                alert("Connection failed: " + response.status);
+
+            });
+
+        
+
 
         $scope.submitted = true;
 

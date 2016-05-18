@@ -1,16 +1,17 @@
 using System;
+using System.Web.Http;
 using System.Web.Http.Cors;
 using AutoMapper;
 using Data;
 using WebApi.Mapper;
 using WebApi.Models;
 
-namespace WebApi.Controllers
+namespace WebApi.Controllers 
 {
 
     [System.Web.Http.Authorize]
-    [EnableCors(origins: "http://localhost:8011", headers: "*", methods: "*")]
-    public class RepoFormController
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    public class RepoFormController : ApiController
     {
         private readonly IMapper _mapper;
 
@@ -24,6 +25,12 @@ namespace WebApi.Controllers
             _mapper = mapConfig.CreateMapper();
         }
 
+
+        [HttpGet]
+        public string GetMe()
+        {
+            return "hello";
+        }
 
         [System.Web.Http.HttpPost]
         public void SaveForm(RepoFormViewModel formViewModel)
