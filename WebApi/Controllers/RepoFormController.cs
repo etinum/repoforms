@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using AutoMapper;
@@ -9,7 +10,7 @@ using WebApi.Models;
 namespace WebApi.Controllers 
 {
 
-    [System.Web.Http.Authorize]
+    //[System.Web.Http.Authorize]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class RepoFormController : ApiController
     {
@@ -38,7 +39,16 @@ namespace WebApi.Controllers
             var repoFormModel = _mapper.Map<RepoForm>(formViewModel);
 
             // save the input values.. 
+            using (var ctx = new PLSFormsDBEntities())
+            {
+                var user = ctx.Users.FirstOrDefault();
 
+                repoFormModel.User = user;
+
+                ctx.RepoForms.Add(repoFormModel);
+
+                ctx.SaveChanges();
+            }
             
         }
 

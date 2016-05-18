@@ -13,7 +13,9 @@ namespace WebApi.Mapper
         protected override void Configure()
         {
 
-            this.CreateMap<RepoFormViewModel, RepoForm>();
+            this.CreateMap<RepoFormViewModel, RepoForm>()
+                .ForMember(dest => dest.KeysChecked, opt => opt.MapFrom(src => src.KeysChecked != null))
+                .ForMember(dest => dest.DrivableChecked, opt => opt.MapFrom(src => src.DrivableChecked != null));
 
         }
     }

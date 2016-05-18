@@ -27,7 +27,7 @@ namespace WebApi.Models
         public Nullable<bool> KeysChecked { get; set; }
         public Nullable<bool> DrivableChecked { get; set; }
         public string Personals { get; set; }
-        public string IPRUpdaterd { get; set; }
+        public string IPRUpdated { get; set; }
         public string RepoProcessing { get; set; }
         public string Billing { get; set; }
         public Nullable<System.DateTime> InitializedDate { get; set; }

@@ -23,7 +23,7 @@
 		keysChecked: boolean;
 		drivableChecked: boolean;
 		personals: string;
-		iPRUpdaterd: string;
+		iPRUpdated: string;
 		repoProcessing: string;
 		billing: string;
 		initializedDate: Date;
