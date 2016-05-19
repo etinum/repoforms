@@ -15,9 +15,12 @@ namespace WebApi.Controllers
     public class RepoFormController : ApiController
     {
         private readonly IMapper _mapper;
+        private PLSFormsDBEntities _ctx; 
 
         public RepoFormController()
         {
+            _ctx = new PLSFormsDBEntities();
+
             var mapConfig = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile<MapperProfile>();
@@ -39,8 +42,6 @@ namespace WebApi.Controllers
             var repoFormModel = _mapper.Map<RepoForm>(formViewModel);
 
             // save the input values.. 
-            using (var ctx = new PLSFormsDBEntities())
-            {
                 var user = GetExistingUser() ?? new User()
                 {
                     WinAuthName = User.Identity.Name,
@@ -50,24 +51,21 @@ namespace WebApi.Controllers
 
                 user.LastLoggedIn = DateTime.Now;
 
-                repoFormModel.User = user;
+                repoFormModel.OriginalUserId = user.Id;
 
-                ctx.RepoForms.Add(repoFormModel);
+                _ctx.RepoForms.Add(repoFormModel);
 
-                ctx.SaveChanges();
-            }
+                _ctx.SaveChanges();
+
             
         }
 
 
         private User GetExistingUser()
         {
-            using (var ctx = new PLSFormsDBEntities())
-            {
-                var matchUser = ctx.Users.FirstOrDefault(r => r.WinAuthName == User.Identity.Name);
-                return matchUser;
+            var matchUser = _ctx.Users.FirstOrDefault(r => r.WinAuthName == User.Identity.Name);
+            return matchUser;
 
-            }
 
         }
 
