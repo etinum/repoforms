@@ -108,21 +108,10 @@ app.controller('repoCtrl', ['$scope', '$http', ($scope, $http) => {
 
     $scope.submitForm = () => {
 
-        $http.get('http://localhost/webapi/api/RepoForm/GetMe')
-            .then(response => {
-                    alert(response.data);
-                },
-            response => {
-                alert("Connection failed: " + response.status);
-
-            });
-
-
-
         $scope.submitted = true;
 
         $scope.$broadcast('show-errors-event');
-        if ($scope.repoForm.$invalid)
+        if ($scope.myForm.$invalid)
             return;
 
 
@@ -160,7 +149,7 @@ app.controller('repoCtrl', ['$scope', '$http', ($scope, $http) => {
         $scope.rf.repoDate = new Date();
     };
     $scope.today();
-
+    
     $scope.openDatePopup = popup => {
         switch (popup) {
             case $scope.enumPopupType.CREATED:

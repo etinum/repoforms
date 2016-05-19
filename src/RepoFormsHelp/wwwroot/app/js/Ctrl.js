@@ -87,15 +87,9 @@ app.controller('repoCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.rf = {};
         $scope.orf = angular.copy($scope.rf);
         $scope.submitForm = function () {
-            $http.get('http://localhost/webapi/api/RepoForm/GetMe')
-                .then(function (response) {
-                alert(response.data);
-            }, function (response) {
-                alert("Connection failed: " + response.status);
-            });
             $scope.submitted = true;
             $scope.$broadcast('show-errors-event');
-            if ($scope.repoForm.$invalid)
+            if ($scope.myForm.$invalid)
                 return;
             $http.post('http://localhost/webapi/api/RepoForm/SaveForm', $scope.rf)
                 .then(function (response) {
