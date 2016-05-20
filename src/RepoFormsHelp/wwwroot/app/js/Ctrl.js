@@ -26,6 +26,13 @@ app.controller('homeCtrl', ['$scope', '$location', '$http', function ($scope, $l
 app.controller('repoCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.ng_maxLength = 50;
         $scope.maxLength = 50;
+        $http.get('http://localhost/webapi/api/RepoForm/TypeAheadData')
+            .then(function (response) {
+            var data = response.data;
+            $scope.typeAheadModel = data;
+        }, function (response) {
+            alert("Connection failed: " + response.status);
+        });
         $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
         $scope.getLocation = function (val) { return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
             params: {
@@ -87,6 +94,7 @@ app.controller('repoCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.rf = {};
         $scope.orf = angular.copy($scope.rf);
         $scope.favColorOptions = ['Red', 'Blue', 'Orange', 'Black', 'White'];
+        $scope.favoriteIceCreamOptions = ['fudge', 'chocolate', 'vanila', 'almond fudge', 'rocky road'];
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
         $scope.altInputFormats = ['M!/d!/yyyy'];
@@ -131,7 +139,9 @@ app.controller('repoCtrl', ['$scope', '$http', function ($scope, $http) {
             });
         };
         $scope.cancelForm = function () { };
-        $scope.resetForm = function () { };
+        $scope.resetForm = function () {
+            $scope.today();
+        };
     }]);
 app.controller('viewCtrl', function ($scope) {
 });

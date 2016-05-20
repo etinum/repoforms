@@ -15,7 +15,7 @@ namespace WebApi.Controllers
     public class RepoFormController : ApiController
     {
         private readonly IMapper _mapper;
-        private PLSFormsDBEntities _ctx; 
+        private readonly PLSFormsDBEntities _ctx; 
 
         public RepoFormController()
         {
@@ -28,6 +28,33 @@ namespace WebApi.Controllers
 
             _mapper = mapConfig.CreateMapper();
         }
+
+        [HttpGet]
+        public RepoFormTypeAheadModel TypeAheadData()
+        {
+
+            var user = GetExistingUser();
+            if (user == null)
+            {
+                return null;
+            }
+
+
+            var repoFormsByUser = _ctx.RepoForms.ToList().FindAll(r => r.OriginalUserId == user.Id);
+
+            var model = new RepoFormTypeAheadModel
+            {
+                Investigator = user.Investigator,
+                ClientList = repoFormsByUser.Select(r => r.Client?.Trim()).Distinct().ToList(),
+                CustomerList = repoFormsByUser.Select(r => r.CustomerName?.Trim()).Distinct().ToList(),
+                RecoveryAgentList = repoFormsByUser.Select(r => r.RecoveryAgent?.Trim()).Distinct().ToList()
+        
+            };
+
+            return model;
+
+        }
+
 
 
         [HttpGet]

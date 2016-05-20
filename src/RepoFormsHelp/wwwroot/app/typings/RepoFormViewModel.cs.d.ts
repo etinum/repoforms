@@ -1,9 +1,10 @@
 ﻿declare module modeltypings {
-	interface RepoFormViewModel {
+    interface RepoFormViewModel {
         createdDate: Date;
         repoDate: Date;
         accountNumber: string;
         investigator: string;
+        client: string;
         closeType: string;
         customerName: string;
         points: string;
@@ -30,5 +31,14 @@
         billing: string;
         initializedDate: Date;
         originalUserId: number;
-	}
+    }
+
+    interface RepoFormTypeAheadModel {
+        investigator: string;
+        clientList: string[];
+        customerList: string[];
+        recoveryAgentList: string[];
+    }
+
+
 }

@@ -4,12 +4,15 @@
         <div class="panel panel-default">
             <div class="panel-heading">General</div>
             <div class="panel-body">
-                <div class="form-group" show-errors>
+
+
+
+            <div class="form-group" show-errors>
                     <div>
                         <label for="createdDate" class="col-sm-3 control-label">Date</label>
                         <div class="col-sm-6">
                             <p class="input-group">
-                                <input id="createdDate" name="createdDate" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.createdDate" is-open="datePopupStatus.created" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly />
+                                <input id="createdDate" name="createdDate" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.createdDate" is-open="datePopupStatus.created" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly/>
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="openDatePopup(enumPopupType.CREATED)"><i class="glyphicon glyphicon-calendar"></i></button>
                                 </span>
@@ -25,7 +28,7 @@
                         <label for="repoDate" class="col-sm-3 control-label">Repo Date</label>
                         <div class="col-sm-6">
                             <p class="input-group">
-                                <input id="repoDate" name="repoDate" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.repoDate" is-open="datePopupStatus.repo" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly />
+                                <input id="repoDate" name="repoDate" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.repoDate" is-open="datePopupStatus.repo" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly/>
                                 <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="openDatePopup(enumPopupType.REPO)"><i class="glyphicon glyphicon-calendar"></i></button>
                                 </span>
@@ -40,7 +43,7 @@
                     <label for="accountNumber" class="col-sm-3 control-label">Account #</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="accountNumber" name="accountNumber" class="form-control"
-                               ng-model="rf.accountNumber" ng-required="true" />
+                               ng-model="rf.accountNumber" ng-required="true"/>
                         <div class="help-block" ng-messages="myForm.accountNumber.$error" ng-show="myForm.accountNumber.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -50,7 +53,7 @@
                     <label for="investigator" class="col-sm-3 control-label">Investigator</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="investigator" name="investigator" class="form-control"
-                               ng-model="rf.investigator" ng-required="true" />
+                               ng-model="rf.investigator" ng-required="true"/>
                         <div class="help-block" ng-messages="myForm.investigator.$error" ng-show="myForm.investigator.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -60,7 +63,7 @@
                     <label for="client" class="col-sm-3 control-label">Client</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="client" name="client" class="form-control"
-                               ng-model="rf.client" ng-required="true" />
+                               ng-model="rf.client" ng-required="true"/>
                         <div class="help-block" ng-messages="myForm.client.$error" ng-show="myForm.investigator.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -70,7 +73,7 @@
                     <label for="closeType" class="col-sm-3 control-label">Close Type</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="closeType" name="closeType" class="form-control"
-                               ng-model="rf.closeType" ng-required="true" />
+                               ng-model="rf.closeType" ng-required="true"/>
                         <div class="help-block" ng-messages="myForm.closeType.$error" ng-show="myForm.closeType.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -80,7 +83,7 @@
                     <label for="customerName" class="col-sm-3 control-label">Customer</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="customerName" name="customerName" class="form-control"
-                               ng-model="rf.customerName" ng-required="true" />
+                               ng-model="rf.customerName" ng-required="true" uib-typeahead="item for item in typeAheadModel.customerList  | filter:$viewValue | limitTo:8" autocomplete="off"/>
                         <div class="help-block" ng-messages="myForm.customerName.$error" ng-show="myForm.customerName.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -90,7 +93,7 @@
                     <label for="points" class="col-sm-3 control-label">Points</label>
                     <div class="col-sm-9">
                         <input type="number" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="points" name="points" class="form-control"
-                               ng-model="rf.points" ng-required="true" />
+                               ng-model="rf.points" ng-required="true"/>
                         <div class="help-block" ng-messages="myForm.points.$error" ng-show="myForm.points.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -100,7 +103,7 @@
                     <label for="recoveryAgent" class="col-sm-3 control-label">Recovery Agent</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryAgent" name="recoveryAgent" class="form-control"
-                               ng-model="rf.recoveryAgent" ng-required="true"/>
+                               ng-model="rf.recoveryAgent" ng-required="true"  uib-typeahead="item for item in typeAheadModel.recoveryAgentList  | filter:$viewValue | limitTo:8" autocomplete="off"/>
                         <div class="help-block" ng-messages="myForm.recoveryAgent.$error" ng-show="myForm.recoveryAgent.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -112,7 +115,7 @@
                     <label for="favColor" class="col-sm-3 control-label">Favorite Color</label>
                     <div class="col-sm-9">
                         <select id="favColor" name="favColor" class="form-control" data-ng-options="color for color in favColorOptions track by color"
-                                data-ng-model="rf.favColor" ng-required="true">
+                                data-ng-model="rf.favColor" ng-required="true" uib-tooltip="hi there">
                             <option value="">---Please select---</option>
                         </select>
                         <div class="help-block" ng-messages="myForm.favColor.$error" ng-show="myForm.favColor.$touched || submitted">
@@ -133,7 +136,6 @@
                     </div>
                 </div>
 
-
             </div>
         </div>
         <div class="panel panel-default">
@@ -143,7 +145,7 @@
                     <label for="recoveryAddress" class="col-sm-3 control-label">Address</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryAddress" name="recoveryAddress" class="form-control"
-                               ng-model="rf.recoveryAddress" ng-required="true" placeholder="Type ahead enabled" uib-typeahead="item.formatted_address for item in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-on-select="onSelect($item,'recovery')" typeahead-no-results="noResults" class="form-control" />
+                               ng-model="rf.recoveryAddress" ng-required="true" placeholder="Type ahead enabled" uib-typeahead="item.formatted_address for item in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-on-select="onSelect($item,'recovery')" typeahead-no-results="noResults"/>
                         <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
                         <div ng-show="noResults">
                             <i class="glyphicon glyphicon-remove"></i> No Results Found
@@ -177,7 +179,7 @@
                     <label for="recoveryZip" class="col-sm-3 control-label">ZIP</label>
                     <div class="col-sm-3">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryZip" name="recoveryZip" class="form-control"
-                               ng-model="rf.recoveryZip" ng-required="true" />
+                               ng-model="rf.recoveryZip" ng-required="true"/>
                         <div class="help-block" ng-messages="myForm.recoveryZip.$error" ng-show="myForm.recoveryZip.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
@@ -185,13 +187,7 @@
                 </div>
             </div>
         </div>
-        <!--<h4>Asynchronous results</h4>
-        <pre>Model: {{asyncSelected | json}}</pre>
-        <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} ng-model="asyncSelected" placeholder="Type Ahead" uib-typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
-        <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
-        <div ng-show="noResults">
-            <i class="glyphicon glyphicon-remove"></i> No Results Found
-        </div>-->
+
         <div class="panel panel-default">
             <div class="panel-heading">Storage Address</div>
             <div class="panel-body">
@@ -199,7 +195,7 @@
                     <label for="storageAddress" class="col-sm-3 control-label">Address</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="storageAddress" name="storageAddress" class="form-control"
-                               ng-model="rf.storageAddress" ng-required="false" placeholder="Type ahead enabled" uib-typeahead="item.formatted_address for item in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-on-select="onSelect($item,'storage')" typeahead-no-results="noResults" class="form-control" />
+                               ng-model="rf.storageAddress" ng-required="false" placeholder="Type ahead enabled" uib-typeahead="item.formatted_address for item in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-on-select="onSelect($item,'storage')" typeahead-no-results="noResults"/>
                         <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
                         <div ng-show="noResults">
                             <i class="glyphicon glyphicon-remove"></i> No Results Found
@@ -381,7 +377,7 @@
                     <label class="col-sm-3 control-label">Signature</label>
                     <div class="col-sm-9">
                         <div style="border: 2px solid; height: 220px; width: 500px">
-                            <signature-pad accept="accept" clear="clear"  height="220" width="500"></signature-pad>
+                            <signature-pad accept="accept"  height="220" width="500"></signature-pad>
                         </div>
                         <button ng-click="clear()">Clear signature</button>
                         <button ng-click="signature = accept()">Sign</button>

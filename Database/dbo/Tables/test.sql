@@ -1,10 +1,9 @@
-﻿CREATE TABLE [dbo].[RepoForm] (
+﻿CREATE TABLE [dbo].[test] (
     [Id]                    INT          IDENTITY (1, 1) NOT NULL,
     [CreatedDate]           DATETIME     NULL,
     [RepoDate]              DATETIME     NULL,
     [AccountNumber]         NCHAR (100)  NULL,
     [Investigator]          NCHAR (100)  NULL,
-    [Client]                NCHAR (100)  NULL,
     [CloseType]             NCHAR (100)  NULL,
     [CustomerName]          NCHAR (100)  NULL,
     [Points]                NCHAR (100)  NULL,
@@ -30,14 +29,6 @@
     [RepoProcessing]        NCHAR (100)  NULL,
     [Billing]               NCHAR (100)  NULL,
     [InitializedDate]       DATETIME     NULL,
-    [OriginalUserId]        INT          NULL,
-    CONSTRAINT [PK_RepoForm] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_RepoForm_OriginalUserId_User_Userid] FOREIGN KEY ([OriginalUserId]) REFERENCES [dbo].[User] ([Id])
+    [OriginalUserId]        INT          NULL
 );
-
-
-
-
-
-
 

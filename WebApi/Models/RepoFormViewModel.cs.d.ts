@@ -4,6 +4,7 @@
 		repoDate: Date;
 		accountNumber: string;
 		investigator: string;
+		client: string;
 		closeType: string;
 		customerName: string;
 		points: string;

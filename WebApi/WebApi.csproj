@@ -185,6 +185,7 @@
     </Compile>
     <Compile Include="Mapper\MapperProfile.cs" />
     <Compile Include="Models\PersonTest.cs" />
+    <Compile Include="Models\RepoFormTypeAheadModel.cs" />
     <Compile Include="Models\RepoFormViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -256,6 +257,9 @@
   <ItemGroup>
     <TypeScriptCompile Include="Models\PersonTest.cs.d.ts">
       <DependentUpon>PersonTest.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Models\RepoFormTypeAheadModel.cs.d.ts">
+      <DependentUpon>RepoFormTypeAheadModel.cs</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Models\RepoFormViewModel.cs.d.ts">
       <DependentUpon>RepoFormViewModel.cs</DependentUpon>

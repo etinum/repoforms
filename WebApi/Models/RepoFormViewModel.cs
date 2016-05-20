@@ -8,6 +8,7 @@ namespace WebApi.Models
         public Nullable<System.DateTime> RepoDate { get; set; }
         public string AccountNumber { get; set; }
         public string Investigator { get; set; }
+        public string Client { get; set; }
         public string CloseType { get; set; }
         public string CustomerName { get; set; }
         public string Points { get; set; }

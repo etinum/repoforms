@@ -53,6 +53,19 @@ app.controller('repoCtrl', ['$scope', '$http', ($scope, $http) => {
     $scope.maxLength = 50;
 
 
+    $http.get('http://localhost/webapi/api/RepoForm/TypeAheadData')
+        .then(response => {
+            var data = <modeltypings.RepoFormTypeAheadModel>response.data;
+            $scope.typeAheadModel = data;
+
+            
+            },
+        response => {
+            alert("Connection failed: " + response.status);
+        });
+
+    
+
     $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
 
     $scope.getLocation = val => $http.get('//maps.googleapis.com/maps/api/geocode/json', {
@@ -110,7 +123,7 @@ app.controller('repoCtrl', ['$scope', '$http', ($scope, $http) => {
 
     // Dropdown configuration
     $scope.favColorOptions = ['Red', 'Blue', 'Orange', 'Black', 'White'];
-
+    $scope.favoriteIceCreamOptions = ['fudge', 'chocolate', 'vanila', 'almond fudge', 'rocky road'];
 
     // DATE configurations
 
@@ -146,6 +159,7 @@ app.controller('repoCtrl', ['$scope', '$http', ($scope, $http) => {
         }
     };
 
+
     $scope.datePopupStatus = {
         created: false,
         repo: false,
@@ -174,7 +188,10 @@ app.controller('repoCtrl', ['$scope', '$http', ($scope, $http) => {
 
     };
     $scope.cancelForm = () => { };
-    $scope.resetForm = () => { };
+    $scope.resetForm = () => {
+        $scope.today();
+
+    };
 
 
 
