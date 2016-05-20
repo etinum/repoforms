@@ -106,29 +106,10 @@ app.controller('repoCtrl', ['$scope', '$http', ($scope, $http) => {
     
     $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed... 
 
-    $scope.submitForm = () => {
-
-        $scope.submitted = true;
-
-        $scope.$broadcast('show-errors-event');
-        if ($scope.myForm.$invalid)
-            return;
 
 
-        $http.post('http://localhost/webapi/api/RepoForm/SaveForm', $scope.rf)
-            .then(response => {
-            },
-            response => {
-                alert("Connection failed: " + response.status);
-
-            });
-
-
-    };
-    $scope.cancelForm = () => { };
-    $scope.resetForm = () => { };
-
-
+    // Dropdown configuration
+    $scope.favColorOptions = ['Red', 'Blue', 'Orange', 'Black', 'White'];
 
 
     // DATE configurations
@@ -170,6 +151,34 @@ app.controller('repoCtrl', ['$scope', '$http', ($scope, $http) => {
         repo: false,
         signed: false
     };
+
+    // Form button handling 
+
+    $scope.submitForm = () => {
+
+        $scope.submitted = true;
+
+        $scope.$broadcast('show-errors-event');
+        if ($scope.myForm.$invalid)
+            return;
+
+
+        $http.post('http://localhost/webapi/api/RepoForm/SaveForm', $scope.rf)
+            .then(response => {
+            },
+            response => {
+                alert("Connection failed: " + response.status);
+
+            });
+
+
+    };
+    $scope.cancelForm = () => { };
+    $scope.resetForm = () => { };
+
+
+
+
 
 }]);
 

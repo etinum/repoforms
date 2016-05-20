@@ -100,22 +100,40 @@
                     <label for="recoveryAgent" class="col-sm-3 control-label">Recovery Agent</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryAgent" name="recoveryAgent" class="form-control"
-                               ng-model="rf.recoveryAgent" ng-required="true" />
+                               ng-model="rf.recoveryAgent" ng-required="true"/>
                         <div class="help-block" ng-messages="myForm.recoveryAgent.$error" ng-show="myForm.recoveryAgent.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
+
+
+                <div class="form-group" show-errors>
+                    <label for="favColor" class="col-sm-3 control-label">Favorite Color</label>
+                    <div class="col-sm-9">
+                        <select id="favColor" name="favColor" class="form-control" data-ng-options="color for color in favColorOptions track by color"
+                                data-ng-model="rf.favColor" ng-required="true">
+                            <option value="">---Please select---</option>
+                        </select>
+                        <div class="help-block" ng-messages="myForm.favColor.$error" ng-show="myForm.favColor.$touched || submitted">
+                            <div ng-messages-include="app/html/error-messages.html"></div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="form-group" show-errors>
                     <label for="notes" class="col-sm-3 control-label">Notes</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="1024" maxlength=1024 id="notes" name="notes" class="form-control"
-                               ng-model="rf.notes" ng-required="false" />
+                               ng-model="rf.notes" ng-required="false" uib-tooltip="Enter something in this input field to disable this tooltip"/>
                         <div class="help-block" ng-messages="myForm.notes.$error" ng-show="myForm.notes.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
         <div class="panel panel-default">

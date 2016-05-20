@@ -86,19 +86,7 @@ app.controller('repoCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.submitted = false;
         $scope.rf = {};
         $scope.orf = angular.copy($scope.rf);
-        $scope.submitForm = function () {
-            $scope.submitted = true;
-            $scope.$broadcast('show-errors-event');
-            if ($scope.myForm.$invalid)
-                return;
-            $http.post('http://localhost/webapi/api/RepoForm/SaveForm', $scope.rf)
-                .then(function (response) {
-            }, function (response) {
-                alert("Connection failed: " + response.status);
-            });
-        };
-        $scope.cancelForm = function () { };
-        $scope.resetForm = function () { };
+        $scope.favColorOptions = ['Red', 'Blue', 'Orange', 'Black', 'White'];
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
         $scope.altInputFormats = ['M!/d!/yyyy'];
@@ -131,6 +119,19 @@ app.controller('repoCtrl', ['$scope', '$http', function ($scope, $http) {
             repo: false,
             signed: false
         };
+        $scope.submitForm = function () {
+            $scope.submitted = true;
+            $scope.$broadcast('show-errors-event');
+            if ($scope.myForm.$invalid)
+                return;
+            $http.post('http://localhost/webapi/api/RepoForm/SaveForm', $scope.rf)
+                .then(function (response) {
+            }, function (response) {
+                alert("Connection failed: " + response.status);
+            });
+        };
+        $scope.cancelForm = function () { };
+        $scope.resetForm = function () { };
     }]);
 app.controller('viewCtrl', function ($scope) {
 });
