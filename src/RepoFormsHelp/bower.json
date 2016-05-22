@@ -7,8 +7,7 @@
     "angular-route": "~1.5.5",
     "angular-messages": "~1.5.5",
     "bootstrap": "~3.3.6",
-    "angular-smart-table": "~2.1.8",
-    "angular-signature": "~0.1.7"
+    "angular-smart-table": "~2.1.8"
   },
   "resolutions": {
     "angular": "~1.5.6"
