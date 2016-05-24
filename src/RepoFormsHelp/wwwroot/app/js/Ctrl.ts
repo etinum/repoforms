@@ -179,7 +179,9 @@ app.controller('repoCtrl', ['$scope', '$http', ($scope, $http) => {
 
         $http.post('http://localhost/webapi/api/RepoForm/SaveForm', $scope.rf)
             .then(response => {
-            },
+                    alert("Submission successful.");
+                    location.reload();
+                },
             response => {
                 alert("Connection failed: " + response.status);
 
