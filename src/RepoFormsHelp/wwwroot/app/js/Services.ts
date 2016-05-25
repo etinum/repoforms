@@ -1,6 +1,6 @@
 // API services
-app.factory('DataService', function ($http) {
+app.factory('dataService', ['$http', ($http)  => {
 
 
-});
+}]);
 

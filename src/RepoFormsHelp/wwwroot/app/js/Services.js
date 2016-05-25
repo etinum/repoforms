@@ -1,3 +1,3 @@
-app.factory('DataService', function ($http) {
-});
+app.factory('dataService', ['$http', function ($http) {
+    }]);
 //# sourceMappingURL=Services.js.map
