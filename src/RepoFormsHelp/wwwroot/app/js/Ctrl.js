@@ -1,26 +1,20 @@
-app.controller('homeCtrl', ['$scope', '$location', '$http', function ($scope, $location, $http) {
+app.controller('homeCtrl', ['$scope', '$location', '$http', 'dataService', function ($scope, $location, $http, $dataService) {
         $scope.GotoRepoForm = function () {
             $location.path('/repoform');
         };
         $scope.ViewRepos = function () {
             alert('Build and they will come');
         };
-        var testlist = [];
         $scope.TestClick = function () {
-            $http.get('http://localhost/webapi/api/values')
-                .then(function (response) {
-                var persons = response.data;
-                $scope.persons = persons;
-            }, function (response) {
-                alert("Connection failed: " + response.status);
+            $dataService.getPersons()
+                .then(function (data) {
+                var testlist = data;
+                $scope.tempPerson = testlist[0];
+                alert($scope.tempPerson.age);
             });
         };
         $scope.SendClick = function () {
-            $http.post('http://localhost/webapi/api/values', $scope.persons[1])
-                .then(function (response) {
-            }, function (response) {
-                alert("Connection failed: " + response.status);
-            });
+            $dataService.addPerson($scope.tempPerson);
         };
     }]);
 app.controller('repoCtrl', ['$scope', '$http', 'dataService', function ($scope, $http, dataService) {
@@ -132,13 +126,7 @@ app.controller('repoCtrl', ['$scope', '$http', 'dataService', function ($scope, 
             $scope.$broadcast('show-errors-event');
             if ($scope.myForm.$invalid)
                 return;
-            $http.post('http://localhost/webapi/api/RepoForm/SaveForm', $scope.rf)
-                .then(function (response) {
-                alert("Submission successful.");
-                location.reload();
-            }, function (response) {
-                alert("Connection failed: " + response.status);
-            });
+            dataService.saveForm($scope.rf).then(function () { return location.reload(); });
         };
         $scope.cancelForm = function () { };
         $scope.resetForm = function () {

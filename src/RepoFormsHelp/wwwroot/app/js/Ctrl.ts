@@ -2,7 +2,7 @@
 /// <reference path="../typings/repoformviewmodel.cs.d.ts" />
 
 
-app.controller('homeCtrl', ['$scope', '$location', '$http', ($scope, $location, $http) => {
+app.controller('homeCtrl', ['$scope', '$location', '$http', 'dataService', ($scope, $location, $http, $dataService) => {
 
 
     $scope.GotoRepoForm = () => {
@@ -16,31 +16,19 @@ app.controller('homeCtrl', ['$scope', '$location', '$http', ($scope, $location, 
     };
 
     // if you want initialize some values... 
-    var testlist = <modeltypings.IPersonTest[]>[];
-    
+    //var testlist = <modeltypings.IPersonTest[]>[];
+
     $scope.TestClick = () => {
-
-        $http.get('http://localhost/webapi/api/values')
-            .then(response => {
-                var persons = <modeltypings.IPersonTest[]>response.data;
-                $scope.persons = persons;
-
-            },
-            response => {
-                alert("Connection failed: " + response.status);
+        $dataService.getPersons()
+            .then(data => {
+                var testlist = <modeltypings.IPersonTest[]>data;
+                $scope.tempPerson = testlist[0];
+                alert($scope.tempPerson.age);
             });
-
-    };
+    }
 
     $scope.SendClick = () => {
-
-        $http.post('http://localhost/webapi/api/values', $scope.persons[1])
-            .then(response => {
-            },
-            response => {
-                alert("Connection failed: " + response.status);
-
-            });
+        $dataService.addPerson($scope.tempPerson);
     }
 }]);
 
@@ -175,17 +163,7 @@ app.controller('repoCtrl', ['$scope', '$http', 'dataService', ($scope, $http, da
         if ($scope.myForm.$invalid)
             return;
 
-
-        $http.post('http://localhost/webapi/api/RepoForm/SaveForm', $scope.rf)
-            .then(response => {
-                    alert("Submission successful.");
-                    location.reload();
-                },
-            response => {
-                alert("Connection failed: " + response.status);
-
-            });
-
+        dataService.saveForm($scope.rf).then(() => location.reload());
 
     };
     $scope.cancelForm = () => { };
@@ -193,10 +171,6 @@ app.controller('repoCtrl', ['$scope', '$http', 'dataService', ($scope, $http, da
         $scope.today();
 
     };
-
-
-
-
 
 }]);
 

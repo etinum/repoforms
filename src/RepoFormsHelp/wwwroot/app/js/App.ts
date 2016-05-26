@@ -4,6 +4,8 @@
 
 var app = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'signature']);
 
+
+
 app.config(["$routeProvider", "$locationProvider",
     ($routeProvider, $locationProvider) => {
         $routeProvider
@@ -22,6 +24,9 @@ app.config(["$routeProvider", "$locationProvider",
             .otherwise({
                 redirectTo: "/home"
             });
+
+        
+
         //$locationProvider.html5Mode(true);;
     }]);
 
