@@ -13,16 +13,20 @@
 
 (app => {
 
-    var controller = ($scope, $location, $dataService) => {
+    var controller = ($scope, $location, $dataService, $window) => {
         $scope.GotoRepoForm = () => {
             $location.path('/repoform');
         };
 
         $scope.ViewRepos = () => {
-
             alert('Build and they will come');
-
         };
+
+        $dataService.getUser()
+            .then(data => {
+                $window.userdata = data;
+                $scope.welcome = "Welcome master " + data;
+            });
 
 
         // TODO: Delete after you don't need this anymore. 
@@ -40,16 +44,17 @@
         }
     };
 
-    controller.$inject = ['$scope', '$location', 'dataService'];
+    controller.$inject = ['$scope', '$location', 'dataService', '$window'];
     app.controller('homeCtrl', controller);
 })(angular.module("repoFormsApp"));
 
 (app => {
-    var controller = ($scope, dataService) => {
+    var controller = ($scope, dataService, $window) => {
         // Input constrain variables.. 
         $scope.ng_maxLength = 50;
         $scope.maxLength = 50;
 
+        //alert("hi there " + $window.userdata);
 
         dataService.getTypeAheadData()
             .then(data => {
@@ -169,7 +174,7 @@
     };
 
 
-    controller.$inject = ['$scope', 'dataService'];
+    controller.$inject = ['$scope', 'dataService', '$window'];
     app.controller('repoCtrl', controller);
 })(angular.module("repoFormsApp"));
 

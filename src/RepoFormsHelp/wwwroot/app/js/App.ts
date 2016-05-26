@@ -2,11 +2,10 @@
 /// <reference path="../typings/angular-resource.d.ts" />
 
 
-var app = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'signature']);
+angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'signature']);
 
 var baseUrl = "http://localhost/";
 var baseWebApiUrl = "http://localhost/webapi/";
-
 
 (app => {
     var routeConfig = ($routeProvider) => {

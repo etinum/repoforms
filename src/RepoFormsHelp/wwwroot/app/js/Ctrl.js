@@ -1,11 +1,16 @@
 (function (app) {
-    var controller = function ($scope, $location, $dataService) {
+    var controller = function ($scope, $location, $dataService, $window) {
         $scope.GotoRepoForm = function () {
             $location.path('/repoform');
         };
         $scope.ViewRepos = function () {
             alert('Build and they will come');
         };
+        $dataService.getUser()
+            .then(function (data) {
+            $window.userdata = data;
+            $scope.welcome = "Welcome master " + data;
+        });
         $scope.TestClick = function () {
             $dataService.getPersons()
                 .then(function (data) {
@@ -18,11 +23,11 @@
             $dataService.addPerson($scope.tempPerson);
         };
     };
-    controller.$inject = ['$scope', '$location', 'dataService'];
+    controller.$inject = ['$scope', '$location', 'dataService', '$window'];
     app.controller('homeCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
-    var controller = function ($scope, dataService) {
+    var controller = function ($scope, dataService, $window) {
         $scope.ng_maxLength = 50;
         $scope.maxLength = 50;
         dataService.getTypeAheadData()
@@ -130,7 +135,7 @@
             $scope.today();
         };
     };
-    controller.$inject = ['$scope', 'dataService'];
+    controller.$inject = ['$scope', 'dataService', '$window'];
     app.controller('repoCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {

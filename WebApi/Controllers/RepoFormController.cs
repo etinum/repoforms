@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -30,6 +31,13 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
+        public string GetUser()
+        {
+            return User.Identity.Name;
+        }
+
+
+        [HttpGet]
         public RepoFormTypeAheadModel TypeAheadData()
         {
 
@@ -58,9 +66,9 @@ namespace WebApi.Controllers
 
 
         [HttpGet]
-        public string GetMe()
+        public List<RepoFormViewModel> GetFormList()
         {
-            return "hello";
+            return new List<RepoFormViewModel>();
         }
 
         [HttpPost]

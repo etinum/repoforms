@@ -87,8 +87,25 @@
         };
 
 
+        // Misc
+        var getUser = () => {
+            var url = baseWebApiUrl + 'api/RepoForm/GetUser';
+            var deferred = $q.defer();
+
+            $http.get(url)
+                .then(response => {
+                    deferred.resolve(response.data);
+                }, (response) => {
+                    alert("There was a problem with the back end call, here is your status code: " + response.status);
+                    deferred.reject(response);
+                });
+            return deferred.promise;
+        };
+
+
 
         return {
+            getUser: getUser,
             getTypeAheadData: getTypeAheadData,
             saveForm: saveForm,
             getPersons: getPersons,
