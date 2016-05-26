@@ -1,6 +1,5 @@
 /// <reference path="../typings/persontest.cs.d.ts" />
 /// <reference path="../typings/repoformviewmodel.cs.d.ts" />
-/// <reference path="App.ts" />
 
 
 app.controller('homeCtrl', ['$scope', '$location', '$http', ($scope, $location, $http) => {
@@ -46,7 +45,7 @@ app.controller('homeCtrl', ['$scope', '$location', '$http', ($scope, $location, 
 }]);
 
 
-app.controller('repoCtrl', ['$scope', '$http', ($scope, $http) => {
+app.controller('repoCtrl', ['$scope', '$http', 'dataService', ($scope, $http, dataService) => {
 
     // Input constrain variables.. 
     $scope.ng_maxLength = 50;
@@ -122,8 +121,8 @@ app.controller('repoCtrl', ['$scope', '$http', ($scope, $http) => {
 
 
     // Dropdown configuration
-    $scope.favColorOptions = ['Red', 'Blue', 'Orange', 'Black', 'White'];
-    $scope.favoriteIceCreamOptions = ['fudge', 'chocolate', 'vanila', 'almond fudge', 'rocky road'];
+    $scope.favColorOptions = dataService.favColorOptions;
+    $scope.favoriteIceCreamOptions = dataService.favoriteIceCreamOptions;
 
     // DATE configurations
 
