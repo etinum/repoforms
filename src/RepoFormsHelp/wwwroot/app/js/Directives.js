@@ -1,4 +1,5 @@
-app.directive('showErrors', ['$timeout', function ($timeout) {
+(function (app) {
+    var directive = function ($timeout) {
         return {
             restrict: 'A',
             require: '^form',
@@ -16,5 +17,8 @@ app.directive('showErrors', ['$timeout', function ($timeout) {
                 });
             }
         };
-    }]);
+    };
+    directive.$inject = ['$timeout'];
+    app.directive('showErrors', directive);
+})(angular.module("repoFormsApp"));
 //# sourceMappingURL=Directives.js.map

@@ -1,8 +1,8 @@
 var app = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'signature']);
 var baseUrl = "http://localhost/";
 var baseWebApiUrl = "http://localhost/webapi/";
-app.config(["$routeProvider", "$locationProvider",
-    function ($routeProvider, $locationProvider) {
+(function (app) {
+    var routeConfig = function ($routeProvider) {
         $routeProvider
             .when("/home", {
             templateUrl: "app/html/Home.html",
@@ -19,5 +19,8 @@ app.config(["$routeProvider", "$locationProvider",
             .otherwise({
             redirectTo: "/home"
         });
-    }]);
+    };
+    routeConfig.$inject = ['$routeProvider'];
+    app.config(routeConfig);
+})(angular.module("repoFormsApp"));
 //# sourceMappingURL=App.js.map

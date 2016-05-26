@@ -1,4 +1,5 @@
-app.controller('homeCtrl', ['$scope', '$location', 'dataService', function ($scope, $location, $dataService) {
+(function (app) {
+    var controller = function ($scope, $location, $dataService) {
         $scope.GotoRepoForm = function () {
             $location.path('/repoform');
         };
@@ -16,8 +17,12 @@ app.controller('homeCtrl', ['$scope', '$location', 'dataService', function ($sco
         $scope.SendClick = function () {
             $dataService.addPerson($scope.tempPerson);
         };
-    }]);
-app.controller('repoCtrl', ['$scope', 'dataService', function ($scope, dataService) {
+    };
+    controller.$inject = ['$scope', '$location', 'dataService'];
+    app.controller('homeCtrl', controller);
+})(angular.module("repoFormsApp"));
+(function (app) {
+    var controller = function ($scope, dataService) {
         $scope.ng_maxLength = 50;
         $scope.maxLength = 50;
         dataService.getTypeAheadData()
@@ -124,7 +129,14 @@ app.controller('repoCtrl', ['$scope', 'dataService', function ($scope, dataServi
         $scope.resetForm = function () {
             $scope.today();
         };
-    }]);
-app.controller('viewCtrl', function ($scope) {
-});
+    };
+    controller.$inject = ['$scope', 'dataService'];
+    app.controller('repoCtrl', controller);
+})(angular.module("repoFormsApp"));
+(function (app) {
+    var controller = function () {
+    };
+    controller.$inject = [];
+    app.controller('viewCtrl', controller);
+})(angular.module("repoFormsApp"));
 //# sourceMappingURL=Ctrl.js.map

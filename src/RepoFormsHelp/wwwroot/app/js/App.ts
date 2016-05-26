@@ -8,8 +8,8 @@ var baseUrl = "http://localhost/";
 var baseWebApiUrl = "http://localhost/webapi/";
 
 
-app.config(["$routeProvider", "$locationProvider",
-    ($routeProvider, $locationProvider) => {
+(app => {
+    var routeConfig = ($routeProvider) => {
         $routeProvider
             .when("/home", {
                 templateUrl: "app/html/Home.html",
@@ -26,7 +26,10 @@ app.config(["$routeProvider", "$locationProvider",
             .otherwise({
                 redirectTo: "/home"
             });
+    };
 
-       //$locationProvider.html5Mode(true);;
-    }]);
+    routeConfig.$inject = ['$routeProvider'];
+    app.config(routeConfig);
+})(angular.module("repoFormsApp"));
+
 
