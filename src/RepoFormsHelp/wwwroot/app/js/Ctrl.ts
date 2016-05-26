@@ -2,7 +2,7 @@
 /// <reference path="../typings/repoformviewmodel.cs.d.ts" />
 
 
-app.controller('homeCtrl', ['$scope', '$location', '$http', 'dataService', ($scope, $location, $http, $dataService) => {
+app.controller('homeCtrl', ['$scope', '$location', 'dataService', ($scope, $location, $dataService) => {
 
 
     $scope.GotoRepoForm = () => {
@@ -33,37 +33,22 @@ app.controller('homeCtrl', ['$scope', '$location', '$http', 'dataService', ($sco
 }]);
 
 
-app.controller('repoCtrl', ['$scope', '$http', 'dataService', ($scope, $http, dataService) => {
+app.controller('repoCtrl', ['$scope', 'dataService', ($scope, dataService) => {
 
     // Input constrain variables.. 
     $scope.ng_maxLength = 50;
     $scope.maxLength = 50;
 
 
-    $http.get('http://localhost/webapi/api/RepoForm/TypeAheadData')
-        .then(response => {
-            var data = <modeltypings.RepoFormTypeAheadModel>response.data;
-            $scope.typeAheadModel = data;
-
-            
-            },
-        response => {
-            alert("Connection failed: " + response.status);
+    dataService.getTypeAheadData()
+        .then(data => {
+            $scope.typeAheadModel = <modeltypings.RepoFormTypeAheadModel>data;
         });
 
-    
 
-    $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+    $scope.states = dataService.states;
 
-    $scope.getLocation = val => $http.get('//maps.googleapis.com/maps/api/geocode/json', {
-        params: {
-            address: val + ', USA',
-            //componentRestrictions: {
-            //    country: 'US'
-            //},
-            sensor: false
-        }
-    }).then(response => response.data.results.map(r => r));
+    $scope.getLocation = dataService.getLocation;
 
     $scope.onSelect = ($item, $type) => {
 
@@ -105,8 +90,7 @@ app.controller('repoCtrl', ['$scope', '$http', 'dataService', ($scope, $http, da
     $scope.rf = <modeltypings.RepoFormViewModel>{};
     
     $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed... 
-
-
+    
 
     // Dropdown configuration
     $scope.favColorOptions = dataService.favColorOptions;
@@ -173,6 +157,9 @@ app.controller('repoCtrl', ['$scope', '$http', 'dataService', ($scope, $http, da
     };
 
 }]);
+
+
+
 
 app.controller('viewCtrl', $scope => {
 

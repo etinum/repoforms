@@ -1,4 +1,4 @@
-app.controller('homeCtrl', ['$scope', '$location', '$http', 'dataService', function ($scope, $location, $http, $dataService) {
+app.controller('homeCtrl', ['$scope', '$location', 'dataService', function ($scope, $location, $dataService) {
         $scope.GotoRepoForm = function () {
             $location.path('/repoform');
         };
@@ -17,23 +17,15 @@ app.controller('homeCtrl', ['$scope', '$location', '$http', 'dataService', funct
             $dataService.addPerson($scope.tempPerson);
         };
     }]);
-app.controller('repoCtrl', ['$scope', '$http', 'dataService', function ($scope, $http, dataService) {
+app.controller('repoCtrl', ['$scope', 'dataService', function ($scope, dataService) {
         $scope.ng_maxLength = 50;
         $scope.maxLength = 50;
-        $http.get('http://localhost/webapi/api/RepoForm/TypeAheadData')
-            .then(function (response) {
-            var data = response.data;
+        dataService.getTypeAheadData()
+            .then(function (data) {
             $scope.typeAheadModel = data;
-        }, function (response) {
-            alert("Connection failed: " + response.status);
         });
-        $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
-        $scope.getLocation = function (val) { return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
-            params: {
-                address: val + ', USA',
-                sensor: false
-            }
-        }).then(function (response) { return response.data.results.map(function (r) { return r; }); }); };
+        $scope.states = dataService.states;
+        $scope.getLocation = dataService.getLocation;
         $scope.onSelect = function ($item, $type) {
             var item = $item;
             var street = '';

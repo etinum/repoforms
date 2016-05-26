@@ -145,7 +145,7 @@
                     <label for="recoveryAddress" class="col-sm-3 control-label">Address</label>
                     <div class="col-sm-9">
                         <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryAddress" name="recoveryAddress" class="form-control"
-                               ng-model="rf.recoveryAddress" ng-required="true" placeholder="Type ahead enabled" uib-typeahead="item.formatted_address for item in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-on-select="onSelect($item,'recovery')" typeahead-no-results="noResults"/>
+                               ng-model="rf.recoveryAddress" ng-required="true" placeholder="Type ahead enabled" uib-typeahead="item.formatted_address for item in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-on-select="onSelect($item,'recovery')" typeahead-no-results="noResults" autocomplete="off"/>
                         <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
                         <div ng-show="noResults">
                             <i class="glyphicon glyphicon-remove"></i> No Results Found

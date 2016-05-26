@@ -1,8 +1,10 @@
 (app => {
+
     var service = ($http, $q) => {
 
+        // Testing service calls, can be removed later. 
         var getPersons = () => {
-            var url = 'http://localhost/webapi/api/values/get';
+            var url = baseWebApiUrl + 'api/values/get';
             var deferred = $q.defer();
 
             $http.get(url)
@@ -15,9 +17,8 @@
             return deferred.promise;
         };
 
-
         var addPerson = (person) => {
-            var url = 'http://localhost/webapi/api/values/post';
+            var url = baseWebApiUrl + 'api/values/post';
             var deferred = $q.defer();
 
             $http.post(url, person)
@@ -29,10 +30,12 @@
                     deferred.reject(response);
                 });
             return deferred.promise;
-        };        
+        };
 
+
+        // Repo Form services
         var saveForm = (formdata) => {
-            var url = 'http://localhost/webapi/api/RepoForm/SaveForm';
+            var url = baseWebApiUrl + 'api/RepoForm/SaveForm';
             var deferred = $q.defer();
 
             $http.post(url, formdata)
@@ -47,16 +50,54 @@
         }
 
 
-        return {
+        // Google api 
+        var getLocation = (val) => {
+            var url = baseWebApiUrl + 'api/RepoForm/SaveForm';
+            var deferred = $q.defer();
 
-            // Repo forms method
+            $http.get('//maps.googleapis.com/maps/api/geocode/json',
+                {
+                    params: {
+                        address: val + ', USA',
+                        sensor: false
+                    }
+                })
+                .then((response) => {
+                    deferred.resolve(response.data.results.map(r => r));
+                }, (response) => {
+                    alert("There was a problem with the back end call, here is your status code: " + response.status);
+                    deferred.reject(response);
+                });
+            return deferred.promise;
+        }
+
+        // TypeAhead data
+        var getTypeAheadData = () => {
+            var url = baseWebApiUrl + 'api/RepoForm/TypeAheadData';
+            var deferred = $q.defer();
+
+            $http.get(url)
+                .then(response => {
+                    deferred.resolve(response.data);
+                }, (response) => {
+                    alert("There was a problem with the back end call, here is your status code: " + response.status);
+                    deferred.reject(response);
+                });
+            return deferred.promise;
+        };
+
+
+
+        return {
+            getTypeAheadData: getTypeAheadData,
             saveForm: saveForm,
-            // These guys are only used for testing
             getPersons: getPersons,
             addPerson: addPerson,
-            // Dropdown configuration
+            getLocation: getLocation,
+            // Static list 
             favColorOptions: ['Red', 'Blue', 'Orange', 'Black', 'White'],
-            favoriteIceCreamOptions: ['fudge', 'chocolate', 'vanila', 'almond fudge', 'rocky road']
+            favoriteIceCreamOptions: ['fudge', 'chocolate', 'vanila', 'almond fudge', 'rocky road'],
+            states: ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
 
         };
     };
@@ -64,40 +105,5 @@
     service.$inject = ['$http', '$q'];
     app.factory("dataService", service);
 
-})(app);
-
-
-
-
-
-//// API services
-//app.factory('dataService', ['$http', function ($http){
-
-
-
-
-//    return {
-
-
-//        // Testing
-//        getPersons : getPersons(),
-
-
-//    };
-
-
-//    // Implementation
-//    var getPersons = () => {
-//        return $http.get('http://localhost/webapi/api/values/get')
-//            .then(response => {
-//                return response.data;
-//            },
-//            response => {
-//                alert("Connection failed: " + response.status);
-//            });
-//    };
-
-
-
-//}]);
+})(angular.module(""));
 

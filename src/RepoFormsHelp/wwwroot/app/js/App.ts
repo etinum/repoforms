@@ -4,6 +4,8 @@
 
 var app = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'signature']);
 
+var baseUrl = "http://localhost/";
+var baseWebApiUrl = "http://localhost/webapi/";
 
 
 app.config(["$routeProvider", "$locationProvider",
@@ -25,8 +27,6 @@ app.config(["$routeProvider", "$locationProvider",
                 redirectTo: "/home"
             });
 
-        
-
-        //$locationProvider.html5Mode(true);;
+       //$locationProvider.html5Mode(true);;
     }]);
 
