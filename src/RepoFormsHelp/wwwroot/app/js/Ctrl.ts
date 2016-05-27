@@ -3,10 +3,10 @@
 
 /* Template for controllers
 (app => {
-        var controller = () => {
+        var controller = ($scope, $window) => {
 
         };
-    controller.$inject = [];
+    controller.$inject = ['$scope', '$window'];
     app.controller('nameOfCtrl', controller);
 })(angular.module("repoFormsApp"));
 */
@@ -19,7 +19,7 @@
         };
 
         $scope.ViewRepos = () => {
-            alert('Build and they will come');
+            $location.path('/viewReports');            
         };
 
         $dataService.getUser()
@@ -179,9 +179,11 @@
 })(angular.module("repoFormsApp"));
 
 (app => {
-    var controller = () => {
+    var controller = ($scope, $window) => {
+
+        $scope.username = $window.userdata;
 
     };
-    controller.$inject = [];
+    controller.$inject = ['$scope', '$window'];
     app.controller('viewCtrl', controller);
 })(angular.module("repoFormsApp"));

@@ -4,7 +4,7 @@
             $location.path('/repoform');
         };
         $scope.ViewRepos = function () {
-            alert('Build and they will come');
+            $location.path('/viewReports');
         };
         $dataService.getUser()
             .then(function (data) {
@@ -139,9 +139,10 @@
     app.controller('repoCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
-    var controller = function () {
+    var controller = function ($scope, $window) {
+        $scope.username = $window.userdata;
     };
-    controller.$inject = [];
+    controller.$inject = ['$scope', '$window'];
     app.controller('viewCtrl', controller);
 })(angular.module("repoFormsApp"));
 //# sourceMappingURL=Ctrl.js.map

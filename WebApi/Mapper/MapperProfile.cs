@@ -17,6 +17,11 @@ namespace WebApi.Mapper
                 .ForMember(dest => dest.KeysChecked, opt => opt.MapFrom(src => src.KeysChecked != null))
                 .ForMember(dest => dest.DrivableChecked, opt => opt.MapFrom(src => src.DrivableChecked != null));
 
+            this.CreateMap<RepoForm, RepoFormViewModel>()
+                .ForMember(dest => dest.KeysChecked, opt => opt.MapFrom(src => src.KeysChecked != null))
+                .ForMember(dest => dest.DrivableChecked, opt => opt.MapFrom(src => src.DrivableChecked != null));
+
+
         }
     }
 }

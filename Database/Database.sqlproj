@@ -67,7 +67,4 @@
     <Build Include="Security\NT AUTHORITY_NETWORK SERVICE.sql" />
     <Build Include="dbo\Tables\test.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="SqlSchemaCompare2.scmp" />
-  </ItemGroup>
 </Project>
