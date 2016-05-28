@@ -78,21 +78,28 @@ namespace WebApi.Controllers
             var repoFormModel = _mapper.Map<RepoForm>(formViewModel);
 
             // save the input values.. 
-                var user = GetExistingUser() ?? new User()
-                {
-                    WinAuthName = User.Identity.Name,
-                    Investigator = repoFormModel.Investigator,
-                    FirstLoggedIn = DateTime.Now
-                };
+            var user = GetExistingUser() ?? new User()
+            {
+                WinAuthName = User.Identity.Name,
+                Investigator = repoFormModel.Investigator,
+                FirstLoggedIn = DateTime.Now
+            };
 
-                user.LastLoggedIn = DateTime.Now;
+            user.LastLoggedIn = DateTime.Now;
 
-                repoFormModel.OriginalUserId = user.Id;
-                
-                _ctx.RepoForms.Add(repoFormModel);
+            // If userid = 0, meaning they are new, we need to create a new user in the databse
+            if (user.Id == 0)
+            {
+                user = _ctx.Users.Add(user);
 
-                _ctx.SaveChanges();
-            
+            } 
+
+            repoFormModel.OriginalUserId = user.Id;
+
+            _ctx.RepoForms.Add(repoFormModel);
+
+            _ctx.SaveChanges();
+
         }
 
 
