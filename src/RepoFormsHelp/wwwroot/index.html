@@ -16,15 +16,17 @@
 
 </head>
 
-<body class="container">
-    <a href="/"><img src="app/images/pra-lslogoblue-with-new-tag3-400pxw.png" /></a>
-    <br /><br /><br />
+<body ng-controller="masterCtrl" class="container">
+    <div class="form-group">
+        <a href="/"><img src="app/images/pra-lslogoblue-with-new-tag3-400pxw.png" /></a>
+    </div>
+    <div class="form-group">
+        {{masterWelcome}}
+    </div>
+
     <div ng-view ng-cloak></div>
     <br /><br /><br /><br />
 
     <script src="app/js/ctrl.js"></script>
-
 </body>
 </html>
-
-

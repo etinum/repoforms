@@ -3,17 +3,31 @@
 
 /* Template for controllers
 (app => {
-        var controller = ($scope, $window) => {
+        var controller = ($scope, $window, $dataService) => {
 
         };
-    controller.$inject = ['$scope', '$window'];
+    controller.$inject = ['$scope', '$window', 'dataService'];
     app.controller('nameOfCtrl', controller);
 })(angular.module("repoFormsApp"));
 */
 
 (app => {
+    var controller = ($scope, $window, $dataService) => {
+        $dataService.getUser()
+            .then(data => {
+                $window.userdata = data;
+                $scope.masterWelcome = "Welcome master " + data;
+            });
+    };
+    controller.$inject = ['$scope', '$window', 'dataService'];
+    app.controller('masterCtrl', controller);
+})(angular.module("repoFormsApp"));
 
-    var controller = ($scope, $location, $dataService, $window) => {
+(app => {
+
+    var controller = ($scope, $location, $dataService, $window, $timeout) => {
+
+
         $scope.GotoRepoForm = () => {
             $location.path('/repoform');
         };
@@ -22,12 +36,15 @@
             $location.path('/viewReports');            
         };
 
-        $dataService.getUser()
-            .then(data => {
-                $window.userdata = data;
-                $scope.welcome = "Welcome master " + data;
-            });
 
+        // watch to see if global variable has been set from master control before using it in the current controller.
+        $scope.$watch(() => $window.userdata, (n) => {
+            if (n !== undefined) {
+                $scope.welcome = "Pick something sir, " + $window.userdata;
+            }
+        });
+
+        
 
         // TODO: Delete after you don't need this anymore. 
         $scope.TestClick = () => {
@@ -44,27 +61,27 @@
         }
     };
 
-    controller.$inject = ['$scope', '$location', 'dataService', '$window'];
+    controller.$inject = ['$scope', '$location', 'dataService', '$window', '$timeout'];
     app.controller('homeCtrl', controller);
 })(angular.module("repoFormsApp"));
 
 (app => {
-    var controller = ($scope, dataService, $window) => {
-        // Input constrain variables.. 
+    var controller = ($scope, $dataService, $window) => {
+        // Input constrain variables..
         $scope.ng_maxLength = 50;
         $scope.maxLength = 50;
 
         //alert("hi there " + $window.userdata);
 
-        dataService.getTypeAheadData()
+        $dataService.getTypeAheadData()
             .then(data => {
                 $scope.typeAheadModel = <modeltypings.RepoFormTypeAheadModel>data;
             });
 
 
-        $scope.states = dataService.states;
+        $scope.states = $dataService.states;
 
-        $scope.getLocation = dataService.getLocation;
+        $scope.getLocation = $dataService.getLocation;
 
         $scope.onSelect = ($item, $type) => {
 
@@ -105,12 +122,12 @@
 
         $scope.rf = <modeltypings.RepoFormViewModel>{};
 
-        $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed... 
+        $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
 
 
         // Dropdown configuration
-        $scope.favColorOptions = dataService.favColorOptions;
-        $scope.favoriteIceCreamOptions = dataService.favoriteIceCreamOptions;
+        $scope.favColorOptions = $dataService.favColorOptions;
+        $scope.favoriteIceCreamOptions = $dataService.favoriteIceCreamOptions;
 
         // DATE configurations
 
@@ -153,7 +170,7 @@
             signed: false
         };
 
-        // Form button handling 
+        // Form button handling
 
         $scope.submitForm = () => {
 
@@ -163,7 +180,7 @@
             if ($scope.myForm.$invalid)
                 return;
 
-            dataService.saveForm($scope.rf).then(() => location.reload());
+            $dataService.saveForm($scope.rf).then(() => location.reload());
 
         };
         $scope.cancelForm = () => { };
@@ -177,6 +194,7 @@
     controller.$inject = ['$scope', 'dataService', '$window'];
     app.controller('repoCtrl', controller);
 })(angular.module("repoFormsApp"));
+
 
 (app => {
     var controller = ($scope, $window) => {

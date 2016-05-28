@@ -1,15 +1,26 @@
 (function (app) {
-    var controller = function ($scope, $location, $dataService, $window) {
+    var controller = function ($scope, $window, $dataService) {
+        $dataService.getUser()
+            .then(function (data) {
+            $window.userdata = data;
+            $scope.masterWelcome = "Welcome master " + data;
+        });
+    };
+    controller.$inject = ['$scope', '$window', 'dataService'];
+    app.controller('masterCtrl', controller);
+})(angular.module("repoFormsApp"));
+(function (app) {
+    var controller = function ($scope, $location, $dataService, $window, $timeout) {
         $scope.GotoRepoForm = function () {
             $location.path('/repoform');
         };
         $scope.ViewRepos = function () {
             $location.path('/viewReports');
         };
-        $dataService.getUser()
-            .then(function (data) {
-            $window.userdata = data;
-            $scope.welcome = "Welcome master " + data;
+        $scope.$watch(function () { return $window.userdata; }, function (n) {
+            if (n !== undefined) {
+                $scope.welcome = "Pick something sir, " + $window.userdata;
+            }
         });
         $scope.TestClick = function () {
             $dataService.getPersons()
@@ -23,19 +34,19 @@
             $dataService.addPerson($scope.tempPerson);
         };
     };
-    controller.$inject = ['$scope', '$location', 'dataService', '$window'];
+    controller.$inject = ['$scope', '$location', 'dataService', '$window', '$timeout'];
     app.controller('homeCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
-    var controller = function ($scope, dataService, $window) {
+    var controller = function ($scope, $dataService, $window) {
         $scope.ng_maxLength = 50;
         $scope.maxLength = 50;
-        dataService.getTypeAheadData()
+        $dataService.getTypeAheadData()
             .then(function (data) {
             $scope.typeAheadModel = data;
         });
-        $scope.states = dataService.states;
-        $scope.getLocation = dataService.getLocation;
+        $scope.states = $dataService.states;
+        $scope.getLocation = $dataService.getLocation;
         $scope.onSelect = function ($item, $type) {
             var item = $item;
             var street = '';
@@ -89,8 +100,8 @@
         $scope.submitted = false;
         $scope.rf = {};
         $scope.orf = angular.copy($scope.rf);
-        $scope.favColorOptions = dataService.favColorOptions;
-        $scope.favoriteIceCreamOptions = dataService.favoriteIceCreamOptions;
+        $scope.favColorOptions = $dataService.favColorOptions;
+        $scope.favoriteIceCreamOptions = $dataService.favoriteIceCreamOptions;
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
         $scope.altInputFormats = ['M!/d!/yyyy'];
@@ -128,7 +139,7 @@
             $scope.$broadcast('show-errors-event');
             if ($scope.myForm.$invalid)
                 return;
-            dataService.saveForm($scope.rf).then(function () { return location.reload(); });
+            $dataService.saveForm($scope.rf).then(function () { return location.reload(); });
         };
         $scope.cancelForm = function () { };
         $scope.resetForm = function () {
