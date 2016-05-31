@@ -44,7 +44,6 @@
             }
         });
 
-        
 
         // TODO: Delete after you don't need this anymore. 
         $scope.TestClick = () => {

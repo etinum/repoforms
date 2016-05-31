@@ -30,5 +30,3 @@ var baseWebApiUrl = "http://localhost/webapi/";
     routeConfig.$inject = ['$routeProvider'];
     app.config(routeConfig);
 })(angular.module("repoFormsApp"));
-
-
