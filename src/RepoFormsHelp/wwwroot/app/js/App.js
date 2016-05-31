@@ -1,6 +1,4 @@
 var myApp = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'signature', 'environment']);
-var baseUrl = "http://localhost/";
-var baseWebApiUrl = "http://localhost/webapi/";
 (function (app) {
     var config = function ($routeProvider, $envServiceProvider) {
         $routeProvider
