@@ -1,8 +1,8 @@
-angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'signature']);
+var myApp = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'signature', 'environment']);
 var baseUrl = "http://localhost/";
 var baseWebApiUrl = "http://localhost/webapi/";
 (function (app) {
-    var routeConfig = function ($routeProvider) {
+    var config = function ($routeProvider, $envServiceProvider) {
         $routeProvider
             .when("/home", {
             templateUrl: "app/html/Home.html",
@@ -19,8 +19,25 @@ var baseWebApiUrl = "http://localhost/webapi/";
             .otherwise({
             redirectTo: "/home"
         });
+        $envServiceProvider.config({
+            domains: {
+                development: ['localhost', 'dev.local'],
+                production: ['plsf', 'plsf.portfoliorecovery.com']
+            },
+            vars: {
+                development: {
+                    apiUrl: '//localhost/webapi/',
+                    staticUrl: '//localhost/'
+                },
+                production: {
+                    apiUrl: '//plsf/webapi/',
+                    staticUrl: '//plsf/'
+                }
+            }
+        });
+        $envServiceProvider.check();
     };
-    routeConfig.$inject = ['$routeProvider'];
-    app.config(routeConfig);
+    config.$inject = ['$routeProvider', 'envServiceProvider'];
+    app.config(config);
 })(angular.module("repoFormsApp"));
 //# sourceMappingURL=App.js.map

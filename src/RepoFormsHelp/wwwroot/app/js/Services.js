@@ -1,5 +1,6 @@
 (function (app) {
-    var service = function ($http, $q) {
+    var service = function ($http, $q, $envService) {
+        var baseWebApiUrl = $envService.read('apiUrl');
         var getPersons = function () {
             var url = baseWebApiUrl + 'api/values/get';
             var deferred = $q.defer();
@@ -91,7 +92,7 @@
             states: ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
         };
     };
-    service.$inject = ['$http', '$q'];
+    service.$inject = ['$http', '$q', 'envService'];
     app.factory("dataService", service);
 })(angular.module("repoFormsApp"));
 //# sourceMappingURL=Services.js.map

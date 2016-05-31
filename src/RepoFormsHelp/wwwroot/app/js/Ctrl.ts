@@ -1,4 +1,5 @@
 /// <reference path="../typings/persontest.cs.d.ts" />
+/// <reference path="../typings/angular-environment.d.ts" />
 /// <reference path="../typings/repoformviewmodel.cs.d.ts" />
 
 /* Template for controllers
@@ -12,14 +13,15 @@
 */
 
 (app => {
-    var controller = ($scope, $window, $dataService) => {
+    var controller = ($scope, $window, $dataService, envService) => {
+
         $dataService.getUser()
             .then(data => {
                 $window.userdata = data;
                 $scope.masterWelcome = "Welcome master " + data;
             });
     };
-    controller.$inject = ['$scope', '$window', 'dataService'];
+    controller.$inject = ['$scope', '$window', 'dataService', 'envService'];
     app.controller('masterCtrl', controller);
 })(angular.module("repoFormsApp"));
 

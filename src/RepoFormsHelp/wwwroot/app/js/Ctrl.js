@@ -1,12 +1,12 @@
 (function (app) {
-    var controller = function ($scope, $window, $dataService) {
+    var controller = function ($scope, $window, $dataService, envService) {
         $dataService.getUser()
             .then(function (data) {
             $window.userdata = data;
             $scope.masterWelcome = "Welcome master " + data;
         });
     };
-    controller.$inject = ['$scope', '$window', 'dataService'];
+    controller.$inject = ['$scope', '$window', 'dataService', 'envService'];
     app.controller('masterCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {

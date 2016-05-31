@@ -1,6 +1,9 @@
 (app => {
 
-    var service = ($http, $q) => {
+    var service = ($http, $q, $envService) => {
+
+
+        var baseWebApiUrl = $envService.read('apiUrl');
 
         // Testing service calls, can be removed later. 
         var getPersons = () => {
@@ -119,7 +122,7 @@
         };
     };
 
-    service.$inject = ['$http', '$q'];
+    service.$inject = ['$http', '$q', 'envService'];
     app.factory("dataService", service);
 
 })(angular.module("repoFormsApp"));

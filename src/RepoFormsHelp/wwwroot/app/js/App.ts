@@ -1,14 +1,15 @@
 /// <reference path="../typings/angular.d.ts" />
 /// <reference path="../typings/angular-resource.d.ts" />
+/// <reference path="../typings/angular-environment.d.ts" />
 
 
-angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'signature']);
+var myApp = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'signature', 'environment']);
 
 var baseUrl = "http://localhost/";
 var baseWebApiUrl = "http://localhost/webapi/";
 
 (app => {
-    var routeConfig = ($routeProvider) => {
+    var config = ($routeProvider, $envServiceProvider) => {
         $routeProvider
             .when("/home", {
                 templateUrl: "app/html/Home.html",
@@ -25,8 +26,40 @@ var baseWebApiUrl = "http://localhost/webapi/";
             .otherwise({
                 redirectTo: "/home"
             });
+
+        $envServiceProvider.config({
+            domains: {
+                development: ['localhost', 'dev.local'],
+                production: ['plsf', 'plsf.portfoliorecovery.com']
+                // anotherStage: ['domain1', 'domain2'],
+                // anotherStage: ['domain1', 'domain2']
+            },
+            vars: {
+                development: {
+                    apiUrl: '//localhost/webapi/',
+                    staticUrl: '//localhost/'
+                    // antoherCustomVar: 'lorem',
+                    // antoherCustomVar: 'ipsum'
+                },
+                production: {
+                    apiUrl: '//plsf/webapi/',
+                    staticUrl: '//plsf/'
+                    // antoherCustomVar: 'lorem',
+                    // antoherCustomVar: 'ipsum'
+                }
+                // anotherStage: {
+                //  customVar: 'lorem',
+                //  customVar: 'ipsum'
+                // }
+            }
+        });
+
+        $envServiceProvider.check();
+
+
     };
 
-    routeConfig.$inject = ['$routeProvider'];
-    app.config(routeConfig);
+    config.$inject = ['$routeProvider', 'envServiceProvider'];
+    app.config(config);
 })(angular.module("repoFormsApp"));
+
