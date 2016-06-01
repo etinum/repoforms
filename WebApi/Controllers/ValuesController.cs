@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using AutoMapper;
@@ -27,6 +29,29 @@ namespace WebApi.Controllers
             });
 
             _mapper = mapConfig.CreateMapper();
+        }
+
+
+        [HttpGet]
+        public bool SendEmail()
+        {
+
+            var smtpserver = WebConfigurationManager.AppSettings["stmpserver"];
+            using (var client = new SmtpClient(smtpserver) {UseDefaultCredentials = false})
+            {
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress("people@gmail.com"),
+                    Body = "This is a test body",
+                    Subject = "subject"
+                };
+
+                mailMessage.To.Add("ertran@portfoliorecovery.com");
+                mailMessage.To.Add("eric.n.tran@gmail.com");
+                client.Send(mailMessage);
+            }
+
+            return true;
         }
 
         // GET api/values

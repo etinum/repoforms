@@ -201,11 +201,14 @@
     var controller = ($scope, $dataService, $window) => {
 
         //$scope.username = $window.userdata;
-        $dataService.getForms()
-            .then(data => {
-                $scope.fms = <modeltypings.RepoFormViewModel[]>data;
-            });
+        $scope.update = () => {
+            $dataService.getForms()
+                .then(data => {
+                    $scope.fms = <modeltypings.RepoFormViewModel[]>data;
+                });
+        };
 
+        $scope.update();
 
     };
 

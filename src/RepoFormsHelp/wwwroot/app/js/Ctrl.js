@@ -151,10 +151,13 @@
 })(angular.module("repoFormsApp"));
 (function (app) {
     var controller = function ($scope, $dataService, $window) {
-        $dataService.getForms()
-            .then(function (data) {
-            $scope.fms = data;
-        });
+        $scope.update = function () {
+            $dataService.getForms()
+                .then(function (data) {
+                $scope.fms = data;
+            });
+        };
+        $scope.update();
     };
     controller.$inject = ['$scope', 'dataService', '$window'];
     app.controller('viewCtrl', controller);

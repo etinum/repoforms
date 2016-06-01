@@ -3,7 +3,7 @@
         <tr>
             <th st-sort="investigator">Investigator</th>
             <th st-sort="accountNumber">Account Number</th>
-            <th st-sort="client">Clien</th>
+            <th st-sort="client">Client</th>
             <th st-sort="closeType">Close Type</th>
             <th st-sort="customerName">Customer Name</th>
         </tr>
@@ -19,8 +19,8 @@
             <td>{{row.closeType}}</td>
             <td>{{row.customerName}}</td>
             <td>
-                <button type="button" ng-click="removeItem(row)" class="btn btn-sm btn-danger">
-                    <i class="glyphicon glyphicon-remove-circle">
+                <button type="button" ng-click="removeItem(row)" class="btn btn-sm btn-default">
+                    <i class="glyphicon glyphicon-edit">
                     </i>
                 </button>
             </td>
@@ -28,3 +28,4 @@
     </tbody>
 </table>
 
+<input type="button" value="Refresh" ng-click="update()"/>
