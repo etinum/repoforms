@@ -37,7 +37,8 @@ namespace WebApi.Utils
             {
                 From = new MailAddress("assignmentwriteup@portfoliorecovery.com"),
                 Body = "There is a new assignment write up completed by: " + winUser,
-                Subject = "Assignment Write Up"
+                Subject = "Assignment Write Up", 
+                IsBodyHtml = true
             };
 
             foreach (var email in emails)
