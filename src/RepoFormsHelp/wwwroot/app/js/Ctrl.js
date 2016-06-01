@@ -150,10 +150,13 @@
     app.controller('repoCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
-    var controller = function ($scope, $window) {
-        $scope.username = $window.userdata;
+    var controller = function ($scope, $dataService, $window) {
+        $dataService.getForms()
+            .then(function (data) {
+            $scope.fms = data;
+        });
     };
-    controller.$inject = ['$scope', '$window'];
+    controller.$inject = ['$scope', 'dataService', '$window'];
     app.controller('viewCtrl', controller);
 })(angular.module("repoFormsApp"));
 //# sourceMappingURL=Ctrl.js.map

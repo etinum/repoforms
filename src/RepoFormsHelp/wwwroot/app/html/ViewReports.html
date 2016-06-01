@@ -1,1 +1,30 @@
-<h3>{{username}}</h3>
+<table st-table="displayCollection" st-safe-src="fms" class="table table-striped">
+    <thead>
+        <tr>
+            <th st-sort="investigator">Investigator</th>
+            <th st-sort="accountNumber">Account Number</th>
+            <th st-sort="client">Clien</th>
+            <th st-sort="closeType">Close Type</th>
+            <th st-sort="customerName">Customer Name</th>
+        </tr>
+        <tr>
+            <th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text" /></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="row in displayCollection">
+            <td>{{row.investigator}}</td>
+            <td>{{row.accountNumber}}</td>
+            <td>{{row.client}}</td>
+            <td>{{row.closeType}}</td>
+            <td>{{row.customerName}}</td>
+            <td>
+                <button type="button" ng-click="removeItem(row)" class="btn btn-sm btn-danger">
+                    <i class="glyphicon glyphicon-remove-circle">
+                    </i>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+

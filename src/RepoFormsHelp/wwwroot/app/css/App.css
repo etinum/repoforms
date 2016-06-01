@@ -25,3 +25,11 @@ fieldset legend .subtitle { font-size: 80%; }
     border-radius: 0;
     box-shadow: none;
   }
+
+    .st-sort-ascent:before{
+    content: '\25B2';
+  }
+
+  .st-sort-descent:before{
+    content: '\25BC';
+  }

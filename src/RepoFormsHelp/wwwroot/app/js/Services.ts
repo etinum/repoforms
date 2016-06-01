@@ -5,6 +5,14 @@
 
         var baseWebApiUrl = $envService.read('apiUrl');
 
+
+
+        // Error messages
+        var alertFailed = (response) => {
+            alert("There was a problem with the back end call, here is your status code: " + response.status);
+        };
+
+
         // Testing service calls, can be removed later. 
         var getPersons = () => {
             var url = baseWebApiUrl + 'api/values/get';
@@ -14,7 +22,7 @@
                 .then(response => {
                     deferred.resolve(response.data);
                 }, (response) => {
-                    alert("There was a problem with the back end call, here is your status code: " + response.status);
+                    alertFailed(response);
                     deferred.reject(response);
                 });
             return deferred.promise;
@@ -29,7 +37,7 @@
                     alert("Successfully saved.");
                     deferred.resolve();
                 }, (response) => {
-                    alert("There was a problem with the back end call, here is your status code: " + response.status);
+                    alertFailed(response);
                     deferred.reject(response);
                 });
             return deferred.promise;
@@ -46,7 +54,7 @@
                     alert("Submission successful.");
                     deferred.resolve();
                 }, (response) => {
-                    alert("There was a problem with the back end call, here is your status code: " + response.status);
+                    alertFailed(response);
                     deferred.reject(response);
                 });
             return deferred.promise;
@@ -68,7 +76,7 @@
                 .then((response) => {
                     deferred.resolve(response.data.results.map(r => r));
                 }, (response) => {
-                    alert("There was a problem with the back end call, here is your status code: " + response.status);
+                    alertFailed(response);
                     deferred.reject(response);
                 });
             return deferred.promise;
@@ -83,7 +91,7 @@
                 .then(response => {
                     deferred.resolve(response.data);
                 }, (response) => {
-                    alert("There was a problem with the back end call, here is your status code: " + response.status);
+                    alertFailed(response);
                     deferred.reject(response);
                 });
             return deferred.promise;
@@ -99,7 +107,23 @@
                 .then(response => {
                     deferred.resolve(response.data);
                 }, (response) => {
-                    alert("There was a problem with the back end call, here is your status code: " + response.status);
+                    alertFailed(response);
+                    deferred.reject(response);
+                });
+            return deferred.promise;
+        };
+
+
+        // Misc
+        var getForms = () => {
+            var url = baseWebApiUrl + 'api/RepoForm/GetForms';
+            var deferred = $q.defer();
+
+            $http.get(url)
+                .then(response => {
+                    deferred.resolve(response.data);
+                }, (response) => {
+                    alertFailed(response);
                     deferred.reject(response);
                 });
             return deferred.promise;
@@ -114,6 +138,7 @@
             getPersons: getPersons,
             addPerson: addPerson,
             getLocation: getLocation,
+            getForms: getForms,
             // Static list 
             favColorOptions: ['Red', 'Blue', 'Orange', 'Black', 'White'],
             favoriteIceCreamOptions: ['fudge', 'chocolate', 'vanila', 'almond fudge', 'rocky road'],

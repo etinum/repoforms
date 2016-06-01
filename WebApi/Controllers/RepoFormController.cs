@@ -68,8 +68,8 @@ namespace WebApi.Controllers
         [HttpGet]
         public List<RepoFormViewModel> GetForms()
         {
-            var formVm = _mapper.Map<List<RepoFormViewModel>>(_ctx.RepoForms.ToList());
-            return formVm;
+            var formViewModels = _mapper.Map<List<RepoFormViewModel>>(_ctx.RepoForms.ToList());
+            return formViewModels;
         }
 
         [HttpPost]

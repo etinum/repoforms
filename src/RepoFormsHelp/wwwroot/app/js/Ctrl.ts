@@ -198,11 +198,17 @@
 
 
 (app => {
-    var controller = ($scope, $window) => {
+    var controller = ($scope, $dataService, $window) => {
 
-        $scope.username = $window.userdata;
+        //$scope.username = $window.userdata;
+        $dataService.getForms()
+            .then(data => {
+                $scope.fms = <modeltypings.RepoFormViewModel[]>data;
+            });
+
 
     };
-    controller.$inject = ['$scope', '$window'];
+
+    controller.$inject = ['$scope', 'dataService', '$window'];
     app.controller('viewCtrl', controller);
 })(angular.module("repoFormsApp"));

@@ -3,7 +3,7 @@
 /// <reference path="../typings/angular-environment.d.ts" />
 
 
-var myApp = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'signature', 'environment']);
+var myApp = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'environment', 'smart-table']);
 
 
 (app => {
