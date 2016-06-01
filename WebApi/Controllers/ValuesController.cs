@@ -9,6 +9,7 @@ using AutoMapper;
 using Data;
 using WebApi.Mapper;
 using WebApi.Models;
+using WebApi.Utils;
 
 namespace WebApi.Controllers
 {
@@ -35,21 +36,8 @@ namespace WebApi.Controllers
         [HttpGet]
         public bool SendEmail()
         {
-
-            var smtpserver = WebConfigurationManager.AppSettings["stmpserver"];
-            using (var client = new SmtpClient(smtpserver) {UseDefaultCredentials = false})
-            {
-                var mailMessage = new MailMessage
-                {
-                    From = new MailAddress("people@gmail.com"),
-                    Body = "This is a test body",
-                    Subject = "subject"
-                };
-
-                mailMessage.To.Add("ertran@portfoliorecovery.com");
-                mailMessage.To.Add("eric.n.tran@gmail.com");
-                client.Send(mailMessage);
-            }
+            
+            new Email().SendTest();
 
             return true;
         }
