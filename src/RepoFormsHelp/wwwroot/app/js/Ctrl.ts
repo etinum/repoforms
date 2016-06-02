@@ -1,5 +1,6 @@
 /// <reference path="../typings/persontest.cs.d.ts" />
 /// <reference path="../typings/angular-environment.d.ts" />
+/// <reference path="../typings/signalr.d.ts" />
 /// <reference path="../typings/repoformviewmodel.cs.d.ts" />
 
 /* Template for controllers
@@ -13,21 +14,24 @@
 */
 
 (app => {
-    var controller = ($scope, $window, $dataService, envService) => {
+    var controller = ($scope, $window, $dataService, $envService, $rootScope) => {
 
         $dataService.getUser()
             .then(data => {
                 $window.userdata = data;
                 $scope.masterWelcome = "Welcome master " + data;
             });
+
+        //$rootScope.testroot = 'pinky';
+        $scope.baseWebApiUrl = $envService.read('apiUrl');
     };
-    controller.$inject = ['$scope', '$window', 'dataService', 'envService'];
+    controller.$inject = ['$scope', '$window', 'dataService', 'envService', '$rootScope'];
     app.controller('masterCtrl', controller);
 })(angular.module("repoFormsApp"));
 
 (app => {
 
-    var controller = ($scope, $location, $dataService, $window, $timeout) => {
+    var controller = ($scope, $location, $dataService, $window) => {
 
 
         $scope.GotoRepoForm = () => {
@@ -62,7 +66,7 @@
         }
     };
 
-    controller.$inject = ['$scope', '$location', 'dataService', '$window', '$timeout'];
+    controller.$inject = ['$scope', '$location', 'dataService', '$window'];
     app.controller('homeCtrl', controller);
 })(angular.module("repoFormsApp"));
 
@@ -198,7 +202,10 @@
 
 
 (app => {
-    var controller = ($scope, $dataService, $window) => {
+    var controller = ($scope, $dataService) => {
+
+
+        var hub = $.connection.testHub;
 
         //$scope.username = $window.userdata;
         $scope.update = () => {
@@ -208,10 +215,28 @@
                 });
         };
 
-        $scope.update();
 
+        // Testing signalR
+        hub.client.SendAlert = (value) => {
+            alert('hello value: ' + value);
+        };
+
+        hub.client.test2 = () => {
+            alert("first testing?");
+        };
+
+        hub.client.test = () => {
+            alert("testing works");
+        };
+
+
+        $.connection.hub.start()
+            .done(() => {
+                $scope.$apply();
+                hub.server.send("hi", "there");
+            });
     };
 
-    controller.$inject = ['$scope', 'dataService', '$window'];
+    controller.$inject = ['$scope', 'dataService'];
     app.controller('viewCtrl', controller);
 })(angular.module("repoFormsApp"));

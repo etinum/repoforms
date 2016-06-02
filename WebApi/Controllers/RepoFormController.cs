@@ -5,6 +5,7 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using AutoMapper;
 using Data;
+using WebApi.Hub;
 using WebApi.Mapper;
 using WebApi.Models;
 
@@ -13,7 +14,7 @@ namespace WebApi.Controllers
 
     [Authorize]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class RepoFormController : ApiController
+    public class RepoFormController : ApiControllerWithHub<TestHub>
     {
         private readonly IMapper _mapper;
         private readonly PLSFormsDBEntities _ctx; 

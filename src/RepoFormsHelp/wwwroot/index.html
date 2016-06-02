@@ -8,15 +8,23 @@
     <script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="lib/angular-messages/angular-messages.min.js"></script>
     <script src="lib/angular-smart-table/dist/smart-table.min.js"></script>
+
     <script src="app/js/app.js"></script>
     <script src="app/js/services.js"></script>
     <script src="app/js/directives.js"></script>
+    <script src="app/js/ctrl.js"></script>
+
+    <script src="//localhost/WebApi/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="//localhost/WebApi/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="//localhost/WebApi/signalr/hubs"></script>
+
     <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="app/css/app.css" rel="stylesheet"/>
+    <link href="app/css/app.css" rel="stylesheet" />
 
 </head>
 
 <body ng-controller="masterCtrl" class="container">
+    {{baseWebApiUrl}}
     <div class="form-group">
         <a href="/"><img src="app/images/pra-lslogoblue-with-new-tag3-400pxw.png" /></a>
     </div>
@@ -27,6 +35,5 @@
     <div ng-view ng-cloak></div>
     <br /><br /><br /><br />
 
-    <script src="app/js/ctrl.js"></script>
 </body>
 </html>
