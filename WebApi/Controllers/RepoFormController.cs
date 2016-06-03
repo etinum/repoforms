@@ -15,7 +15,7 @@ namespace WebApi.Controllers
 
     [Authorize]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class RepoFormController : ApiControllerWithHub<TestHub>
+    public class RepoFormController : ApiControllerWithHub<RepoHub>
     {
         private readonly IMapper _mapper;
         private readonly PLSFormsDBEntities _ctx; 
@@ -84,14 +84,15 @@ namespace WebApi.Controllers
         [HttpPost]
         public int SaveForm(RepoFormViewModel formViewModel)
         {
-            if (formViewModel.Id > 0)
-            {
-                return UpdateForm(formViewModel);   
-            }
-            return NewForm(formViewModel);
+            
+            var rf = formViewModel.Id > 0 ? UpdateForm(formViewModel) : NewForm(formViewModel);
+
+            Hub.Clients.All.UpdateList(_mapper.Map<RepoFormViewModel>(rf));
+
+            return rf.Id;
         }
 
-        private int UpdateForm(RepoFormViewModel formViewModel)
+        private RepoForm UpdateForm(RepoFormViewModel formViewModel)
         {
 
             var repoFormModel = _mapper.Map<RepoForm>(formViewModel);
@@ -101,11 +102,11 @@ namespace WebApi.Controllers
             _ctx.Entry(repoFormModel).State = EntityState.Modified;
             _ctx.SaveChanges();
 
-            return formViewModel.Id;
+            return repoFormModel;
 
         }
 
-        private int NewForm(RepoFormViewModel formViewModel)
+        private RepoForm NewForm(RepoFormViewModel formViewModel)
         {
             var repoFormModel = _mapper.Map<RepoForm>(formViewModel);
             var user = UpdateUser(repoFormModel);
@@ -116,7 +117,7 @@ namespace WebApi.Controllers
 
             _ctx.SaveChanges();
 
-            return repoFormModel.Id;
+            return repoFormModel;
         }
 
 

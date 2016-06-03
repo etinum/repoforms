@@ -172,7 +172,7 @@
 })(angular.module("repoFormsApp"));
 (function (app) {
     var controller = function ($scope, $dataService, $location) {
-        var hub = $.connection.testHub;
+        var hub = $.connection.repoHub;
         $scope.update = function () {
             $dataService.getForms()
                 .then(function (data) {
@@ -182,6 +182,19 @@
         $scope.edit = function (row) {
             var rowee = row;
             $location.path('/repoform/' + rowee.id);
+        };
+        hub.client.UpdateList = function (updatedForm) {
+            var index = $dataService.arrayObjectIndexOf($scope.fms, updatedForm.id, "id");
+            if (index === -1) {
+                $scope.fms.push(updatedForm);
+                $scope.$apply();
+            }
+            else {
+                $scope.fms.splice(index, 1);
+                $scope.$apply();
+                $scope.fms.splice(index, 0, updatedForm);
+                $scope.$apply();
+            }
         };
         hub.client.SendAlert = function (value) {
             alert('hello value: ' + value);

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebApi.Hub
 {
-    class RepoHub : Microsoft.AspNet.SignalR.Hub
+    public class RepoHub : Microsoft.AspNet.SignalR.Hub
     {
         public void Subscribe(string customerId)
         {

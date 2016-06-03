@@ -356,6 +356,7 @@ interface SignalR {
     */
     version: string;
     testHub: any;
+    repoHub: any;
 }
 
 interface JQueryStatic {

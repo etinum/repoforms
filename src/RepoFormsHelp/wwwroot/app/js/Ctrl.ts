@@ -203,9 +203,7 @@
             $dataService.getForm($routeParams.id)
                 .then(data => {
                     $scope.rf = <modeltypings.RepoFormViewModel>data;
-
                     setRfDate(data);
-
                     $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
                 });
         } else {
@@ -228,7 +226,7 @@
     var controller = ($scope, $dataService, $location) => {
 
 
-        var hub = $.connection.testHub;
+        var hub = $.connection.repoHub;
 
         //$scope.username = $window.userdata;
         $scope.update = () => {
@@ -243,6 +241,25 @@
             $location.path('/repoform/' + rowee.id);
 
         };
+
+
+
+        hub.client.UpdateList = (updatedForm: modeltypings.RepoFormViewModel) => {
+
+            var index = $dataService.arrayObjectIndexOf($scope.fms, updatedForm.id, "id");
+
+            if (index === -1) {
+                $scope.fms.push(updatedForm);
+                $scope.$apply();
+            } else {
+                $scope.fms.splice(index, 1);
+                $scope.$apply();
+                $scope.fms.splice(index, 0, updatedForm);
+                $scope.$apply();
+            }
+
+        };
+
 
         // Testing signalR
         hub.client.SendAlert = (value) => {
