@@ -39,7 +39,7 @@
         };
 
         $scope.ViewRepos = () => {
-            $location.path('/viewReports');            
+            $location.path('/viewReports');
         };
 
 
@@ -71,12 +71,13 @@
 })(angular.module("repoFormsApp"));
 
 (app => {
-    var controller = ($scope, $dataService, $window) => {
+    var controller = ($scope, $dataService, $window, $routeParams) => {
+
+
+
         // Input constrain variables..
         $scope.ng_maxLength = 50;
         $scope.maxLength = 50;
-
-        //alert("hi there " + $window.userdata);
 
         $dataService.getTypeAheadData()
             .then(data => {
@@ -85,9 +86,7 @@
 
 
         $scope.states = $dataService.states;
-
         $scope.getLocation = $dataService.getLocation;
-
         $scope.onSelect = ($item, $type) => {
 
             // This is to cover the different address fields
@@ -124,12 +123,6 @@
 
         $scope.submitted = false;
 
-
-        $scope.rf = <modeltypings.RepoFormViewModel>{};
-
-        $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
-
-
         // Dropdown configuration
         $scope.favColorOptions = $dataService.favColorOptions;
         $scope.favoriteIceCreamOptions = $dataService.favoriteIceCreamOptions;
@@ -146,12 +139,12 @@
             SIGNED: 3
         }
 
-
         $scope.today = () => {
             $scope.rf.createdDate = new Date();
             $scope.rf.repoDate = new Date();
+            $scope.rf.initializedDate = null;
         };
-        $scope.today();
+
 
         $scope.openDatePopup = popup => {
             switch (popup) {
@@ -193,16 +186,43 @@
             $scope.today();
 
         };
+
+
+        var setRfDate = (data: modeltypings.RepoFormViewModel) => {
+            $scope.rf.repoDate = data.repoDate ? new Date(data.repoDate.toString()) : null;
+            $scope.rf.createdDate = data.createdDate ? new Date(data.createdDate.toString()) : null;
+            $scope.rf.initializedDate = data.initializedDate ? new Date(data.initializedDate.toString()) : null;
+        }; 
+
+
+        if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id)) {
+            //$scope.id = parseInt($routeParams.id);
+            $dataService.getForm($routeParams.id)
+                .then(data => {
+                    $scope.rf = <modeltypings.RepoFormViewModel>data;
+
+                    setRfDate(data);
+
+                    $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
+                });
+        } else {
+            $scope.rf = <modeltypings.RepoFormViewModel>{};
+            $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
+            $scope.rf.repoDate = new Date("06/17/2016");
+            //$scope.today();
+        }
+
+
     };
 
 
-    controller.$inject = ['$scope', 'dataService', '$window'];
+    controller.$inject = ['$scope', 'dataService', '$window', '$routeParams'];
     app.controller('repoCtrl', controller);
 })(angular.module("repoFormsApp"));
 
 
 (app => {
-    var controller = ($scope, $dataService) => {
+    var controller = ($scope, $dataService, $location) => {
 
 
         var hub = $.connection.testHub;
@@ -215,13 +235,18 @@
                 });
         };
 
+        $scope.edit = (row) => {
+            var rowee = <modeltypings.RepoFormViewModel>row;
+            $location.path('/repoform/' + rowee.id);
+
+        };
 
         // Testing signalR
         hub.client.SendAlert = (value) => {
             alert('hello value: ' + value);
         };
 
-        hub.client.test2 = () => {
+        hub.client.test2 = () => {;
             alert("first testing?");
         };
 
@@ -232,11 +257,14 @@
 
         $.connection.hub.start()
             .done(() => {
-                $scope.$apply();
-                hub.server.send("hi", "there");
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
+                //hub.server.send("hi", "there");
+                $scope.update();
             });
     };
 
-    controller.$inject = ['$scope', 'dataService'];
+    controller.$inject = ['$scope', 'dataService', '$location'];
     app.controller('viewCtrl', controller);
 })(angular.module("repoFormsApp"));

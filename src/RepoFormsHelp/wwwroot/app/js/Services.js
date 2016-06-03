@@ -95,6 +95,22 @@
             });
             return deferred.promise;
         };
+        var getForm = function (id) {
+            var url = baseWebApiUrl + 'api/RepoForm/GetForm';
+            var deferred = $q.defer();
+            $http.get(url, {
+                params: {
+                    id: id
+                }
+            })
+                .then(function (response) {
+                deferred.resolve(response.data);
+            }, function (response) {
+                alertFailed(response);
+                deferred.reject(response);
+            });
+            return deferred.promise;
+        };
         return {
             getUser: getUser,
             getTypeAheadData: getTypeAheadData,
@@ -103,6 +119,7 @@
             addPerson: addPerson,
             getLocation: getLocation,
             getForms: getForms,
+            getForm: getForm,
             favColorOptions: ['Red', 'Blue', 'Orange', 'Black', 'White'],
             favoriteIceCreamOptions: ['fudge', 'chocolate', 'vanila', 'almond fudge', 'rocky road'],
             states: ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']

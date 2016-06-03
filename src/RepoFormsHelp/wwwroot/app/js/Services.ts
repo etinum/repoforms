@@ -1,3 +1,17 @@
+//(app => {
+
+//    var service = ($http, $q, $envService) => {
+//    };
+
+//    service.$inject = ['$http', '$q', 'envService'];
+//    app.factory("service_name", service);
+
+//})(angular.module("repoFormsApp"));
+
+
+
+
+
 (app => {
 
     var service = ($http, $q, $envService) => {
@@ -129,7 +143,23 @@
             return deferred.promise;
         };
 
+        var getForm = (id) => {
+            var url = baseWebApiUrl + 'api/RepoForm/GetForm';
+            var deferred = $q.defer();
 
+            $http.get(url, {
+                params: {
+                    id: id
+                }
+            })
+                .then(response => {
+                    deferred.resolve(response.data);
+                }, (response) => {
+                    alertFailed(response);
+                    deferred.reject(response);
+                });
+            return deferred.promise;
+        };
 
         return {
             getUser: getUser,
@@ -139,6 +169,7 @@
             addPerson: addPerson,
             getLocation: getLocation,
             getForms: getForms,
+            getForm: getForm,
             // Static list 
             favColorOptions: ['Red', 'Blue', 'Orange', 'Black', 'White'],
             favoriteIceCreamOptions: ['fudge', 'chocolate', 'vanila', 'almond fudge', 'rocky road'],

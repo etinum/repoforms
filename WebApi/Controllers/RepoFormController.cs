@@ -73,6 +73,13 @@ namespace WebApi.Controllers
             return formViewModels;
         }
 
+        [HttpGet]
+        public RepoFormViewModel GetForm(int id)
+        {
+            var formViewModel = _mapper.Map<RepoFormViewModel>(_ctx.RepoForms.FirstOrDefault(r => r.Id == id));
+            return formViewModel;
+        }
+
         [HttpPost]
         public void SaveForm(RepoFormViewModel formViewModel)
         {

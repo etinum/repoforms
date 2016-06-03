@@ -1,5 +1,6 @@
 ﻿declare module server {
 	interface RepoFormViewModel {
+		id: number;
 		createdDate: Date;
 		repoDate: Date;
 		accountNumber: string;

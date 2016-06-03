@@ -208,6 +208,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hub\RepoHub.cs" />
     <Compile Include="Hub\TestHub.cs" />
     <Compile Include="Mapper\MapperProfile.cs" />
     <Compile Include="Models\PersonTest.cs" />

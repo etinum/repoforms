@@ -10,6 +10,10 @@ var myApp = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstr
             templateUrl: "app/html/RepoForm.html",
             controller: "repoCtrl"
         })
+            .when("/repoform/:id", {
+            templateUrl: "app/html/RepoForm.html",
+            controller: "repoCtrl"
+        })
             .when("/viewReports", {
             templateUrl: "app/html/ViewReports.html",
             controller: "viewCtrl"

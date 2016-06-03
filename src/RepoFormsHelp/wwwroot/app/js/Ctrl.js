@@ -39,7 +39,7 @@
     app.controller('homeCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
-    var controller = function ($scope, $dataService, $window) {
+    var controller = function ($scope, $dataService, $window, $routeParams) {
         $scope.ng_maxLength = 50;
         $scope.maxLength = 50;
         $dataService.getTypeAheadData()
@@ -99,8 +99,6 @@
             }
         };
         $scope.submitted = false;
-        $scope.rf = {};
-        $scope.orf = angular.copy($scope.rf);
         $scope.favColorOptions = $dataService.favColorOptions;
         $scope.favoriteIceCreamOptions = $dataService.favoriteIceCreamOptions;
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
@@ -114,8 +112,8 @@
         $scope.today = function () {
             $scope.rf.createdDate = new Date();
             $scope.rf.repoDate = new Date();
+            $scope.rf.initializedDate = null;
         };
-        $scope.today();
         $scope.openDatePopup = function (popup) {
             switch (popup) {
                 case $scope.enumPopupType.CREATED:
@@ -146,12 +144,30 @@
         $scope.resetForm = function () {
             $scope.today();
         };
+        var setRfDate = function (data) {
+            $scope.rf.repoDate = data.repoDate ? new Date(data.repoDate.toString()) : null;
+            $scope.rf.createdDate = data.createdDate ? new Date(data.createdDate.toString()) : null;
+            $scope.rf.initializedDate = data.initializedDate ? new Date(data.initializedDate.toString()) : null;
+        };
+        if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id)) {
+            $dataService.getForm($routeParams.id)
+                .then(function (data) {
+                $scope.rf = data;
+                setRfDate(data);
+                $scope.orf = angular.copy($scope.rf);
+            });
+        }
+        else {
+            $scope.rf = {};
+            $scope.orf = angular.copy($scope.rf);
+            $scope.rf.repoDate = new Date("06/17/2016");
+        }
     };
-    controller.$inject = ['$scope', 'dataService', '$window'];
+    controller.$inject = ['$scope', 'dataService', '$window', '$routeParams'];
     app.controller('repoCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
-    var controller = function ($scope, $dataService) {
+    var controller = function ($scope, $dataService, $location) {
         var hub = $.connection.testHub;
         $scope.update = function () {
             $dataService.getForms()
@@ -159,10 +175,15 @@
                 $scope.fms = data;
             });
         };
+        $scope.edit = function (row) {
+            var rowee = row;
+            $location.path('/repoform/' + rowee.id);
+        };
         hub.client.SendAlert = function (value) {
             alert('hello value: ' + value);
         };
         hub.client.test2 = function () {
+            ;
             alert("first testing?");
         };
         hub.client.test = function () {
@@ -170,11 +191,13 @@
         };
         $.connection.hub.start()
             .done(function () {
-            $scope.$apply();
-            hub.server.send("hi", "there");
+            if (!$scope.$$phase) {
+                $scope.$apply();
+            }
+            $scope.update();
         });
     };
-    controller.$inject = ['$scope', 'dataService'];
+    controller.$inject = ['$scope', 'dataService', '$location'];
     app.controller('viewCtrl', controller);
 })(angular.module("repoFormsApp"));
 //# sourceMappingURL=Ctrl.js.map

@@ -2,7 +2,7 @@
   "locked": false,
   "version": 2,
   "targets": {
-    "DNX,Version=v4.5.1": {
+    "DNX,Version=v4.5.2": {
       "AutoMapper/4.2.1": {
         "type": "package",
         "frameworkAssemblies": [
@@ -2141,7 +2141,7 @@
         }
       }
     },
-    "DNX,Version=v4.5.1/win7-x86": {
+    "DNX,Version=v4.5.2/win7-x86": {
       "AutoMapper/4.2.1": {
         "type": "package",
         "frameworkAssemblies": [
@@ -2855,7 +2855,7 @@
         }
       }
     },
-    "DNX,Version=v4.5.1/win7-x64": {
+    "DNX,Version=v4.5.2/win7-x64": {
       "AutoMapper/4.2.1": {
         "type": "package",
         "frameworkAssemblies": [
@@ -10724,7 +10724,7 @@
       "Microsoft.Extensions.Logging.Console >= 1.0.0-rc1-final",
       "Microsoft.Extensions.Logging.Debug >= 1.0.0-rc1-final"
     ],
-    "DNX,Version=v4.5.1": [],
+    "DNX,Version=v4.5.2": [],
     "DNXCore,Version=v5.0": []
   }
 }

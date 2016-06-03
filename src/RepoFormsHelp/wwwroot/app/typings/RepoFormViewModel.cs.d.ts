@@ -1,5 +1,6 @@
 ﻿declare module modeltypings {
     interface RepoFormViewModel {
+        id: number;
         createdDate: Date;
         repoDate: Date;
         accountNumber: string;

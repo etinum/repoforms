@@ -92,7 +92,7 @@
                 <div class="form-group" show-errors>
                     <label for="points" class="col-sm-3 control-label">Points</label>
                     <div class="col-sm-9">
-                        <input type="number" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="points" name="points" class="form-control"
+                        <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="points" name="points" class="form-control"
                                ng-model="rf.points" ng-required="true"/>
                         <div class="help-block" ng-messages="myForm.points.$error" ng-show="myForm.points.$touched || submitted">
                             <div ng-messages-include="app/html/error-messages.html"></div>
