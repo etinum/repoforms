@@ -1,5 +1,11 @@
 (function (app) {
     var service = function ($http, $q, $envService) {
+        function trimObjectProperties(objectToTrim) {
+            for (var key in objectToTrim) {
+                if (objectToTrim[key] !== null && objectToTrim[key].trim)
+                    objectToTrim[key] = objectToTrim[key].trim();
+            }
+        }
         var baseWebApiUrl = $envService.read('apiUrl');
         var alertFailed = function (response) {
             alert("There was a problem with the back end call, here is your status code: " + response.status);
@@ -9,6 +15,7 @@
             var deferred = $q.defer();
             $http.get(url)
                 .then(function (response) {
+                trimObjectProperties(response.data);
                 deferred.resolve(response.data);
             }, function (response) {
                 alertFailed(response);
@@ -64,6 +71,7 @@
             var deferred = $q.defer();
             $http.get(url)
                 .then(function (response) {
+                trimObjectProperties(response.data);
                 deferred.resolve(response.data);
             }, function (response) {
                 alertFailed(response);
@@ -76,6 +84,7 @@
             var deferred = $q.defer();
             $http.get(url)
                 .then(function (response) {
+                trimObjectProperties(response.data);
                 deferred.resolve(response.data);
             }, function (response) {
                 alertFailed(response);
@@ -88,6 +97,7 @@
             var deferred = $q.defer();
             $http.get(url)
                 .then(function (response) {
+                trimObjectProperties(response.data);
                 deferred.resolve(response.data);
             }, function (response) {
                 alertFailed(response);
@@ -104,6 +114,7 @@
                 }
             })
                 .then(function (response) {
+                trimObjectProperties(response.data);
                 deferred.resolve(response.data);
             }, function (response) {
                 alertFailed(response);

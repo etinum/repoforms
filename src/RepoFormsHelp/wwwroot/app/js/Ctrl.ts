@@ -140,8 +140,9 @@
         }
 
         $scope.today = () => {
-            $scope.rf.createdDate = new Date();
-            $scope.rf.repoDate = new Date();
+            var today = new Date().toString();
+            $scope.rf.createdDate = new Date(today);
+            $scope.rf.repoDate = new Date(today);
             $scope.rf.initializedDate = null;
         };
 
@@ -181,9 +182,11 @@
             $dataService.saveForm($scope.rf).then(() => location.reload());
 
         };
-        $scope.cancelForm = () => { };
+        $scope.cancelForm = () => {
+            $window.history.back();
+        };
         $scope.resetForm = () => {
-            $scope.today();
+            location.reload();
 
         };
 
@@ -209,7 +212,7 @@
             $scope.rf = <modeltypings.RepoFormViewModel>{};
             $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
             $scope.rf.repoDate = new Date("06/17/2016");
-            //$scope.today();
+            $scope.today();
         }
 
 

@@ -1,14 +1,16 @@
-//(app => {
 
-//    var service = ($http, $q, $envService) => {
-//    };
+/* TEMPLATE
+(app => {
 
-//    service.$inject = ['$http', '$q', 'envService'];
-//    app.factory("service_name", service);
+    var service = ($http, $q, $envService) => {
+        // Implmentation
+    };
 
-//})(angular.module("repoFormsApp"));
+    service.$inject = ['$http', '$q', 'envService'];
+    app.factory("service_name", service);
 
-
+})(angular.module("repoFormsApp"));
+*/
 
 
 
@@ -17,9 +19,14 @@
     var service = ($http, $q, $envService) => {
 
 
+        function trimObjectProperties(objectToTrim) {
+            for (var key in objectToTrim) {
+                if (objectToTrim[key] !== null && objectToTrim[key].trim)
+                    objectToTrim[key] = objectToTrim[key].trim();
+            }
+        }
+
         var baseWebApiUrl = $envService.read('apiUrl');
-
-
 
         // Error messages
         var alertFailed = (response) => {
@@ -34,6 +41,7 @@
 
             $http.get(url)
                 .then(response => {
+                    trimObjectProperties(response.data);
                     deferred.resolve(response.data);
                 }, (response) => {
                     alertFailed(response);
@@ -103,6 +111,7 @@
 
             $http.get(url)
                 .then(response => {
+                    trimObjectProperties(response.data);
                     deferred.resolve(response.data);
                 }, (response) => {
                     alertFailed(response);
@@ -119,6 +128,7 @@
 
             $http.get(url)
                 .then(response => {
+                    trimObjectProperties(response.data);
                     deferred.resolve(response.data);
                 }, (response) => {
                     alertFailed(response);
@@ -127,7 +137,6 @@
             return deferred.promise;
         };
 
-
         // Misc
         var getForms = () => {
             var url = baseWebApiUrl + 'api/RepoForm/GetForms';
@@ -135,6 +144,7 @@
 
             $http.get(url)
                 .then(response => {
+                    trimObjectProperties(response.data);
                     deferred.resolve(response.data);
                 }, (response) => {
                     alertFailed(response);
@@ -153,6 +163,7 @@
                 }
             })
                 .then(response => {
+                    trimObjectProperties(response.data);
                     deferred.resolve(response.data);
                 }, (response) => {
                     alertFailed(response);
@@ -182,4 +193,5 @@
     app.factory("dataService", service);
 
 })(angular.module("repoFormsApp"));
+
 

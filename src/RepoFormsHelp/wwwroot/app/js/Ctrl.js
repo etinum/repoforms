@@ -110,8 +110,9 @@
             SIGNED: 3
         };
         $scope.today = function () {
-            $scope.rf.createdDate = new Date();
-            $scope.rf.repoDate = new Date();
+            var today = new Date().toString();
+            $scope.rf.createdDate = new Date(today);
+            $scope.rf.repoDate = new Date(today);
             $scope.rf.initializedDate = null;
         };
         $scope.openDatePopup = function (popup) {
@@ -140,9 +141,11 @@
                 return;
             $dataService.saveForm($scope.rf).then(function () { return location.reload(); });
         };
-        $scope.cancelForm = function () { };
+        $scope.cancelForm = function () {
+            $window.history.back();
+        };
         $scope.resetForm = function () {
-            $scope.today();
+            location.reload();
         };
         var setRfDate = function (data) {
             $scope.rf.repoDate = data.repoDate ? new Date(data.repoDate.toString()) : null;
@@ -161,6 +164,7 @@
             $scope.rf = {};
             $scope.orf = angular.copy($scope.rf);
             $scope.rf.repoDate = new Date("06/17/2016");
+            $scope.today();
         }
     };
     controller.$inject = ['$scope', 'dataService', '$window', '$routeParams'];
