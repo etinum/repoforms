@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -76,15 +77,51 @@ namespace WebApi.Controllers
         [HttpGet]
         public RepoFormViewModel GetForm(int id)
         {
-            var formViewModel = _mapper.Map<RepoFormViewModel>(_ctx.RepoForms.FirstOrDefault(r => r.Id == id));
+            var formViewModel = _mapper.Map<RepoFormViewModel>(_ctx.RepoForms.Find(id));
             return formViewModel;
         }
 
         [HttpPost]
-        public void SaveForm(RepoFormViewModel formViewModel)
+        public int SaveForm(RepoFormViewModel formViewModel)
+        {
+            if (formViewModel.Id > 0)
+            {
+                return UpdateForm(formViewModel);   
+            }
+            return NewForm(formViewModel);
+        }
+
+        private int UpdateForm(RepoFormViewModel formViewModel)
+        {
+
+            var repoFormModel = _mapper.Map<RepoForm>(formViewModel);
+            UpdateUser(repoFormModel);
+
+            // https://msdn.microsoft.com/en-us/data/jj592676.aspx
+            _ctx.Entry(repoFormModel).State = EntityState.Modified;
+            _ctx.SaveChanges();
+
+            return formViewModel.Id;
+
+        }
+
+        private int NewForm(RepoFormViewModel formViewModel)
         {
             var repoFormModel = _mapper.Map<RepoForm>(formViewModel);
+            var user = UpdateUser(repoFormModel);
 
+            repoFormModel.OriginalUserId = user.Id;
+
+            _ctx.RepoForms.Add(repoFormModel);
+
+            _ctx.SaveChanges();
+
+            return repoFormModel.Id;
+        }
+
+
+        private User UpdateUser(RepoForm repoFormModel)
+        {
             // save the input values.. 
             var user = GetExistingUser() ?? new User()
             {
@@ -99,17 +136,9 @@ namespace WebApi.Controllers
             if (user.Id == 0)
             {
                 user = _ctx.Users.Add(user);
-
-            } 
-
-            repoFormModel.OriginalUserId = user.Id;
-
-            _ctx.RepoForms.Add(repoFormModel);
-
-            _ctx.SaveChanges();
-
+            }
+            return user;
         }
-
 
         private User GetExistingUser()
         {
