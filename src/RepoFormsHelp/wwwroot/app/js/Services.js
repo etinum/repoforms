@@ -58,7 +58,6 @@
             var deferred = $q.defer();
             $http.post(url, formdata)
                 .then(function () {
-                alert("Submission successful.");
                 deferred.resolve();
             }, function (response) {
                 alertFailed(response);

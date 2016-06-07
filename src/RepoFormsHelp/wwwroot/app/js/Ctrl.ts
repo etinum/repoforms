@@ -71,7 +71,7 @@
 })(angular.module("repoFormsApp"));
 
 (app => {
-    var controller = ($scope, $dataService, $window, $routeParams) => {
+    var controller = ($scope, $dataService, $window, $routeParams, $uibModal) => {
 
 
 
@@ -179,7 +179,9 @@
             if ($scope.myForm.$invalid)
                 return;
 
-            $dataService.saveForm($scope.rf).then(() => location.reload());
+            $scope.load = $dataService.saveForm($scope.rf).then(() => {
+                $scope.open();
+            });
 
         };
         $scope.cancelForm = () => {
@@ -214,22 +216,66 @@
         }
 
 
+
+        $scope.open = () => {
+
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'modalSubmittedCtrl.html',
+                controller: 'modalSubmittedCtrl',
+                size: 'sm'
+                //resolve: {
+                //    items() {
+                //        return $scope.items;
+                //    }
+                //}
+            });
+
+            modalInstance.result.then(() => {
+                // handing when close, you can get the parameter...
+            }, () => {
+                // handling when cancel, you can get the value... 
+            });
+
+        };
+
     };
 
 
-    controller.$inject = ['$scope', 'dataService', '$window', '$routeParams'];
+    controller.$inject = ['$scope', 'dataService', '$window', '$routeParams', '$uibModal'];
     app.controller('repoCtrl', controller);
 })(angular.module("repoFormsApp"));
+
+
+(app => {
+    var controller = ($scope, $uibModalInstance, $timeout, $window) => {
+
+        $scope.close = () => {
+            $uibModalInstance.dismiss();
+            $window.history.back();
+        };
+
+        $timeout(() => {
+                $scope.close();
+            },
+            2000);
+    };
+    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window'];
+    app.controller('modalSubmittedCtrl', controller);
+})(angular.module("repoFormsApp"));
+
+
+
 
 
 (app => {
     var controller = ($scope, $dataService, $location) => {
 
 
-        $scope.delay = 0;
-        $scope.minDuration = 0;
-        $scope.message = 'Please Wait...';
-        $scope.backdrop = true;
+        //$scope.delay = 0;
+        //$scope.minDuration = 0;
+        //$scope.message = 'Please Wait...';
+        //$scope.backdrop = true;
 
         var hub = $.connection.repoHub;
 
@@ -238,6 +284,7 @@
             $scope.load = $dataService.getForms()
                 .then(data => {
                     $scope.fms = <modeltypings.RepoFormViewModel[]>data;
+                    $scope.totalItems = $scope.fms.length;
                 });
         };
 
@@ -247,6 +294,10 @@
 
         };
 
+        // Paging variables.
+        $scope.itemsPerPage = 6;
+        $scope.currentPage = 1;
+        $scope.maxSize = 5;
 
 
         hub.client.UpdateList = (updatedForm: modeltypings.RepoFormViewModel) => {

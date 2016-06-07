@@ -39,7 +39,7 @@
     app.controller('homeCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
-    var controller = function ($scope, $dataService, $window, $routeParams) {
+    var controller = function ($scope, $dataService, $window, $routeParams, $uibModal) {
         $scope.ng_maxLength = 50;
         $scope.maxLength = 50;
         $dataService.getTypeAheadData()
@@ -139,7 +139,9 @@
             $scope.$broadcast('show-errors-event');
             if ($scope.myForm.$invalid)
                 return;
-            $dataService.saveForm($scope.rf).then(function () { return location.reload(); });
+            $scope.load = $dataService.saveForm($scope.rf).then(function () {
+                $scope.open();
+            });
         };
         $scope.cancelForm = function () {
             $window.history.back();
@@ -166,27 +168,51 @@
             $scope.rf.repoDate = new Date("06/17/2016");
             $scope.today();
         }
+        $scope.open = function () {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'modalSubmittedCtrl.html',
+                controller: 'modalSubmittedCtrl',
+                size: 'sm'
+            });
+            modalInstance.result.then(function () {
+            }, function () {
+            });
+        };
     };
-    controller.$inject = ['$scope', 'dataService', '$window', '$routeParams'];
+    controller.$inject = ['$scope', 'dataService', '$window', '$routeParams', '$uibModal'];
     app.controller('repoCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
+    var controller = function ($scope, $uibModalInstance, $timeout, $window) {
+        $scope.close = function () {
+            $uibModalInstance.dismiss();
+            $window.history.back();
+        };
+        $timeout(function () {
+            $scope.close();
+        }, 2000);
+    };
+    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window'];
+    app.controller('modalSubmittedCtrl', controller);
+})(angular.module("repoFormsApp"));
+(function (app) {
     var controller = function ($scope, $dataService, $location) {
-        $scope.delay = 0;
-        $scope.minDuration = 0;
-        $scope.message = 'Please Wait...';
-        $scope.backdrop = true;
         var hub = $.connection.repoHub;
         $scope.update = function () {
             $scope.load = $dataService.getForms()
                 .then(function (data) {
                 $scope.fms = data;
+                $scope.totalItems = $scope.fms.length;
             });
         };
         $scope.edit = function (row) {
             var rowee = row;
             $location.path('/repoform/' + rowee.id);
         };
+        $scope.itemsPerPage = 6;
+        $scope.currentPage = 1;
+        $scope.maxSize = 5;
         hub.client.UpdateList = function (updatedForm) {
             var index = $dataService.arrayObjectIndexOf($scope.fms, updatedForm.id, "id");
             if (index === -1) {

@@ -95,7 +95,6 @@
 
             $http.post(url, formdata)
                 .then(() => {
-                    alert("Submission successful.");
                     deferred.resolve();
                 }, (response) => {
                     alertFailed(response);
