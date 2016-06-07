@@ -153,7 +153,7 @@
             $scope.rf.initializedDate = data.initializedDate ? new Date(data.initializedDate.toString()) : null;
         };
         if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id)) {
-            $dataService.getForm($routeParams.id)
+            $scope.load = $dataService.getForm($routeParams.id)
                 .then(function (data) {
                 $scope.rf = data;
                 setRfDate(data);
@@ -172,9 +172,13 @@
 })(angular.module("repoFormsApp"));
 (function (app) {
     var controller = function ($scope, $dataService, $location) {
+        $scope.delay = 0;
+        $scope.minDuration = 0;
+        $scope.message = 'Please Wait...';
+        $scope.backdrop = true;
         var hub = $.connection.repoHub;
         $scope.update = function () {
-            $dataService.getForms()
+            $scope.load = $dataService.getForms()
                 .then(function (data) {
                 $scope.fms = data;
             });

@@ -1,4 +1,4 @@
-var myApp = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'environment', 'smart-table']);
+var myApp = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'environment', 'smart-table', 'cgBusy']);
 (function (app) {
     var config = function ($routeProvider, $envServiceProvider) {
         $routeProvider

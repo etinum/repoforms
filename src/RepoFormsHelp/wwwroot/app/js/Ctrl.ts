@@ -200,7 +200,7 @@
 
         if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id)) {
             //$scope.id = parseInt($routeParams.id);
-            $dataService.getForm($routeParams.id)
+            $scope.load = $dataService.getForm($routeParams.id)
                 .then(data => {
                     $scope.rf = <modeltypings.RepoFormViewModel>data;
                     setRfDate(data);
@@ -226,11 +226,16 @@
     var controller = ($scope, $dataService, $location) => {
 
 
+        $scope.delay = 0;
+        $scope.minDuration = 0;
+        $scope.message = 'Please Wait...';
+        $scope.backdrop = true;
+
         var hub = $.connection.repoHub;
 
         //$scope.username = $window.userdata;
         $scope.update = () => {
-            $dataService.getForms()
+            $scope.load = $dataService.getForms()
                 .then(data => {
                     $scope.fms = <modeltypings.RepoFormViewModel[]>data;
                 });
