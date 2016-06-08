@@ -250,15 +250,18 @@
 (app => {
     var controller = ($scope, $uibModalInstance, $timeout, $window) => {
 
+        var timer = $timeout(() => {
+            $scope.close();
+        },
+            3000);
+
+
         $scope.close = () => {
+            $timeout.cancel(timer);
             $uibModalInstance.dismiss();
             $window.history.back();
         };
 
-        $timeout(() => {
-                $scope.close();
-            },
-            2000);
     };
     controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window'];
     app.controller('modalSubmittedCtrl', controller);
@@ -305,15 +308,17 @@
             var index = $dataService.arrayObjectIndexOf($scope.fms, updatedForm.id, "id");
 
             if (index === -1) {
-                $scope.fms.push(updatedForm);
-                $scope.$apply();
+                $scope.$apply(() => {
+                    $scope.fms.push(updatedForm);
+                });
             } else {
-                $scope.fms.splice(index, 1);
-                $scope.$apply();
-                $scope.fms.splice(index, 0, updatedForm);
-                $scope.$apply();
+                $scope.$apply(() => {
+                    $scope.fms.splice(index, 1);
+                });
+                $scope.$apply(() => {
+                    $scope.fms.splice(index, 0, updatedForm);
+                });
             }
-
         };
 
 
@@ -333,10 +338,6 @@
 
         $.connection.hub.start()
             .done(() => {
-                if (!$scope.$$phase) {
-                    $scope.$apply();
-                }
-                //hub.server.send("hi", "there");
                 $scope.update();
             });
     };

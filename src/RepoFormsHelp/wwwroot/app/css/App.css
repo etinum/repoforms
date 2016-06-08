@@ -1,21 +1,23 @@
-fieldset legend .subtitle { font-size: 80%; }
+fieldset legend .subtitle {
+    font-size: 80%;
+}
 
-  .typeahead-demo .custom-popup-wrapper {
+/*.typeahead-demo .custom-popup-wrapper {
     position: absolute;
     top: 100%;
     left: 0;
     z-index: 1000;
     display: none;
     background-color: #f9f9f9;
-  }
+}
 
-  .typeahead-demo .custom-popup-wrapper > .message {
+.typeahead-demo .custom-popup-wrapper > .message {
     padding: 10px 20px;
     border-bottom: 1px solid #ddd;
     color: #868686;
-  }
+}
 
-  .typeahead-demo .custom-popup-wrapper > .dropdown-menu {
+.typeahead-demo .custom-popup-wrapper > .dropdown-menu {
     position: static;
     float: none;
     display: block;
@@ -24,12 +26,17 @@ fieldset legend .subtitle { font-size: 80%; }
     border: none;
     border-radius: 0;
     box-shadow: none;
-  }
+}*/
 
-    .st-sort-ascent:before{
+.st-sort-ascent:before {
     content: '\25B2';
-  }
+}
 
-  .st-sort-descent:before{
+.st-sort-descent:before {
     content: '\25BC';
-  }
+}
+
+/* This is here to fix ui bootsrap modal from shifting content to the left on modal pop up*/
+body {
+    overflow-y: auto;
+}

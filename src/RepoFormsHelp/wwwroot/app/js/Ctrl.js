@@ -185,13 +185,14 @@
 })(angular.module("repoFormsApp"));
 (function (app) {
     var controller = function ($scope, $uibModalInstance, $timeout, $window) {
+        var timer = $timeout(function () {
+            $scope.close();
+        }, 3000);
         $scope.close = function () {
+            $timeout.cancel(timer);
             $uibModalInstance.dismiss();
             $window.history.back();
         };
-        $timeout(function () {
-            $scope.close();
-        }, 2000);
     };
     controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window'];
     app.controller('modalSubmittedCtrl', controller);
@@ -216,14 +217,17 @@
         hub.client.UpdateList = function (updatedForm) {
             var index = $dataService.arrayObjectIndexOf($scope.fms, updatedForm.id, "id");
             if (index === -1) {
-                $scope.fms.push(updatedForm);
-                $scope.$apply();
+                $scope.$apply(function () {
+                    $scope.fms.push(updatedForm);
+                });
             }
             else {
-                $scope.fms.splice(index, 1);
-                $scope.$apply();
-                $scope.fms.splice(index, 0, updatedForm);
-                $scope.$apply();
+                $scope.$apply(function () {
+                    $scope.fms.splice(index, 1);
+                });
+                $scope.$apply(function () {
+                    $scope.fms.splice(index, 0, updatedForm);
+                });
             }
         };
         hub.client.SendAlert = function (value) {
@@ -238,9 +242,6 @@
         };
         $.connection.hub.start()
             .done(function () {
-            if (!$scope.$$phase) {
-                $scope.$apply();
-            }
             $scope.update();
         });
     };
