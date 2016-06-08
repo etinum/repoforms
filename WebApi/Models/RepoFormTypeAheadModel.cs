@@ -8,7 +8,7 @@ namespace WebApi.Models
 {
     public class RepoFormTypeAheadModel
     {
-        public string Investigator { get; set; }
+        public List<string> Investigator { get; set; }
         public List<string> ClientList { get; set; }
         public List<string> CustomerList { get; set; }
         public List<string> RecoveryAgentList { get; set; }

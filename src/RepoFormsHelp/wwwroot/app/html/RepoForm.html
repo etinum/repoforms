@@ -69,7 +69,7 @@
                         <label for="investigator" class="col-sm-3 control-label">Investigator</label>
                         <div class="col-sm-9">
                             <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="investigator" name="investigator" class="form-control"
-                                   ng-model="rf.investigator" ng-required="true" />
+                                   ng-model="rf.investigator" ng-required="true" uib-typeahead="item for item in typeAheadModel.investigator  | filter:$viewValue | limitTo:8" autocomplete="off"/>
                             <div class="help-block" ng-messages="myForm.investigator.$error" ng-show="myForm.investigator.$touched || submitted">
                                 <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>

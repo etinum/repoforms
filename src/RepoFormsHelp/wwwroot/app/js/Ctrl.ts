@@ -42,8 +42,12 @@
             $location.path('/viewReports');
         };
 
+        $scope.Tbd = () => {
+            alert("If you build it, they will come");
+        };
+    
 
-        // watch to see if global variable has been set from master control before using it in the current controller.
+    // watch to see if global variable has been set from master control before using it in the current controller.
         $scope.$watch(() => $window.userdata, (n) => {
             if (n !== undefined) {
                 $scope.welcome = "Pick something sir, " + $window.userdata;
@@ -284,7 +288,7 @@
 
         $scope.addAdminVerified = data => {
             data.forEach(item => {
-                item.dummy = item.initializedDate == null;
+                item.isInitialized = item.initializedDate == null;
             });
         };
 

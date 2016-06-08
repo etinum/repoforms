@@ -37,7 +37,7 @@
     }
 
     interface RepoFormTypeAheadModel {
-        investigator: string;
+        investigator: string[];
         clientList: string[];
         customerList: string[];
         recoveryAgentList: string[];

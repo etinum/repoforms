@@ -18,6 +18,9 @@
         $scope.ViewRepos = function () {
             $location.path('/viewReports');
         };
+        $scope.Tbd = function () {
+            alert("If you build it, they will come");
+        };
         $scope.$watch(function () { return $window.userdata; }, function (n) {
             if (n !== undefined) {
                 $scope.welcome = "Pick something sir, " + $window.userdata;
@@ -202,7 +205,7 @@
         var hub = $.connection.repoHub;
         $scope.addAdminVerified = function (data) {
             data.forEach(function (item) {
-                item.dummy = item.initializedDate == null;
+                item.isInitialized = item.initializedDate == null;
             });
         };
         $scope.update = function () {
