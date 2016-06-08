@@ -17,7 +17,7 @@
           <Property Name="Client" Type="nchar" MaxLength="100" />
           <Property Name="CloseType" Type="nchar" MaxLength="100" />
           <Property Name="CustomerName" Type="nchar" MaxLength="100" />
-          <Property Name="Points" Type="nchar" MaxLength="100" />
+          <Property Name="Points" Type="int" />
           <Property Name="RecoveryAgent" Type="nchar" MaxLength="100" />
           <Property Name="Notes" Type="nchar" MaxLength="1024" />
           <Property Name="RecoveryAddress" Type="nchar" MaxLength="100" />
@@ -41,6 +41,8 @@
           <Property Name="Billing" Type="nchar" MaxLength="100" />
           <Property Name="InitializedDate" Type="datetime" />
           <Property Name="OriginalUserId" Type="int" />
+          <Property Name="AdminUserId" Type="int" />
+          <Property Name="Verified" Type="bit" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -77,24 +79,13 @@
     <edmx:ConceptualModels>
       <Schema Namespace="PLSFormsDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="PLSFormsDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Users" EntityType="PLSFormsDBModel.User" />
           <EntitySet Name="RepoForms" EntityType="PLSFormsDBModel.RepoForm" />
+          <EntitySet Name="Users" EntityType="PLSFormsDBModel.User" />
           <AssociationSet Name="FK_RepoForm_OriginalUserId_User_Userid" Association="PLSFormsDBModel.FK_RepoForm_OriginalUserId_User_Userid">
             <End Role="User" EntitySet="Users" />
             <End Role="RepoForm" EntitySet="RepoForms" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="WinAuthName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="Investigator" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-          <Property Name="LastLoggedIn" Type="DateTime" Precision="3" />
-          <Property Name="FirstLoggedIn" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="RepoForms" Relationship="PLSFormsDBModel.FK_RepoForm_OriginalUserId_User_Userid" FromRole="User" ToRole="RepoForm" />
-        </EntityType>
         <EntityType Name="RepoForm">
           <Key>
             <PropertyRef Name="Id" />
@@ -107,7 +98,7 @@
           <Property Name="Client" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="CloseType" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
-          <Property Name="Points" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="Points" Type="Int32" />
           <Property Name="RecoveryAgent" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="Notes" Type="String" MaxLength="1024" FixedLength="true" Unicode="true" />
           <Property Name="RecoveryAddress" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
@@ -131,7 +122,20 @@
           <Property Name="Billing" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
           <Property Name="InitializedDate" Type="DateTime" Precision="3" />
           <Property Name="OriginalUserId" Type="Int32" />
+          <Property Name="AdminUserId" Type="Int32" />
+          <Property Name="Verified" Type="Boolean" />
           <NavigationProperty Name="User" Relationship="PLSFormsDBModel.FK_RepoForm_OriginalUserId_User_Userid" FromRole="RepoForm" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WinAuthName" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Investigator" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="LastLoggedIn" Type="DateTime" Precision="3" />
+          <Property Name="FirstLoggedIn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="RepoForms" Relationship="PLSFormsDBModel.FK_RepoForm_OriginalUserId_User_Userid" FromRole="User" ToRole="RepoForm" />
         </EntityType>
         <Association Name="FK_RepoForm_OriginalUserId_User_Userid">
           <End Type="PLSFormsDBModel.User" Role="User" Multiplicity="0..1" />
@@ -151,20 +155,11 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="PLSFormsDBModelStoreContainer" CdmEntityContainer="PLSFormsDBEntities">
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="PLSFormsDBModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="FirstLoggedIn" ColumnName="FirstLoggedIn" />
-                <ScalarProperty Name="LastLoggedIn" ColumnName="LastLoggedIn" />
-                <ScalarProperty Name="Investigator" ColumnName="Investigator" />
-                <ScalarProperty Name="WinAuthName" ColumnName="WinAuthName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="RepoForms">
             <EntityTypeMapping TypeName="PLSFormsDBModel.RepoForm">
               <MappingFragment StoreEntitySet="RepoForm">
+                <ScalarProperty Name="Verified" ColumnName="Verified" />
+                <ScalarProperty Name="AdminUserId" ColumnName="AdminUserId" />
                 <ScalarProperty Name="OriginalUserId" ColumnName="OriginalUserId" />
                 <ScalarProperty Name="InitializedDate" ColumnName="InitializedDate" />
                 <ScalarProperty Name="Billing" ColumnName="Billing" />
@@ -196,6 +191,17 @@
                 <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
                 <ScalarProperty Name="RepoDate" ColumnName="RepoDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="PLSFormsDBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="FirstLoggedIn" ColumnName="FirstLoggedIn" />
+                <ScalarProperty Name="LastLoggedIn" ColumnName="LastLoggedIn" />
+                <ScalarProperty Name="Investigator" ColumnName="Investigator" />
+                <ScalarProperty Name="WinAuthName" ColumnName="WinAuthName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

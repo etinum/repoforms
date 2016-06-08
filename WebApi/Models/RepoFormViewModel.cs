@@ -5,14 +5,14 @@ namespace WebApi.Models
     public class RepoFormViewModel
     {
         public int Id { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<System.DateTime> RepoDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? RepoDate { get; set; }
         public string AccountNumber { get; set; }
         public string Investigator { get; set; }
         public string Client { get; set; }
         public string CloseType { get; set; }
         public string CustomerName { get; set; }
-        public string Points { get; set; }
+        public int? Points { get; set; }
         public string RecoveryAgent { get; set; }
         public string Notes { get; set; }
         public string RecoveryAddress { get; set; }
@@ -28,14 +28,16 @@ namespace WebApi.Models
         public string PoliceDept { get; set; }
         public string PoliceNumber { get; set; }
         public string PoliceBadgeNumber { get; set; }
-        public Nullable<bool> KeysChecked { get; set; }
-        public Nullable<bool> DrivableChecked { get; set; }
+        public bool? KeysChecked { get; set; }
+        public bool? DrivableChecked { get; set; }
         public string Personals { get; set; }
         public string IPRUpdated { get; set; }
         public string RepoProcessing { get; set; }
         public string Billing { get; set; }
-        public Nullable<System.DateTime> InitializedDate { get; set; }
-        public Nullable<int> OriginalUserId { get; set; }
+        public DateTime? InitializedDate { get; set; }
+        public int? OriginalUserId { get; set; }
+        public int? AdminUserId { get; set; }
+        public bool? Verified { get; set; }
 
     }
 }

@@ -3,24 +3,31 @@
         <thead>
         <tr>
             <th st-sort="investigator">Investigator</th>
+            <th st-sort="repoDate">Repo Date</th>
             <th st-sort="accountNumber">Account Number</th>
             <th st-sort="client">Client</th>
-            <th st-sort="closeType">Close Type</th>
-            <th st-sort="customerName">Customer Name</th>
-            <th st-sort="repoDate">Repo Date</th>
+            <th st-sort="points">Points</th>
+            <th st-sort="initializedDate">Initialized Date</th>
         </tr>
         <tr>
             <th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+            <th>
+                <select st-search="dummy">
+                    <option value="">All</option>
+                    <option value="true" selected="selected">Not Yet Confirmed</option>
+                    <option value="false">Already Confirmed</option>
+                </select>
+            </th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="row in displayCollection.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
-            <td>{{row.investigator}}</td>
-            <td>{{row.accountNumber}}</td>
-            <td>{{row.client}}</td>
-            <td>{{row.closeType}}</td>
-            <td>{{row.customerName}}</td>
-            <td>{{row.repoDate | date:'MM/dd/yyyy' }}</td>
+            <td ng-class="{'highlight': row.initializedDate == null}">{{row.investigator}}</td>
+            <td ng-class="{'highlight': row.initializedDate == null}">{{row.repoDate | date:'MM/dd/yyyy' }}</td>
+            <td ng-class="{'highlight': row.initializedDate == null}">{{row.accountNumber}}</td>
+            <td ng-class="{'highlight': row.initializedDate == null}">{{row.client}}</td>
+            <td ng-class="{'highlight': row.initializedDate == null}">{{row.points}}</td>
+            <td ng-class="{'highlight': row.initializedDate == null}">{{row.initializedDate | date:'MM/dd/yyyy' }}</td>
             <td>
                 <button type="button" ng-click="edit(row)" class="btn btn-sm btn-default">
                     <i class="glyphicon glyphicon-edit">

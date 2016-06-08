@@ -25,7 +25,7 @@ namespace Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<RepoForm> RepoForms { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     }
 }

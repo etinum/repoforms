@@ -8,7 +8,7 @@
 		client: string;
 		closeType: string;
 		customerName: string;
-		points: string;
+		points: number;
 		recoveryAgent: string;
 		notes: string;
 		recoveryAddress: string;
@@ -32,5 +32,7 @@
 		billing: string;
 		initializedDate: Date;
 		originalUserId: number;
+		adminUserId: number;
+		verified: boolean;
 	}
 }

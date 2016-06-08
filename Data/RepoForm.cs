@@ -22,7 +22,7 @@ namespace Data
         public string Client { get; set; }
         public string CloseType { get; set; }
         public string CustomerName { get; set; }
-        public string Points { get; set; }
+        public Nullable<int> Points { get; set; }
         public string RecoveryAgent { get; set; }
         public string Notes { get; set; }
         public string RecoveryAddress { get; set; }
@@ -46,6 +46,8 @@ namespace Data
         public string Billing { get; set; }
         public Nullable<System.DateTime> InitializedDate { get; set; }
         public Nullable<int> OriginalUserId { get; set; }
+        public Nullable<int> AdminUserId { get; set; }
+        public Nullable<bool> Verified { get; set; }
     
         public virtual User User { get; set; }
     }

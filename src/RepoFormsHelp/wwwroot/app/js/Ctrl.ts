@@ -1,7 +1,7 @@
 /// <reference path="../typings/persontest.cs.d.ts" />
 /// <reference path="../typings/angular-environment.d.ts" />
 /// <reference path="../typings/signalr.d.ts" />
-/// <reference path="../typings/repoformviewmodel.cs.d.ts" />
+/// <reference path="../typings/repoformviewmodels.cs.d.ts" />
 
 /* Template for controllers
 (app => {
@@ -282,11 +282,18 @@
 
         var hub = $.connection.repoHub;
 
+        $scope.addAdminVerified = data => {
+            data.forEach(item => {
+                item.dummy = item.initializedDate == null;
+            });
+        };
+
         //$scope.username = $window.userdata;
         $scope.update = () => {
             $scope.load = $dataService.getForms()
                 .then(data => {
                     $scope.fms = <modeltypings.RepoFormViewModel[]>data;
+                    $scope.addAdminVerified($scope.fms);
                     $scope.totalItems = $scope.fms.length;
                 });
         };

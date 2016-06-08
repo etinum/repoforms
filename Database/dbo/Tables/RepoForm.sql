@@ -7,7 +7,7 @@
     [Client]                NCHAR (100)  NULL,
     [CloseType]             NCHAR (100)  NULL,
     [CustomerName]          NCHAR (100)  NULL,
-    [Points]                NCHAR (100)  NULL,
+    [Points]                INT          NULL,
     [RecoveryAgent]         NCHAR (100)  NULL,
     [Notes]                 NCHAR (1024) NULL,
     [RecoveryAddress]       NCHAR (100)  NULL,
@@ -31,9 +31,15 @@
     [Billing]               NCHAR (100)  NULL,
     [InitializedDate]       DATETIME     NULL,
     [OriginalUserId]        INT          NULL,
+    [AdminUserId]           INT          NULL,
+    [Verified]              BIT          NULL,
     CONSTRAINT [PK_RepoForm] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_RepoForm_OriginalUserId_User_Userid] FOREIGN KEY ([OriginalUserId]) REFERENCES [dbo].[User] ([Id])
 );
+
+
+
+
 
 
 

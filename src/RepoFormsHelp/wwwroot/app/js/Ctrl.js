@@ -200,10 +200,16 @@
 (function (app) {
     var controller = function ($scope, $dataService, $location) {
         var hub = $.connection.repoHub;
+        $scope.addAdminVerified = function (data) {
+            data.forEach(function (item) {
+                item.dummy = item.initializedDate == null;
+            });
+        };
         $scope.update = function () {
             $scope.load = $dataService.getForms()
                 .then(function (data) {
                 $scope.fms = data;
+                $scope.addAdminVerified($scope.fms);
                 $scope.totalItems = $scope.fms.length;
             });
         };
