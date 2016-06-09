@@ -1,7 +1,3 @@
-Notes:<br/>
-1. Red -- Means there is still a need for score recording<br />
-2. Italics bold -- Means there is still a need for auditing<br />
-
 <div cg-busy="load">
     <table st-table="displayCollection" st-safe-src="fms" class="table table-striped">
         <thead>
@@ -15,13 +11,12 @@ Notes:<br/>
             <th st-sort="points">Points</th>
         </tr>
         <tr>
-            <th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
-            <th>
-                <select st-search="administered">
-                    <option value="">All</option>
-                    <option value="false" selected="selected">Not Yet Confirmed</option>
-                    <option value="true">Already Confirmed</option>
+            <th colspan="4"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+            <th colspan="5">
+
+                <select ng-model="filterSelected" ng-change="filter()" class="form-control" ng-options="filter as filter.label for filter in filterOptions track by filter.id">
                 </select>
+
             </th>
         </tr>
         </thead>

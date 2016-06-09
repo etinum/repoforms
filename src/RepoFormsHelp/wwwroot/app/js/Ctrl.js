@@ -163,12 +163,13 @@
                 $scope.rf = data;
                 setRfDate(data);
                 $scope.orf = angular.copy($scope.rf);
+                $scope.isAdmin = true;
             });
         }
         else {
             $scope.rf = {};
             $scope.orf = angular.copy($scope.rf);
-            $scope.rf.repoDate = new Date("06/17/2016");
+            $scope.isAdmin = false;
             $scope.today();
         }
         $scope.open = function () {
@@ -202,37 +203,80 @@
 })(angular.module("repoFormsApp"));
 (function (app) {
     var controller = function ($scope, $dataService, $location) {
+        $scope.enumFilterType = {
+            ATT: 1,
+            AUDIT: 2,
+            SCORE: 3,
+            ALL: 4
+        };
         var hub = $.connection.repoHub;
-        $scope.addAdminVerified = function () {
-            var data = $scope.fms;
+        $scope.processData = function () {
+            $scope.addAdminVerified($scope.allItems);
+            $scope.filter();
+        };
+        $scope.addAdminVerified = function (data) {
             data.forEach(function (item) {
                 item.administered = item.initializedDate !== null && $dataService.isTrue(item.verified);
             });
         };
-        $scope.update = function () {
+        $scope.getForms = function () {
             $scope.load = $dataService.getForms()
                 .then(function (data) {
-                $scope.fms = data;
-                $scope.addAdminVerified();
-                $scope.totalItems = $scope.fms.length;
+                $scope.allItems = data;
+                $scope.processData();
             });
-        };
-        $scope.edit = function (row) {
-            var rowee = row;
-            $location.path('/repoform/' + rowee.id);
         };
         $scope.scored = function (row) {
             var saveobj = angular.copy(row);
             saveobj.verified = true;
             $scope.load = $dataService.saveForm(saveobj)
                 .then(function () {
-                $scope.load = $dataService.getForms()
-                    .then(function (data) {
-                    $scope.fms = data;
-                    $scope.addAdminVerified();
-                    $scope.totalItems = $scope.fms.length;
-                });
+                $scope.getForms();
             });
+        };
+        $scope.update = function () {
+            $scope.getForms();
+        };
+        $scope.edit = function (row) {
+            var rowee = row;
+            $location.path('/repoform/' + rowee.id);
+        };
+        $scope.filterOptions = [
+            {
+                'label': 'All',
+                'id': $scope.enumFilterType.ALL
+            },
+            {
+                'label': 'Attention',
+                'id': $scope.enumFilterType.ATT
+            },
+            {
+                'label': 'Audit',
+                'id': $scope.enumFilterType.AUDIT
+            },
+            {
+                'label': 'Score',
+                'id': $scope.enumFilterType.SCORE
+            }
+        ];
+        $scope.filterSelected = $scope.filterOptions.find(function (item) { return item.id === $scope.enumFilterType.ATT; });
+        $scope.filter = function () {
+            switch ($scope.filterSelected.id) {
+                case $scope.enumFilterType.ALL:
+                    $scope.fms = $scope.allItems;
+                    break;
+                case $scope.enumFilterType.ATT:
+                    $scope.fms = $scope.allItems.filter(function (item) { return !item.administered; });
+                    break;
+                case $scope.enumFilterType.AUDIT:
+                    $scope.fms = $scope.allItems.filter(function (item) { return item.initializedDate == null; });
+                    break;
+                case $scope.enumFilterType.SCORE:
+                    $scope.fms = $scope.allItems.filter(function (item) { return !item.verified; });
+                    break;
+                default:
+            }
+            $scope.totalItems = $scope.fms.length;
         };
         $scope.itemsPerPage = 12;
         $scope.currentPage = 1;
@@ -242,7 +286,7 @@
             if (index === -1) {
                 $scope.$apply(function () {
                     $scope.fms.push(updatedForm);
-                    $scope.addAdminVerified();
+                    $scope.addAdminVerified($scope.fms);
                 });
             }
             else {
@@ -251,7 +295,7 @@
                 });
                 $scope.$apply(function () {
                     $scope.fms.splice(index, 0, updatedForm);
-                    $scope.addAdminVerified();
+                    $scope.addAdminVerified($scope.fms);
                 });
             }
         };

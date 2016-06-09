@@ -24,7 +24,7 @@
             return -1;
         }
         function isFalse(obj) {
-            if (obj === null || obj === false) {
+            if (obj === null || obj === false || obj === undefined) {
                 return false;
             }
             return true;

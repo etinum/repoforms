@@ -211,6 +211,7 @@
                     $scope.rf = <modeltypings.RepoFormViewModel>data;
                     setRfDate(data);
                     $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
+                    $scope.isAdmin = true;
                     //$location.hash('adminPanel');
                     //$anchorScroll();
 
@@ -218,7 +219,7 @@
         } else {
             $scope.rf = <modeltypings.RepoFormViewModel>{};
             $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
-            $scope.rf.repoDate = new Date("06/17/2016");
+            $scope.isAdmin = false;
             $scope.today();
         }
 
@@ -286,29 +287,35 @@
         //$scope.message = 'Please Wait...';
         //$scope.backdrop = true;
 
+        $scope.enumFilterType = {
+            ATT: 1,
+            AUDIT: 2,
+            SCORE: 3,
+            ALL: 4
+        }
+
         var hub = $.connection.repoHub;
 
-        $scope.addAdminVerified = () => {
-            var data = $scope.fms;
+
+        $scope.processData = () => {
+
+            $scope.addAdminVerified($scope.allItems);
+            $scope.filter();
+
+        }
+
+        $scope.addAdminVerified = (data) => {
             data.forEach(item => {
                 item.administered = item.initializedDate !== null && $dataService.isTrue(item.verified);
             });
         };
 
-        //$scope.username = $window.userdata;
-        $scope.update = () => {
+        $scope.getForms = () => {
             $scope.load = $dataService.getForms()
                 .then(data => {
-                    $scope.fms = <modeltypings.RepoFormViewModel[]>data;
-                    $scope.addAdminVerified();
-                    $scope.totalItems = $scope.fms.length;
+                    $scope.allItems = <modeltypings.RepoFormViewModel[]>data;
+                    $scope.processData();
                 });
-        };
-
-        $scope.edit = (row) => {
-            var rowee = <modeltypings.RepoFormViewModel>row;
-            $location.path('/repoform/' + rowee.id);
-
         };
 
 
@@ -317,13 +324,62 @@
             saveobj.verified = true;
             $scope.load = $dataService.saveForm(saveobj)
                 .then(() => {
-                    $scope.load = $dataService.getForms()
-                        .then(data => {
-                            $scope.fms = <modeltypings.RepoFormViewModel[]>data;
-                            $scope.addAdminVerified();
-                            $scope.totalItems = $scope.fms.length;
-                        });
+                    $scope.getForms();
                 });
+        };
+
+        //$scope.username = $window.userdata;
+        $scope.update = () => {
+            $scope.getForms();
+        };
+
+        $scope.edit = (row) => {
+            var rowee = <modeltypings.RepoFormViewModel>row;
+            $location.path('/repoform/' + rowee.id);
+
+        };
+
+        $scope.filterOptions = [
+            {
+                'label':'All',
+                'id': $scope.enumFilterType.ALL
+            },
+            {
+                'label': 'Attention',
+                'id': $scope.enumFilterType.ATT
+            },
+            {
+                'label': 'Audit',
+                'id': $scope.enumFilterType.AUDIT
+            },
+            {
+                'label': 'Score',
+                'id': $scope.enumFilterType.SCORE
+            }
+        ];
+
+        // default value
+        $scope.filterSelected = $scope.filterOptions.find(item => item.id === $scope.enumFilterType.ATT);
+
+        $scope.filter = () => {
+
+            switch ($scope.filterSelected.id) {
+                case $scope.enumFilterType.ALL:
+                    $scope.fms = $scope.allItems;
+                    break;
+                case $scope.enumFilterType.ATT:
+                    $scope.fms = $scope.allItems.filter(item => !item.administered);
+                    break;
+                case $scope.enumFilterType.AUDIT:
+                    $scope.fms = $scope.allItems.filter(item => item.initializedDate == null);
+                    break;
+                case $scope.enumFilterType.SCORE:
+                    $scope.fms = $scope.allItems.filter(item => !item.verified);
+                    break;
+                default:
+            }
+
+            $scope.totalItems = $scope.fms.length;
 
         };
 
@@ -340,7 +396,7 @@
             if (index === -1) {
                 $scope.$apply(() => {
                     $scope.fms.push(updatedForm);
-                    $scope.addAdminVerified();
+                    $scope.addAdminVerified($scope.fms);
                 });
             } else {
                 $scope.$apply(() => {
@@ -348,7 +404,7 @@
                 });
                 $scope.$apply(() => {
                     $scope.fms.splice(index, 0, updatedForm);
-                    $scope.addAdminVerified();
+                    $scope.addAdminVerified($scope.fms);
                 });
             }
         };
