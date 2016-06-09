@@ -1,6 +1,6 @@
 var myApp = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'environment', 'smart-table', 'cgBusy']);
 (function (app) {
-    var config = function ($routeProvider, $envServiceProvider) {
+    var config = function ($routeProvider, $envServiceProvider, $locationProvider) {
         $routeProvider
             .when("/home", {
             templateUrl: "app/html/Home.html",
@@ -14,7 +14,7 @@ var myApp = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstr
             templateUrl: "app/html/RepoForm.html",
             controller: "repoCtrl"
         })
-            .when("/viewReports", {
+            .when("/admin", {
             templateUrl: "app/html/ViewReports.html",
             controller: "viewCtrl"
         })
@@ -44,7 +44,7 @@ var myApp = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstr
         });
         $envServiceProvider.check();
     };
-    config.$inject = ['$routeProvider', 'envServiceProvider'];
+    config.$inject = ['$routeProvider', 'envServiceProvider', '$locationProvider'];
     app.config(config);
 })(angular.module("repoFormsApp"));
 //# sourceMappingURL=App.js.map

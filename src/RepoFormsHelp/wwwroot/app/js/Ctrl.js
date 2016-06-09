@@ -16,7 +16,7 @@
             $location.path('/repoform');
         };
         $scope.ViewRepos = function () {
-            $location.path('/viewReports');
+            $location.path('/admin');
         };
         $scope.Tbd = function () {
             alert("If you build it, they will come");

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mail;
 using System.Web.Configuration;
 
@@ -30,14 +31,18 @@ namespace WebApi.Utils
         }
 
 
-        public void AssignmentWriteUp(List<string> emails, string winUser)
+        public void AssignmentWriteUp(string winUser, string investigator)
         {
+
+            var emailString = WebConfigurationManager.AppSettings["RepoEmails"];
+            var emails = emailString.Split(';').ToList();
+
 
             var mailMessage = new MailMessage
             {
                 From = new MailAddress("assignmentwriteup@portfoliorecovery.com"),
-                Body = "There is a new assignment write up completed by: " + winUser,
-                Subject = "Assignment Write Up", 
+                Body = $"There is a new assignment write up completed by: {winUser}({investigator})",
+                Subject = $"Assignment Write Up for {investigator}", 
                 IsBodyHtml = true
             };
 
@@ -48,6 +53,5 @@ namespace WebApi.Utils
             _client.Send(mailMessage);
 
         }
-
     }
 }

@@ -39,7 +39,7 @@
         };
 
         $scope.ViewRepos = () => {
-            $location.path('/viewReports');
+            $location.path('/admin');
         };
 
         $scope.Tbd = () => {

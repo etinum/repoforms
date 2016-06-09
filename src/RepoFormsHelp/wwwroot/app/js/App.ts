@@ -8,7 +8,7 @@ var myApp = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstr
 
 
 (app => {
-    var config = ($routeProvider, $envServiceProvider) => {
+    var config = ($routeProvider, $envServiceProvider, $locationProvider) => {
         $routeProvider
             .when("/home", {
                 templateUrl: "app/html/Home.html",
@@ -22,7 +22,7 @@ var myApp = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstr
                 templateUrl: "app/html/RepoForm.html",
                 controller: "repoCtrl"
             })
-            .when("/viewReports", {
+            .when("/admin", {
                 templateUrl: "app/html/ViewReports.html",
                 controller: "viewCtrl"
             })
@@ -66,10 +66,10 @@ var myApp = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstr
 
         $envServiceProvider.check();
 
-
+        //$locationProvider.html5Mode(true);
     };
 
-    config.$inject = ['$routeProvider', 'envServiceProvider'];
+    config.$inject = ['$routeProvider', 'envServiceProvider', '$locationProvider'];
     app.config(config);
 })(angular.module("repoFormsApp"));
 

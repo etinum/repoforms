@@ -10,6 +10,7 @@ using Data;
 using WebApi.Hub;
 using WebApi.Mapper;
 using WebApi.Models;
+using WebApi.Utils;
 
 namespace WebApi.Controllers 
 {
@@ -97,7 +98,12 @@ namespace WebApi.Controllers
         {
 
             var repoFormModel = _mapper.Map<RepoForm>(formViewModel);
-            UpdateUser(repoFormModel);
+            var user = UpdateUser(repoFormModel);
+
+            if (repoFormModel.InitializedDate != null)
+            {
+                repoFormModel.AdminUserId = user.Id;
+            }
 
             // https://msdn.microsoft.com/en-us/data/jj592676.aspx
             _ctx.Entry(repoFormModel).State = EntityState.Modified;
@@ -117,6 +123,8 @@ namespace WebApi.Controllers
             _ctx.RepoForms.Add(repoFormModel);
 
             _ctx.SaveChanges();
+
+            new Email().AssignmentWriteUp(user.WinAuthName, repoFormModel.Investigator);
 
             return repoFormModel;
         }
