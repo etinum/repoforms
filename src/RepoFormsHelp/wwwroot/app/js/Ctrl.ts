@@ -75,7 +75,7 @@
 })(angular.module("repoFormsApp"));
 
 (app => {
-    var controller = ($scope, $dataService, $window, $routeParams, $uibModal) => {
+    var controller = ($scope, $dataService, $window, $routeParams, $uibModal, $location, $anchorScroll) => {
 
 
 
@@ -211,6 +211,9 @@
                     $scope.rf = <modeltypings.RepoFormViewModel>data;
                     setRfDate(data);
                     $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
+                    //$location.hash('adminPanel');
+                    //$anchorScroll();
+
                 });
         } else {
             $scope.rf = <modeltypings.RepoFormViewModel>{};
@@ -218,7 +221,6 @@
             $scope.rf.repoDate = new Date("06/17/2016");
             $scope.today();
         }
-
 
 
         $scope.open = () => {
@@ -246,7 +248,7 @@
     };
 
 
-    controller.$inject = ['$scope', 'dataService', '$window', '$routeParams', '$uibModal'];
+    controller.$inject = ['$scope', 'dataService', '$window', '$routeParams', '$uibModal', '$location', '$anchorScroll'];
     app.controller('repoCtrl', controller);
 })(angular.module("repoFormsApp"));
 
@@ -286,9 +288,10 @@
 
         var hub = $.connection.repoHub;
 
-        $scope.addAdminVerified = data => {
+        $scope.addAdminVerified = () => {
+            var data = $scope.fms;
             data.forEach(item => {
-                item.isInitialized = item.initializedDate == null;
+                item.administered = item.initializedDate !== null && $dataService.isTrue(item.verified);
             });
         };
 
@@ -297,7 +300,7 @@
             $scope.load = $dataService.getForms()
                 .then(data => {
                     $scope.fms = <modeltypings.RepoFormViewModel[]>data;
-                    $scope.addAdminVerified($scope.fms);
+                    $scope.addAdminVerified();
                     $scope.totalItems = $scope.fms.length;
                 });
         };
@@ -308,8 +311,24 @@
 
         };
 
+
+        $scope.scored = (row) => {
+            var saveobj = angular.copy(row);
+            saveobj.verified = true;
+            $scope.load = $dataService.saveForm(saveobj)
+                .then(() => {
+                    $scope.load = $dataService.getForms()
+                        .then(data => {
+                            $scope.fms = <modeltypings.RepoFormViewModel[]>data;
+                            $scope.addAdminVerified();
+                            $scope.totalItems = $scope.fms.length;
+                        });
+                });
+
+        };
+
         // Paging variables.
-        $scope.itemsPerPage = 6;
+        $scope.itemsPerPage = 12;
         $scope.currentPage = 1;
         $scope.maxSize = 5;
 
@@ -321,6 +340,7 @@
             if (index === -1) {
                 $scope.$apply(() => {
                     $scope.fms.push(updatedForm);
+                    $scope.addAdminVerified();
                 });
             } else {
                 $scope.$apply(() => {
@@ -328,6 +348,7 @@
                 });
                 $scope.$apply(() => {
                     $scope.fms.splice(index, 0, updatedForm);
+                    $scope.addAdminVerified();
                 });
             }
         };

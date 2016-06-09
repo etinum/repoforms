@@ -1,33 +1,45 @@
+Notes:<br/>
+1. Red -- Means the scoring admin still needs to record<br />
+2. Italics bold -- Means there is still a need for data verification<br />
+
 <div cg-busy="load">
     <table st-table="displayCollection" st-safe-src="fms" class="table table-striped">
         <thead>
         <tr>
-            <th st-sort="investigator">Investigator</th>
-            <th st-sort="repoDate">Repo Date</th>
+            <th st-sort="createDate">Date</th>
             <th st-sort="accountNumber">Account Number</th>
+            <th st-sort="investigator">Investigator</th>
             <th st-sort="client">Client</th>
+            <th st-sort="closeType">Close Type</th>
+            <th st-sort="customerName">Customer</th>
             <th st-sort="points">Points</th>
-            <th st-sort="initializedDate">Initialized Date</th>
         </tr>
         <tr>
             <th colspan="5"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
             <th>
-                <select st-search="isInitialized">
+                <select st-search="administered">
                     <option value="">All</option>
-                    <option value="true" selected="selected">Not Yet Confirmed</option>
-                    <option value="false">Already Confirmed</option>
+                    <option value="false" selected="selected">Not Yet Confirmed</option>
+                    <option value="true">Already Confirmed</option>
                 </select>
             </th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="row in displayCollection.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
-            <td ng-class="{'highlight': row.initializedDate == null}">{{row.investigator}}</td>
-            <td ng-class="{'highlight': row.initializedDate == null}">{{row.repoDate | date:'MM/dd/yyyy' }}</td>
-            <td ng-class="{'highlight': row.initializedDate == null}">{{row.accountNumber}}</td>
-            <td ng-class="{'highlight': row.initializedDate == null}">{{row.client}}</td>
-            <td ng-class="{'highlight': row.initializedDate == null}">{{row.points}}</td>
-            <td ng-class="{'highlight': row.initializedDate == null}">{{row.initializedDate | date:'MM/dd/yyyy' }}</td>
+            <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.repoDate | date:'MM/dd/yyyy' }}</td>
+            <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.accountNumber}}</td>
+            <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.investigator}}</td>
+            <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.client}}</td>
+            <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.closeType}}</td>
+            <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.customerName}}</td>
+            <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.points}}</td>
+            <td>
+                <button type="button" ng-hide="row.verified" ng-click="scored(row)" class="btn btn-sm btn-info">
+                    <i class="glyphicon glyphicon-check">
+                    </i>
+                </button>
+            </td>
             <td>
                 <button type="button" ng-click="edit(row)" class="btn btn-sm btn-default">
                     <i class="glyphicon glyphicon-edit">

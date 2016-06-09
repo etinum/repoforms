@@ -46,6 +46,19 @@
             return -1;
         }
 
+        function isFalse(obj) {
+            if (obj === null || obj === false) {
+                return false;
+            }
+            return true;
+        }
+
+        function isTrue(obj) {
+            if (obj === true) {
+                return true;
+            }
+            return false;
+        }
 
 
         var baseWebApiUrl = $envService.read('apiUrl');
@@ -206,6 +219,8 @@
             trimObjectProperties: trimObjectProperties,
             arrayUnique: arrayUnique,
             arrayObjectIndexOf: arrayObjectIndexOf,
+            isFalse: isFalse,
+            isTrue: isTrue,
             // Static list 
             favColorOptions: ['Red', 'Blue', 'Orange', 'Black', 'White'],
             favoriteIceCreamOptions: ['fudge', 'chocolate', 'vanila', 'almond fudge', 'rocky road'],

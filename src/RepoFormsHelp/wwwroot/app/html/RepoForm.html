@@ -28,7 +28,7 @@
                             <label for="createdDate" class="col-sm-3 control-label">Date</label>
                             <div class="col-sm-6">
                                 <p class="input-group">
-                                    <input id="createdDate" name="createdDate" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.createdDate" is-open="datePopupStatus.created" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly />
+                                    <input id="createdDate" name="createdDate" type="text" ng-click="openDatePopup(enumPopupType.CREATED)" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.createdDate" is-open="datePopupStatus.created" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="openDatePopup(enumPopupType.CREATED)"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
@@ -44,7 +44,7 @@
                             <label for="repoDate" class="col-sm-3 control-label">Repo Date</label>
                             <div class="col-sm-6">
                                 <p class="input-group">
-                                    <input id="repoDate" name="repoDate" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.repoDate" is-open="datePopupStatus.repo" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly />
+                                    <input id="repoDate" name="repoDate" type="text" ng-click="openDatePopup(enumPopupType.REPO)" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.repoDate" is-open="datePopupStatus.repo" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" readonly />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="openDatePopup(enumPopupType.REPO)"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
@@ -145,7 +145,7 @@
                         <label for="notes" class="col-sm-3 control-label">Notes</label>
                         <div class="col-sm-9">
                             <input type="text" ng-maxlength="1024" maxlength=1024 id="notes" name="notes" class="form-control"
-                                   ng-model="rf.notes" ng-required="false" uib-tooltip="This is just a sample tool tip value..." tooltip-trigger="focus" tooltip-placement="bottom-left" />
+                                   ng-model="rf.notes" ng-required="false"  />  <!--uib-tooltip="This is just a sample tool tip value..." tooltip-trigger="focus" tooltip-placement="bottom-left"-->
                             <div class="help-block" ng-messages="myForm.notes.$error" ng-show="myForm.notes.$touched || submitted">
                                 <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>
@@ -341,7 +341,7 @@
                 </div>
             </div>
             <div class="panel panel-default">
-                <div class="panel-heading">Department confirmation</div>
+                <div class="panel-heading" id="adminPanel">Department confirmation</div>
                 <div class="panel-body">
                     <div class="form-group" show-errors>
                         <label for="iPRUpdated" class="col-sm-3 control-label">IPR Updated</label>
@@ -378,7 +378,7 @@
                             <label for="initializedDate" class="col-sm-3 control-label">Date</label>
                             <div class="col-sm-6">
                                 <p class="input-group">
-                                    <input id="initializedDate" name="initializedDate" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.initializedDate" is-open="datePopupStatus.signed" datepicker-options="dateOptions" ng-required="false" close-text="Close" alt-input-formats="altInputFormats" readonly />
+                                    <input id="initializedDate" name="initializedDate" type="text" ng-click="openDatePopup(enumPopupType.SIGNED)" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.initializedDate" is-open="datePopupStatus.signed" datepicker-options="dateOptions" ng-required="false" close-text="Close" alt-input-formats="altInputFormats" readonly/>
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="openDatePopup(enumPopupType.SIGNED)"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
@@ -389,6 +389,18 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"
+                                           ng-model="rf.verified" />Scoring Admin Verified
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
                     <!--<div class="form-group" show-errors>
                         <label class="col-sm-3 control-label">Signature</label>
                         <div class="col-sm-9">

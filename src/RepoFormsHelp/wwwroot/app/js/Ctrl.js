@@ -42,7 +42,7 @@
     app.controller('homeCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
-    var controller = function ($scope, $dataService, $window, $routeParams, $uibModal) {
+    var controller = function ($scope, $dataService, $window, $routeParams, $uibModal, $location, $anchorScroll) {
         $scope.ng_maxLength = 50;
         $scope.maxLength = 50;
         $dataService.getTypeAheadData()
@@ -183,7 +183,7 @@
             });
         };
     };
-    controller.$inject = ['$scope', 'dataService', '$window', '$routeParams', '$uibModal'];
+    controller.$inject = ['$scope', 'dataService', '$window', '$routeParams', '$uibModal', '$location', '$anchorScroll'];
     app.controller('repoCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
@@ -203,16 +203,17 @@
 (function (app) {
     var controller = function ($scope, $dataService, $location) {
         var hub = $.connection.repoHub;
-        $scope.addAdminVerified = function (data) {
+        $scope.addAdminVerified = function () {
+            var data = $scope.fms;
             data.forEach(function (item) {
-                item.isInitialized = item.initializedDate == null;
+                item.administered = item.initializedDate !== null && $dataService.isTrue(item.verified);
             });
         };
         $scope.update = function () {
             $scope.load = $dataService.getForms()
                 .then(function (data) {
                 $scope.fms = data;
-                $scope.addAdminVerified($scope.fms);
+                $scope.addAdminVerified();
                 $scope.totalItems = $scope.fms.length;
             });
         };
@@ -220,7 +221,20 @@
             var rowee = row;
             $location.path('/repoform/' + rowee.id);
         };
-        $scope.itemsPerPage = 6;
+        $scope.scored = function (row) {
+            var saveobj = angular.copy(row);
+            saveobj.verified = true;
+            $scope.load = $dataService.saveForm(saveobj)
+                .then(function () {
+                $scope.load = $dataService.getForms()
+                    .then(function (data) {
+                    $scope.fms = data;
+                    $scope.addAdminVerified();
+                    $scope.totalItems = $scope.fms.length;
+                });
+            });
+        };
+        $scope.itemsPerPage = 12;
         $scope.currentPage = 1;
         $scope.maxSize = 5;
         hub.client.UpdateList = function (updatedForm) {
@@ -228,6 +242,7 @@
             if (index === -1) {
                 $scope.$apply(function () {
                     $scope.fms.push(updatedForm);
+                    $scope.addAdminVerified();
                 });
             }
             else {
@@ -236,6 +251,7 @@
                 });
                 $scope.$apply(function () {
                     $scope.fms.splice(index, 0, updatedForm);
+                    $scope.addAdminVerified();
                 });
             }
         };

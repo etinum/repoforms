@@ -2,10 +2,15 @@ fieldset legend .subtitle {
     font-size: 80%;
 }
 
-tr .highlight {
-    color: #a94442;
+tr .repo-admin {
     font-weight: bold;
+    font-style: oblique;
 }
+
+tr .repo-score {
+    color: red;
+}
+
 
 .st-sort-ascent:before {
     content: '\25B2';

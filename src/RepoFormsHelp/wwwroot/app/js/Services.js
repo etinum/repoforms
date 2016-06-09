@@ -23,6 +23,18 @@
             }
             return -1;
         }
+        function isFalse(obj) {
+            if (obj === null || obj === false) {
+                return false;
+            }
+            return true;
+        }
+        function isTrue(obj) {
+            if (obj === true) {
+                return true;
+            }
+            return false;
+        }
         var baseWebApiUrl = $envService.read('apiUrl');
         var alertFailed = function (response) {
             alert("There was a problem with the back end call, here is your status code: " + response.status);
@@ -150,6 +162,8 @@
             trimObjectProperties: trimObjectProperties,
             arrayUnique: arrayUnique,
             arrayObjectIndexOf: arrayObjectIndexOf,
+            isFalse: isFalse,
+            isTrue: isTrue,
             favColorOptions: ['Red', 'Blue', 'Orange', 'Black', 'White'],
             favoriteIceCreamOptions: ['fudge', 'chocolate', 'vanila', 'almond fudge', 'rocky road'],
             states: ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
