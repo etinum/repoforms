@@ -3,9 +3,17 @@
 /// <reference path="../typings/angular-environment.d.ts" />
 
 
-var myApp = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'environment', 'smart-table', 'cgBusy']);
+// Global configurations: 
+// superadmin all groups
+// manager includes auditor
+// auditor ...  etc.  
+var superadmin = 'Ertran, JFountaine, JAZiebro';
+var manager = 'JAZiebro, JFountaine, knbaugher';
+var auditor = 'TAKushnir, cashideler';
 
 
+
+angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'environment', 'smart-table', 'cgBusy']);
 
 (app => {
     var config = ($routeProvider, $envServiceProvider, $locationProvider) => {

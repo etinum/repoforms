@@ -56,10 +56,10 @@ namespace WebApi.Controllers
 
             var model = new RepoFormTypeAheadModel
             {
-                Investigator = repoFormsByUser.Select(r => r.Investigator?.Trim()).Distinct().ToList(),
-                ClientList = repoFormsByUser.Select(r => r.Client?.Trim()).Distinct().ToList(),
-                CustomerList = repoFormsByUser.Select(r => r.CustomerName?.Trim()).Distinct().ToList(),
-                RecoveryAgentList = repoFormsByUser.Select(r => r.RecoveryAgent?.Trim()).Distinct().ToList()
+                Investigator = repoFormsByUser.Select(r => r.Investigator?.Trim()).Distinct().ToList()
+                // ClientList = repoFormsByUser.Select(r => r.Client?.Trim()).Distinct().ToList(),
+                // CustomerList = repoFormsByUser.Select(r => r.CustomerName?.Trim()).Distinct().ToList(),
+                // RecoveryAgentList = repoFormsByUser.Select(r => r.RecoveryAgent?.Trim()).Distinct().ToList()
         
             };
 
@@ -124,7 +124,7 @@ namespace WebApi.Controllers
 
             _ctx.SaveChanges();
 
-            new Email().AssignmentWriteUp(user.WinAuthName, repoFormModel.Investigator);
+            Email.AssignmentWriteUp(user.WinAuthName, repoFormModel.Investigator);
 
             return repoFormModel;
         }

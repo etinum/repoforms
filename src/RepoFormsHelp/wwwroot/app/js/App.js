@@ -1,4 +1,7 @@
-var myApp = angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'environment', 'smart-table', 'cgBusy']);
+var superadmin = 'Ertran, JFountaine, JAZiebro';
+var manager = 'JAZiebro, JFountaine, knbaugher';
+var auditor = 'TAKushnir, cashideler';
+angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'environment', 'smart-table', 'cgBusy']);
 (function (app) {
     var config = function ($routeProvider, $envServiceProvider, $locationProvider) {
         $routeProvider

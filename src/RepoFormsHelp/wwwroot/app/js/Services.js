@@ -1,5 +1,5 @@
 (function (app) {
-    var service = function ($http, $q, $envService) {
+    var service = function ($http, $q, $envService, $window) {
         var trimObjectProperties = function (objectToTrim) {
             for (var key in objectToTrim) {
                 if (objectToTrim[key] !== null && objectToTrim[key].trim)
@@ -31,6 +31,19 @@
         }
         function isTrue(obj) {
             if (obj === true) {
+                return true;
+            }
+            return false;
+        }
+        function isSuperAdmin(username) {
+            if (!username) {
+                username = $window.userdata;
+            }
+            if (!username)
+                return false;
+            var lcuser = username.toLowerCase().split("\\")[1];
+            var names = superadmin.toLowerCase().split(",");
+            if (names.indexOf(lcuser) > -1) {
                 return true;
             }
             return false;
@@ -164,12 +177,14 @@
             arrayObjectIndexOf: arrayObjectIndexOf,
             isFalse: isFalse,
             isTrue: isTrue,
-            favColorOptions: ['Red', 'Blue', 'Orange', 'Black', 'White'],
-            favoriteIceCreamOptions: ['fudge', 'chocolate', 'vanila', 'almond fudge', 'rocky road'],
+            isSuperAdmin: isSuperAdmin,
+            closeTypeOptions: ['BK', 'PAID', 'FORWARD', 'LOCATE', 'REPO', 'LPR'],
+            clientOptions: ['UTOTRAKK', 'ALLY FINANCIAL', 'BAY ENTERPRISE GROUP', 'BHFC', 'C & F FINANCE', 'CARMAX AUTO FINANCE', 'CFAM', 'CHRYSLER CAPITAL-2', 'CHRYSLER CAPITAL-3', 'CITY WIDE INVESTIGATIONS', 'CLA', 'CONSUMER PORTFOLIO', 'EXETER', 'FORD MOTOR CREDIT', 'HYUNDAI MOTOR FINANCE', 'NISSAN MOTOR ACCEPTANCE ', 'NMAC LOSS RECOVERY IGS', 'SAFCO', 'SANTANDER-1', 'SANTANDER-2', 'SANTANDER-3', 'VW CREDIT-PSC', 'VW CREDIT-CSC', 'WELLS FARGO', 'WESTLAKE FINANCIAL', 'UNIVERSAL ACCEPTANCE CORP', 'TURBO TITLE LOANS', 'PRA RECEIVABLE MANAGEMENT', 'SANTANDER-4', 'PRA RECEIVABLES', 'CHRYSLER CAPITAL-1', 'VW CREDIT', 'SST'],
+            investigatorOptions: ['Aaron Brazil', 'Aaron Steele', 'Adam Cuthbertson', 'Aimee Lamoureux', 'Alexandria Velis', 'Alexis Smith', 'Anthony D\'Lallo', 'Brandice Plunkett', 'Brandon Burkhouse', 'Brian Shultis', 'Bryan Olson', 'Casey Flissinger', 'Charles Ruth', 'Cheryl Stuckey', 'Christy Gallow', 'Courtney Kulik', 'Dak Brown', 'Denise Priano', 'Devin Hughes', 'Erica Farley', 'Erika Holiday', 'House', 'Janette Bailey', 'Jason Anderson', 'Jeremy Lynch', 'Jessica Westphal', 'Jinette Hernandez', 'Johanna Johnson', 'Keshia Fisher', 'Kevin Zwahlen', 'Katie Halling', 'Kristina Karavan', 'Kyle Baugher', 'Madison Post', 'Mary Sydloski', 'Nicole Seevers', 'Nicole Ho', 'Oliver Shipp', 'Patrick Mcdonnell', 'Priscilla Nava', 'Rachel Fader', 'Ricklene Smith', 'Roger Goss', 'Rolf Bell', 'Rose Cuellar', 'Sarah Blankenship', 'Sean Sasville', 'Shauna Harris', 'Shay Harmon', 'Stacy Fisher', 'Steve Estey', 'Tatyana Nesterova', 'Thomas Anderson', 'Timothy Beeman', 'Tony Quadra', 'Tonia Gatto', 'Travis Rudnick', 'Trey Jackson', 'Zac Bastien'],
             states: ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
         };
     };
-    service.$inject = ['$http', '$q', 'envService'];
+    service.$inject = ['$http', '$q', 'envService', '$window'];
     app.factory("dataService", service);
 })(angular.module("repoFormsApp"));
 //# sourceMappingURL=Services.js.map

@@ -51,7 +51,7 @@ namespace WebApi.Controllers
         public bool SendEmail()
         {
             
-            new Email().SendTest();
+            Email.SendTest();
 
             return true;
         }

@@ -1,17 +1,21 @@
 (function (app) {
     var controller = function ($scope, $window, $dataService, $envService, $rootScope) {
-        $dataService.getUser()
+        $scope.load = $dataService.getUser()
             .then(function (data) {
             $window.userdata = data;
-            $scope.masterWelcome = "Welcome master " + data;
         });
-        $scope.baseWebApiUrl = $envService.read('apiUrl');
     };
     controller.$inject = ['$scope', '$window', 'dataService', 'envService', '$rootScope'];
     app.controller('masterCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
-    var controller = function ($scope, $location, $dataService, $window) {
+    var controller = function ($scope, $location, $dataService, $window, $envService) {
+        if ($envService.is('production')) {
+            $scope.isProd = true;
+        }
+        else {
+            $scope.isProd = false;
+        }
         $scope.GotoRepoForm = function () {
             $location.path('/repoform');
         };
@@ -23,7 +27,7 @@
         };
         $scope.$watch(function () { return $window.userdata; }, function (n) {
             if (n !== undefined) {
-                $scope.welcome = "Pick something sir, " + $window.userdata;
+                $scope.welcome = "Pick something sir, " + $window.userdata.toLowerCase().split("\\")[1];
             }
         });
         $scope.TestClick = function () {
@@ -38,7 +42,7 @@
             $dataService.addPerson($scope.tempPerson);
         };
     };
-    controller.$inject = ['$scope', '$location', 'dataService', '$window'];
+    controller.$inject = ['$scope', '$location', 'dataService', '$window', 'envService'];
     app.controller('homeCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
@@ -48,6 +52,12 @@
         $dataService.getTypeAheadData()
             .then(function (data) {
             $scope.typeAheadModel = data;
+            if (!$scope.typeAheadModel) {
+                $scope.investigatorOptions = $dataService.investigatorOptions;
+            }
+            else {
+                $scope.investigatorOptions = $dataService.investigatorOptions.concat($scope.typeAheadModel.investigator);
+            }
         });
         $scope.states = $dataService.states;
         $scope.getLocation = $dataService.getLocation;
@@ -102,8 +112,8 @@
             }
         };
         $scope.submitted = false;
-        $scope.favColorOptions = $dataService.favColorOptions;
-        $scope.favoriteIceCreamOptions = $dataService.favoriteIceCreamOptions;
+        $scope.closeTypeOptions = $dataService.closeTypeOptions;
+        $scope.clientOptions = $dataService.clientOptions;
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
         $scope.altInputFormats = ['M!/d!/yyyy'];

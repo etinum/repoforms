@@ -16,14 +16,13 @@
 (app => {
     var controller = ($scope, $window, $dataService, $envService, $rootScope) => {
 
-        $dataService.getUser()
+        $scope.load = $dataService.getUser()
             .then(data => {
                 $window.userdata = data;
-                $scope.masterWelcome = "Welcome master " + data;
             });
 
         //$rootScope.testroot = 'pinky';
-        $scope.baseWebApiUrl = $envService.read('apiUrl');
+        //$scope.baseWebApiUrl = $envService.read('apiUrl');
     };
     controller.$inject = ['$scope', '$window', 'dataService', 'envService', '$rootScope'];
     app.controller('masterCtrl', controller);
@@ -31,7 +30,15 @@
 
 (app => {
 
-    var controller = ($scope, $location, $dataService, $window) => {
+    var controller = ($scope, $location, $dataService, $window, $envService) => {
+
+
+        // configure hiddden fields in production
+        if ($envService.is('production')) {
+            $scope.isProd = true;
+        } else {
+            $scope.isProd = false;
+        }
 
 
         $scope.GotoRepoForm = () => {
@@ -50,7 +57,7 @@
     // watch to see if global variable has been set from master control before using it in the current controller.
         $scope.$watch(() => $window.userdata, (n) => {
             if (n !== undefined) {
-                $scope.welcome = "Pick something sir, " + $window.userdata;
+                $scope.welcome = "Pick something sir, " + $window.userdata.toLowerCase().split("\\")[1];
             }
         });
 
@@ -70,7 +77,7 @@
         }
     };
 
-    controller.$inject = ['$scope', '$location', 'dataService', '$window'];
+    controller.$inject = ['$scope', '$location', 'dataService', '$window', 'envService'];
     app.controller('homeCtrl', controller);
 })(angular.module("repoFormsApp"));
 
@@ -86,6 +93,11 @@
         $dataService.getTypeAheadData()
             .then(data => {
                 $scope.typeAheadModel = <modeltypings.RepoFormTypeAheadModel>data;
+                if (!$scope.typeAheadModel) {
+                    $scope.investigatorOptions = $dataService.investigatorOptions;
+                } else {
+                    $scope.investigatorOptions = $dataService.investigatorOptions.concat($scope.typeAheadModel.investigator);
+                }
             });
 
 
@@ -128,8 +140,10 @@
         $scope.submitted = false;
 
         // Dropdown configuration
-        $scope.favColorOptions = $dataService.favColorOptions;
-        $scope.favoriteIceCreamOptions = $dataService.favoriteIceCreamOptions;
+        $scope.closeTypeOptions = $dataService.closeTypeOptions;
+
+        // Type ahead configuration
+        $scope.clientOptions = $dataService.clientOptions;
 
         // DATE configurations
 

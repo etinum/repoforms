@@ -69,7 +69,7 @@
                         <label for="investigator" class="col-sm-3 control-label">Investigator</label>
                         <div class="col-sm-9">
                             <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="investigator" name="investigator" class="form-control"
-                                   ng-model="rf.investigator" ng-required="true" uib-typeahead="item for item in typeAheadModel.investigator  | filter:$viewValue | limitTo:8" autocomplete="off"/>
+                                   ng-model="rf.investigator" ng-required="true" uib-typeahead="item for item in investigatorOptions  | filter:$viewValue | limitTo:8" autocomplete="off"/>
                             <div class="help-block" ng-messages="myForm.investigator.$error" ng-show="myForm.investigator.$touched || submitted">
                                 <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>
@@ -79,22 +79,26 @@
                         <label for="client" class="col-sm-3 control-label">Client</label>
                         <div class="col-sm-9">
                             <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="client" name="client" class="form-control"
-                                   ng-model="rf.client" ng-required="true" />
+                                   ng-model="rf.client" ng-required="true" uib-typeahead="item for item in clientOptions  | filter:$viewValue | limitTo:8" autocomplete="off"/>
                             <div class="help-block" ng-messages="myForm.client.$error" ng-show="myForm.investigator.$touched || submitted">
                                 <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>
                         </div>
                     </div>
+
                     <div class="form-group" show-errors>
                         <label for="closeType" class="col-sm-3 control-label">Close Type</label>
                         <div class="col-sm-9">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="closeType" name="closeType" class="form-control"
-                                   ng-model="rf.closeType" ng-required="true" />
+                            <select id="closeType" name="closeType" class="form-control" data-ng-options="item for item in closeTypeOptions track by item"
+                                    data-ng-model="rf.closeType" ng-required="true">
+                                <option value="">---Please select---</option>
+                            </select>
                             <div class="help-block" ng-messages="myForm.closeType.$error" ng-show="myForm.closeType.$touched || submitted">
                                 <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>
                         </div>
                     </div>
+
                     <div class="form-group" show-errors>
                         <label for="customerName" class="col-sm-3 control-label">Customer</label>
                         <div class="col-sm-9">
@@ -119,7 +123,7 @@
                         <label for="recoveryAgent" class="col-sm-3 control-label">Recovery Agent</label>
                         <div class="col-sm-9">
                             <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryAgent" name="recoveryAgent" class="form-control"
-                                   ng-model="rf.recoveryAgent" ng-required="true" uib-typeahead="item for item in typeAheadModel.recoveryAgentList  | filter:$viewValue | limitTo:8" autocomplete="off" />
+                                   ng-model="rf.recoveryAgent" ng-required="false" uib-typeahead="item for item in typeAheadModel.recoveryAgentList  | filter:$viewValue | limitTo:8" autocomplete="off" />
                             <div class="help-block" ng-messages="myForm.recoveryAgent.$error" ng-show="myForm.recoveryAgent.$touched || submitted">
                                 <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>
@@ -139,7 +143,6 @@
                             </div>
                         </div>
                     </div>-->
-
 
                     <div class="form-group" show-errors>
                         <label for="notes" class="col-sm-3 control-label">Notes</label>
@@ -175,7 +178,7 @@
                         <label for="recoveryCity" class="col-sm-3 control-label">City</label>
                         <div class="col-sm-5">
                             <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryCity" name="recoveryCity" class="form-control"
-                                   ng-model="rf.recoveryCity" ng-required="true" />
+                                   ng-model="rf.recoveryCity" ng-required="false" />
                             <div class="help-block" ng-messages="myForm.recoveryCity.$error" ng-show="myForm.recoveryCity.$touched || submitted">
                                 <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>
@@ -185,7 +188,7 @@
                         <label for="recoveryState" class="col-sm-3 control-label">State</label>
                         <div class="col-sm-4">
                             <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryState" name="recoveryState" class="form-control"
-                                   ng-model="rf.recoveryState" ng-required="true" />
+                                   ng-model="rf.recoveryState" ng-required="false" />
                             <div class="help-block" ng-messages="myForm.recoveryState.$error" ng-show="myForm.recoveryState.$touched || submitted">
                                 <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>
@@ -195,7 +198,7 @@
                         <label for="recoveryZip" class="col-sm-3 control-label">ZIP</label>
                         <div class="col-sm-3">
                             <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryZip" name="recoveryZip" class="form-control"
-                                   ng-model="rf.recoveryZip" ng-required="true" />
+                                   ng-model="rf.recoveryZip" ng-required="false" />
                             <div class="help-block" ng-messages="myForm.recoveryZip.$error" ng-show="myForm.recoveryZip.$touched || submitted">
                                 <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>

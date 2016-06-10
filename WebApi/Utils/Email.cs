@@ -5,17 +5,12 @@ using System.Web.Configuration;
 
 namespace WebApi.Utils
 {
-    public class Email
+    public static class Email
     {
-        private readonly SmtpClient _client;
+        private static readonly SmtpClient Client = new SmtpClient(WebConfigurationManager.AppSettings["smtpserver"]) { UseDefaultCredentials = false };
 
-        public Email()
-        {
-            var smtpserver = WebConfigurationManager.AppSettings["smtpserver"];
-            _client = new SmtpClient(smtpserver) { UseDefaultCredentials = false };
-        }
 
-        public void SendTest()
+        public static void SendTest()
         {
             var mailMessage = new MailMessage
             {
@@ -26,12 +21,12 @@ namespace WebApi.Utils
 
             mailMessage.To.Add("ertran@portfoliorecovery.com");
             mailMessage.To.Add("eric.n.tran@gmail.com");
-            _client.Send(mailMessage);
+            Client.Send(mailMessage);
 
         }
 
 
-        public void AssignmentWriteUp(string winUser, string investigator)
+        public static void AssignmentWriteUp(string winUser, string investigator)
         {
 
             var emailString = WebConfigurationManager.AppSettings["RepoEmails"];
@@ -50,7 +45,7 @@ namespace WebApi.Utils
             {
                 mailMessage.To.Add(email);
             }
-            _client.Send(mailMessage);
+            Client.Send(mailMessage);
 
         }
     }
