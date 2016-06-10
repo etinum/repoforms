@@ -28,6 +28,9 @@
         $scope.$watch(function () { return $window.userdata; }, function (n) {
             if (n !== undefined) {
                 $scope.welcome = "Pick something sir, " + $window.userdata.toLowerCase().split("\\")[1];
+                $scope.isSuperAdmin = $dataService.isSuperAdmin();
+                $scope.isAuditor = $dataService.isAuditor();
+                $scope.isManagement = $dataService.isManagement();
             }
         });
         $scope.TestClick = function () {

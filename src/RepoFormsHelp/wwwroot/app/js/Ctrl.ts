@@ -40,7 +40,6 @@
             $scope.isProd = false;
         }
 
-
         $scope.GotoRepoForm = () => {
             $location.path('/repoform');
         };
@@ -58,6 +57,12 @@
         $scope.$watch(() => $window.userdata, (n) => {
             if (n !== undefined) {
                 $scope.welcome = "Pick something sir, " + $window.userdata.toLowerCase().split("\\")[1];
+
+                // Set permissions: 
+                $scope.isSuperAdmin = $dataService.isSuperAdmin();
+                $scope.isAuditor = $dataService.isAuditor();
+                $scope.isManagement = $dataService.isManagement();
+
             }
         });
 

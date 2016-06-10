@@ -9,7 +9,7 @@
     </div>
 </fieldset>
 
-<fieldset ng-hide="isProd">
+<fieldset ng-hide="!isAuditor">
     <legend>Admin</legend>
     <div class="form-group">
         <input type="button" class="btn btn-primary" value="Admin Verification" ng-click="ViewRepos()" />
@@ -18,7 +18,7 @@
     </div>
 </fieldset>
 
-<fieldset ng-hide="isProd">
+<fieldset ng-hide="!isManagement">
     <legend>Management</legend>
     <div class="form-group">
         <input type="button" class="btn btn-primary" value="Daily Reports" ng-click="Tbd()" />
@@ -27,8 +27,7 @@
     </div>
 </fieldset>
 
-
-<fieldset ng-hide="isProd">
+<fieldset ng-hide="!isAuditor">
     <legend>Floor Display</legend>
     <div class="form-group">
         <input type="button" class="btn btn-primary" value="Scores" ng-click="Tbd()" />

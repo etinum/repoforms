@@ -7,9 +7,9 @@
 // superadmin all groups
 // manager includes auditor
 // auditor ...  etc.  
-var superadmin = 'Ertran, JFountaine, JAZiebro';
-var manager = 'JAZiebro, JFountaine, knbaugher';
-var auditor = 'TAKushnir, cashideler';
+var superadmin = 'JFountaine,JAZiebro';
+var management = 'Ertran,JAZiebro,JFountaine,knbaugher';
+var auditor = 'TAKushnir,cashideler';
 
 
 
