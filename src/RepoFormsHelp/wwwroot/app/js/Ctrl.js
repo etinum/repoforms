@@ -306,17 +306,19 @@
             var index = $dataService.arrayObjectIndexOf($scope.fms, updatedForm.id, "id");
             if (index === -1) {
                 $scope.$apply(function () {
-                    $scope.fms.push(updatedForm);
-                    $scope.addAdminVerified($scope.fms);
+                    $scope.allItems.push(updatedForm);
+                    $scope.addAdminVerified($scope.allItems);
+                    $scope.filter();
                 });
             }
             else {
                 $scope.$apply(function () {
-                    $scope.fms.splice(index, 1);
+                    $scope.allItems.splice(index, 1);
                 });
                 $scope.$apply(function () {
-                    $scope.fms.splice(index, 0, updatedForm);
-                    $scope.addAdminVerified($scope.fms);
+                    $scope.allItems.splice(index, 0, updatedForm);
+                    $scope.addAdminVerified($scope.allItems);
+                    $scope.filter();
                 });
             }
         };
