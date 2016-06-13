@@ -303,20 +303,17 @@
         $scope.currentPage = 1;
         $scope.maxSize = 5;
         hub.client.UpdateList = function (updatedForm) {
-            var index = $dataService.arrayObjectIndexOf($scope.fms, updatedForm.id, "id");
+            var index = $dataService.arrayObjectIndexOf($scope.allItems, updatedForm.id, "id");
             if (index === -1) {
-                $scope.$apply(function () {
+                $scope.$evalAsync(function () {
                     $scope.allItems.push(updatedForm);
                     $scope.addAdminVerified($scope.allItems);
                     $scope.filter();
                 });
             }
             else {
-                $scope.$apply(function () {
-                    $scope.allItems.splice(index, 1);
-                });
-                $scope.$apply(function () {
-                    $scope.allItems.splice(index, 0, updatedForm);
+                $scope.$evalAsync(function () {
+                    $scope.allItems.splice(index, 1, updatedForm);
                     $scope.addAdminVerified($scope.allItems);
                     $scope.filter();
                 });

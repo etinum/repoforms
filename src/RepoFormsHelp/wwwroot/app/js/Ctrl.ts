@@ -419,23 +419,22 @@
 
         hub.client.UpdateList = (updatedForm: modeltypings.RepoFormViewModel) => {
 
-            var index = $dataService.arrayObjectIndexOf($scope.fms, updatedForm.id, "id");
+            var index = $dataService.arrayObjectIndexOf($scope.allItems, updatedForm.id, "id");
 
             if (index === -1) {
-                $scope.$apply(() => {
+                $scope.$evalAsync(() => {
                     $scope.allItems.push(updatedForm);
                     $scope.addAdminVerified($scope.allItems);
                     $scope.filter();
                 });
             } else {
-                $scope.$apply(() => {
-                    $scope.allItems.splice(index, 1);
-                });
-                $scope.$apply(() => {
-                    $scope.allItems.splice(index, 0, updatedForm);
+                $scope.$evalAsync(() => {
+                    //$scope.allItems.splice(index, 1);
+                    $scope.allItems.splice(index, 1, updatedForm);
                     $scope.addAdminVerified($scope.allItems);
                     $scope.filter();
                 });
+
             }
 
         };
