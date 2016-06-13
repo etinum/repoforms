@@ -50,8 +50,7 @@ namespace WebApi.Controllers
             {
                 return null;
             }
-
-
+            
             var repoFormsByUser = _ctx.RepoForms.ToList().FindAll(r => r.OriginalUserId == user.Id);
 
             var model = new RepoFormTypeAheadModel

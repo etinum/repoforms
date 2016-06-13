@@ -1,10 +1,6 @@
 (function (app) {
     var service = function ($http, $q, $envService, $window) {
         var trimObjectProperties = function (objectToTrim) {
-            for (var key in objectToTrim) {
-                if (objectToTrim[key] !== null && objectToTrim[key].trim)
-                    objectToTrim[key] = objectToTrim[key].trim();
-            }
         };
         var arrayUnique = function (array) {
             var a = array.concat();

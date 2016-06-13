@@ -220,7 +220,8 @@
             ATT: 1,
             AUDIT: 2,
             SCORE: 3,
-            ALL: 4
+            ALL: 4,
+            LPR: 5
         };
         var hub = $.connection.repoHub;
         $scope.processData = function () {
@@ -260,7 +261,7 @@
                 'id': $scope.enumFilterType.ALL
             },
             {
-                'label': 'Attention',
+                'label': 'Need Attention',
                 'id': $scope.enumFilterType.ATT
             },
             {
@@ -270,6 +271,10 @@
             {
                 'label': 'Score',
                 'id': $scope.enumFilterType.SCORE
+            },
+            {
+                'label': 'LPR',
+                'id': $scope.enumFilterType.LPR
             }
         ];
         $scope.filterSelected = $scope.filterOptions.find(function (item) { return item.id === $scope.enumFilterType.ATT; });
@@ -286,6 +291,9 @@
                     break;
                 case $scope.enumFilterType.SCORE:
                     $scope.fms = $scope.allItems.filter(function (item) { return !item.verified; });
+                    break;
+                case $scope.enumFilterType.LPR:
+                    $scope.fms = $scope.allItems.filter(function (item) { return item.closeType === 'LPR'; });
                     break;
                 default:
             }

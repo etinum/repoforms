@@ -21,10 +21,10 @@
 
         // Helper methods
         var trimObjectProperties = (objectToTrim) => {
-            for (var key in objectToTrim) {
-                if (objectToTrim[key] !== null && objectToTrim[key].trim)
-                    objectToTrim[key] = objectToTrim[key].trim();
-            }
+            //for (var key in objectToTrim) {
+            //    if (objectToTrim[key] !== null && objectToTrim[key].trim)
+            //        objectToTrim[key] = objectToTrim[key].trim();
+            //}
         };
 
 

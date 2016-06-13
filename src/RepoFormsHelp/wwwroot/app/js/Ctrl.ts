@@ -310,7 +310,8 @@
             ATT: 1,
             AUDIT: 2,
             SCORE: 3,
-            ALL: 4
+            ALL: 4,
+            LPR: 5
         }
 
         var hub = $.connection.repoHub;
@@ -364,7 +365,7 @@
                 'id': $scope.enumFilterType.ALL
             },
             {
-                'label': 'Attention',
+                'label': 'Need Attention',
                 'id': $scope.enumFilterType.ATT
             },
             {
@@ -374,7 +375,12 @@
             {
                 'label': 'Score',
                 'id': $scope.enumFilterType.SCORE
+            },
+            {
+                'label': 'LPR',
+                'id': $scope.enumFilterType.LPR
             }
+
         ];
 
         // default value
@@ -394,6 +400,9 @@
                     break;
                 case $scope.enumFilterType.SCORE:
                     $scope.fms = $scope.allItems.filter(item => !item.verified);
+                    break;
+                case $scope.enumFilterType.LPR:
+                    $scope.fms = $scope.allItems.filter(item => item.closeType === 'LPR');
                     break;
                 default:
             }

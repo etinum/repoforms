@@ -18,6 +18,7 @@ namespace Data
         public User()
         {
             this.RepoForms = new HashSet<RepoForm>();
+            this.RepoForms1 = new HashSet<RepoForm>();
         }
     
         public int Id { get; set; }
@@ -28,5 +29,7 @@ namespace Data
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RepoForm> RepoForms { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RepoForm> RepoForms1 { get; set; }
     }
 }

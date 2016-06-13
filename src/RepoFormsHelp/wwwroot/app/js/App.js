@@ -1,5 +1,5 @@
-var superadmin = 'JFountaine,JAZiebro';
-var management = 'Ertran,JAZiebro,JFountaine,knbaugher';
+var superadmin = 'Ertran,JFountaine,JAZiebro';
+var management = 'JAZiebro,JFountaine,knbaugher';
 var auditor = 'TAKushnir,cashideler';
 angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'environment', 'smart-table', 'cgBusy']);
 (function (app) {
