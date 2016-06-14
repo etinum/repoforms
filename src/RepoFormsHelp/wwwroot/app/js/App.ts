@@ -9,7 +9,7 @@
 // auditor ...  etc.  
 var superadmin = 'Ertran,JFountaine,JAZiebro';
 var management = 'JAZiebro,JFountaine,knbaugher';
-var auditor = 'TAKushnir,cashideler';
+var auditor = 'TAKushnir,cashideler,ShHarmon';
 
 
 

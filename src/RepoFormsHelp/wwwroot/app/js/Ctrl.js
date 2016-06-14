@@ -277,7 +277,7 @@
                 'id': $scope.enumFilterType.LPR
             }
         ];
-        $scope.filterSelected = $scope.filterOptions.find(function (item) { return item.id === $scope.enumFilterType.ATT; });
+        $scope.filterSelected = $scope.filterOptions.filter(function (item) { return item.id === $scope.enumFilterType.ATT; })[0];
         $scope.filter = function () {
             switch ($scope.filterSelected.id) {
                 case $scope.enumFilterType.ALL:

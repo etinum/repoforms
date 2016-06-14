@@ -384,7 +384,7 @@
         ];
 
         // default value
-        $scope.filterSelected = $scope.filterOptions.find(item => item.id === $scope.enumFilterType.ATT);
+        $scope.filterSelected = $scope.filterOptions.filter(item => item.id === $scope.enumFilterType.ATT)[0];
 
         $scope.filter = () => {
 

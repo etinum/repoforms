@@ -36,7 +36,7 @@ namespace WebApi.Utils
             var mailMessage = new MailMessage
             {
                 From = new MailAddress("assignmentwriteup@portfoliorecovery.com"),
-                Body = $"There is a new assignment write up completed by: {winUser}({investigator})",
+                Body = $"There is a new assignment write up completed by: {winUser}({investigator})<br>URL: http://plsf",
                 Subject = $"Assignment Write Up for {investigator}", 
                 IsBodyHtml = true
             };
