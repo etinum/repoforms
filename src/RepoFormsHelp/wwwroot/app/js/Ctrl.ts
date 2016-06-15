@@ -48,10 +48,16 @@
             $location.path('/admin');
         };
 
+
+        $scope.goContacts = () => {
+            window.location.href = 'contacts.pdf';
+        };
+
         $scope.Tbd = () => {
             alert("If you build it, they will come");
         };
-    
+
+
 
     // watch to see if global variable has been set from master control before using it in the current controller.
         $scope.$watch(() => $window.userdata, (n) => {
@@ -393,13 +399,13 @@
                     $scope.fms = $scope.allItems;
                     break;
                 case $scope.enumFilterType.ATT:
-                    $scope.fms = $scope.allItems.filter(item => !item.administered);
+                    $scope.fms = $scope.allItems.filter(item => !item.administered && item.closeType !== 'LPR');
                     break;
                 case $scope.enumFilterType.AUDIT:
-                    $scope.fms = $scope.allItems.filter(item => item.initializedDate == null);
+                    $scope.fms = $scope.allItems.filter(item => item.initializedDate == null && item.closeType !== 'LPR');
                     break;
                 case $scope.enumFilterType.SCORE:
-                    $scope.fms = $scope.allItems.filter(item => !item.verified);
+                    $scope.fms = $scope.allItems.filter(item => !item.verified && item.closeType !== 'LPR');
                     break;
                 case $scope.enumFilterType.LPR:
                     $scope.fms = $scope.allItems.filter(item => item.closeType === 'LPR');

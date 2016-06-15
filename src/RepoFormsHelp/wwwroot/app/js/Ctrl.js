@@ -22,6 +22,9 @@
         $scope.ViewRepos = function () {
             $location.path('/admin');
         };
+        $scope.goContacts = function () {
+            window.location.href = 'contacts.pdf';
+        };
         $scope.Tbd = function () {
             alert("If you build it, they will come");
         };
@@ -284,13 +287,13 @@
                     $scope.fms = $scope.allItems;
                     break;
                 case $scope.enumFilterType.ATT:
-                    $scope.fms = $scope.allItems.filter(function (item) { return !item.administered; });
+                    $scope.fms = $scope.allItems.filter(function (item) { return !item.administered && item.closeType !== 'LPR'; });
                     break;
                 case $scope.enumFilterType.AUDIT:
-                    $scope.fms = $scope.allItems.filter(function (item) { return item.initializedDate == null; });
+                    $scope.fms = $scope.allItems.filter(function (item) { return item.initializedDate == null && item.closeType !== 'LPR'; });
                     break;
                 case $scope.enumFilterType.SCORE:
-                    $scope.fms = $scope.allItems.filter(function (item) { return !item.verified; });
+                    $scope.fms = $scope.allItems.filter(function (item) { return !item.verified && item.closeType !== 'LPR'; });
                     break;
                 case $scope.enumFilterType.LPR:
                     $scope.fms = $scope.allItems.filter(function (item) { return item.closeType === 'LPR'; });
