@@ -30,7 +30,7 @@
         };
         $scope.$watch(function () { return $window.userdata; }, function (n) {
             if (n !== undefined) {
-                $scope.welcome = "Pick something sir, " + $window.userdata.toLowerCase().split("\\")[1];
+                $scope.welcome = "Welcome " + $window.userdata.toLowerCase().split("\\")[1];
                 $scope.isSuperAdmin = $dataService.isSuperAdmin();
                 $scope.isAuditor = $dataService.isAuditor();
                 $scope.isManagement = $dataService.isManagement();
@@ -218,14 +218,20 @@
     app.controller('modalSubmittedCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
-    var controller = function ($scope, $dataService, $location) {
+    var controller = function ($scope, $dataService, $location, $window) {
         $scope.enumFilterType = {
             ATT: 1,
             AUDIT: 2,
             SCORE: 3,
-            ALL: 4,
-            LPR: 5
+            ALL: 4
         };
+        $scope.$watch(function () { return $window.userdata; }, function (n) {
+            if (n !== undefined) {
+                $scope.isSuperAdmin = $dataService.isSuperAdmin();
+                $scope.isAuditor = $dataService.isAuditor();
+                $scope.isManagement = $dataService.isManagement();
+            }
+        });
         var hub = $.connection.repoHub;
         $scope.processData = function () {
             $scope.addAdminVerified($scope.allItems);
@@ -274,17 +280,13 @@
             {
                 'label': 'Score',
                 'id': $scope.enumFilterType.SCORE
-            },
-            {
-                'label': 'LPR',
-                'id': $scope.enumFilterType.LPR
             }
         ];
         $scope.filterSelected = $scope.filterOptions.filter(function (item) { return item.id === $scope.enumFilterType.ATT; })[0];
         $scope.filter = function () {
             switch ($scope.filterSelected.id) {
                 case $scope.enumFilterType.ALL:
-                    $scope.fms = $scope.allItems;
+                    $scope.fms = $scope.allItems.filter(function (item) { return item.closeType !== 'LPR'; });
                     break;
                 case $scope.enumFilterType.ATT:
                     $scope.fms = $scope.allItems.filter(function (item) { return !item.administered && item.closeType !== 'LPR'; });
@@ -337,7 +339,7 @@
             $scope.update();
         });
     };
-    controller.$inject = ['$scope', 'dataService', '$location'];
+    controller.$inject = ['$scope', 'dataService', '$location', '$window'];
     app.controller('viewCtrl', controller);
 })(angular.module("repoFormsApp"));
 //# sourceMappingURL=Ctrl.js.map

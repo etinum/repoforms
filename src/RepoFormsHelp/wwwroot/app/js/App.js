@@ -1,6 +1,6 @@
 var superadmin = 'Ertran,JFountaine,JAZiebro';
 var management = 'JAZiebro,JFountaine,knbaugher';
-var auditor = 'TAKushnir,cashideler,ShHarmon';
+var auditor = 'TAKushnir,cashideler,ShHarmon,clwren';
 angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'environment', 'smart-table', 'cgBusy']);
 (function (app) {
     var config = function ($routeProvider, $envServiceProvider, $locationProvider) {

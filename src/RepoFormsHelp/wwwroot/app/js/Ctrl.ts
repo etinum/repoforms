@@ -62,7 +62,7 @@
     // watch to see if global variable has been set from master control before using it in the current controller.
         $scope.$watch(() => $window.userdata, (n) => {
             if (n !== undefined) {
-                $scope.welcome = "Pick something sir, " + $window.userdata.toLowerCase().split("\\")[1];
+                $scope.welcome = "Welcome " + $window.userdata.toLowerCase().split("\\")[1];
 
                 // Set permissions: 
                 $scope.isSuperAdmin = $dataService.isSuperAdmin();
@@ -304,7 +304,7 @@
 
 
 (app => {
-    var controller = ($scope, $dataService, $location) => {
+    var controller = ($scope, $dataService, $location, $window) => {
 
 
         //$scope.delay = 0;
@@ -316,9 +316,19 @@
             ATT: 1,
             AUDIT: 2,
             SCORE: 3,
-            ALL: 4,
-            LPR: 5
+            ALL: 4
+            //LPR: 5
         }
+
+        // watch to see if global variable has been set from master control before using it in the current controller.
+        $scope.$watch(() => $window.userdata, (n) => {
+            if (n !== undefined) {
+                // Set permissions: 
+                $scope.isSuperAdmin = $dataService.isSuperAdmin();
+                $scope.isAuditor = $dataService.isAuditor();
+                $scope.isManagement = $dataService.isManagement();
+            }
+        });
 
         var hub = $.connection.repoHub;
 
@@ -381,11 +391,11 @@
             {
                 'label': 'Score',
                 'id': $scope.enumFilterType.SCORE
-            },
-            {
-                'label': 'LPR',
-                'id': $scope.enumFilterType.LPR
             }
+            //{
+            //    'label': 'LPR',
+            //    'id': $scope.enumFilterType.LPR
+            //}
 
         ];
 
@@ -396,7 +406,7 @@
 
             switch ($scope.filterSelected.id) {
                 case $scope.enumFilterType.ALL:
-                    $scope.fms = $scope.allItems;
+                    $scope.fms = $scope.allItems.filter(item => item.closeType !== 'LPR');
                     break;
                 case $scope.enumFilterType.ATT:
                     $scope.fms = $scope.allItems.filter(item => !item.administered && item.closeType !== 'LPR');
@@ -466,6 +476,6 @@
             });
     };
 
-    controller.$inject = ['$scope', 'dataService', '$location'];
+    controller.$inject = ['$scope', 'dataService', '$location', '$window'];
     app.controller('viewCtrl', controller);
 })(angular.module("repoFormsApp"));
