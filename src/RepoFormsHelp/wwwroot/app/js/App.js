@@ -32,12 +32,17 @@ angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'enviro
             domains: {
                 development: ['localhost', 'dev.local'],
                 iisexpress: ['localhost:15021'],
-                production: ['plsf', 'plsf.portfoliorecovery.com']
+                production: ['plsf', 'plsf.portfoliorecovery.com'],
+                staging: ['plsf:9900']
             },
             vars: {
                 development: {
                     apiUrl: '//localhost/webapi/',
                     staticUrl: '//localhost/'
+                },
+                staging: {
+                    apiUrl: '//plsf:9900/webapi/',
+                    staticUrl: '//plsf:9900/'
                 },
                 iisexpress: {
                     apiUrl: '//localhost:15021/webapi/',

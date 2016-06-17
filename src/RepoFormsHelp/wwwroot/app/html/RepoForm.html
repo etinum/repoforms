@@ -67,7 +67,7 @@
                         <label for="investigator" class="col-sm-3 control-label">Investigator</label>
                         <div class="col-sm-9">
                             <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="investigator" name="investigator" class="form-control"
-                                   ng-model="rf.investigator" ng-required="false" uib-typeahead="item for item in investigatorOptions  | filter:$viewValue | limitTo:8" autocomplete="off"/>
+                                   ng-model="rf.investigator" ng-required="false" uib-typeahead="item for item in investigatorOptions  | filter:$viewValue | limitTo:8" autocomplete="off" />
                             <div class="help-block" ng-messages="myForm.investigator.$error" ng-show="myForm.investigator.$touched || submitted">
                                 <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>
@@ -77,7 +77,7 @@
                         <label for="client" class="col-sm-3 control-label">Client</label>
                         <div class="col-sm-9">
                             <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="client" name="client" class="form-control"
-                                   ng-model="rf.client" ng-required="false" uib-typeahead="item for item in clientOptions  | filter:$viewValue | limitTo:8" autocomplete="off"/>
+                                   ng-model="rf.client" ng-required="false" uib-typeahead="item for item in clientOptions  | filter:$viewValue | limitTo:8" autocomplete="off" />
                             <div class="help-block" ng-messages="myForm.client.$error" ng-show="myForm.investigator.$touched || submitted">
                                 <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>
@@ -146,7 +146,7 @@
                         <label for="notes" class="col-sm-3 control-label">Notes</label>
                         <div class="col-sm-9">
                             <input type="text" ng-maxlength="1024" maxlength=1024 id="notes" name="notes" class="form-control"
-                                   ng-model="rf.notes" ng-required="false"  />  <!--uib-tooltip="This is just a sample tool tip value..." tooltip-trigger="focus" tooltip-placement="bottom-left"-->
+                                   ng-model="rf.notes" ng-required="false" />  <!--uib-tooltip="This is just a sample tool tip value..." tooltip-trigger="focus" tooltip-placement="bottom-left"-->
                             <div class="help-block" ng-messages="myForm.notes.$error" ng-show="myForm.notes.$touched || submitted">
                                 <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>
@@ -379,7 +379,7 @@
                             <label for="initializedDate" class="col-sm-3 control-label">Date</label>
                             <div class="col-sm-6">
                                 <p class="input-group">
-                                    <input id="initializedDate" name="initializedDate" type="text" ng-click="openDatePopup(enumPopupType.SIGNED)" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.initializedDate" is-open="datePopupStatus.signed" datepicker-options="dateOptions" ng-required="false" close-text="Close" alt-input-formats="altInputFormats" readonly/>
+                                    <input id="initializedDate" name="initializedDate" type="text" ng-click="openDatePopup(enumPopupType.SIGNED)" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.initializedDate" is-open="datePopupStatus.signed" datepicker-options="dateOptions" ng-required="false" close-text="Close" alt-input-formats="altInputFormats" readonly />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="openDatePopup(enumPopupType.SIGNED)"><i class="glyphicon glyphicon-calendar"></i></button>
                                     </span>
@@ -416,14 +416,28 @@
             </div>
         </fieldset>
 
+
         <div class="col-sm-offset-3 col-sm-9">
-            <input type="button" class="btn btn-default" value="Cancel"
-                   ng-click="cancelForm()" />
-            <input style="margin-left: 2cm" type="submit" class="btn btn-primary" value="Submit"
-                   ng-click="submitForm()" />
-            <input style="margin-left: 2cm" type="reset" class="btn btn-warning" value="Reset"
-                   ng-click="resetForm()" />
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-3 col-sm-2 col-lg-1 ">
+                        <input type="button" class="btn btn-default" value="Cancel"
+                               ng-click="cancelForm()" />
+                    </div>
+                    <div class="col-xs-3 col-sm-2 col-lg-1">
+                        <input type="submit" class="btn btn-primary" value="Submit"
+                               ng-click="submitForm()" />
+                    </div>
+                    <div class="col-xs-6 col-sm-8 col-lg-10 ">
+                        <input type="reset" class="btn btn-warning" value="Reset"
+                               ng-click="resetForm()" />
+                    </div>
+                </div>
+            </div>
             <div class="alert alert-danger" ng-if="hasFormError">{{formErrors}}</div>
         </div>
     </div>
 </form>
+
+
+

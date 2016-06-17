@@ -46,7 +46,8 @@ angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'enviro
             domains: {
                 development: ['localhost', 'dev.local'],
                 iisexpress: ['localhost:15021'],
-                production: ['plsf', 'plsf.portfoliorecovery.com']
+                production: ['plsf', 'plsf.portfoliorecovery.com'],
+                staging: ['plsf:9900']
                 // anotherStage: ['domain1', 'domain2'],
                 // anotherStage: ['domain1', 'domain2']
             },
@@ -56,6 +57,10 @@ angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'enviro
                     staticUrl: '//localhost/'
                     // antoherCustomVar: 'lorem',
                     // antoherCustomVar: 'ipsum'
+                },
+                staging: {
+                    apiUrl: '//plsf:9900/webapi/',
+                    staticUrl: '//plsf:9900/'
                 },
                 iisexpress: {
                     apiUrl: '//localhost:15021/webapi/',
