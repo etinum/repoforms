@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using AutoMapper;
@@ -48,12 +49,17 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public bool SendEmail()
+        public bool CheckDebugMode()
         {
-            
-            Email.SendTest();
 
+#if DEBUG
             return true;
+#else
+            return false;
+#endif
+
+
+
         }
 
         // GET api/values

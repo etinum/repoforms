@@ -21,8 +21,6 @@
                 <div class="panel-heading">General</div>
                 <div class="panel-body">
 
-
-
                     <div class="form-group" show-errors>
                         <div>
                             <label for="createdDate" class="col-sm-3 control-label">Date</label>
@@ -421,9 +419,9 @@
         <div class="col-sm-offset-3 col-sm-9">
             <input type="button" class="btn btn-default" value="Cancel"
                    ng-click="cancelForm()" />
-            <input type="submit" class="btn btn-primary" value="Submit"
+            <input style="margin-left: 2cm" type="submit" class="btn btn-primary" value="Submit"
                    ng-click="submitForm()" />
-            <input type="reset" class="btn btn-warning" value="Reset"
+            <input style="margin-left: 2cm" type="reset" class="btn btn-warning" value="Reset"
                    ng-click="resetForm()" />
             <div class="alert alert-danger" ng-if="hasFormError">{{formErrors}}</div>
         </div>

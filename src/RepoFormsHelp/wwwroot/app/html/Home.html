@@ -5,8 +5,12 @@
     </div>
 
     <div class="form-group">
-        <input type="button" class="btn btn-primary" value="Submit New Repo Form" ng-click="GotoRepoForm()" />
+        <input type="button" class="btn btn-primary" value="Submit New Repo Form" ng-click="GotoRepoForm()"/>
     </div>
+    <div class="form-group">
+        <input type="button" class="btn btn-primary" value="View Submissions" ng-click="ViewRepos()" />
+    </div>
+
 </fieldset>
 
 <fieldset ng-hide="!isAuditor">
@@ -39,7 +43,7 @@
 <fieldset ng-hide="!isManagement">
     <legend>Misc</legend>
     <div class="form-group">
-        <input type="button" class="btn btn-primary" value="PLS address book" ng-click="goContacts()" />
+        <input type="button" class="btn btn-primary" value="PLS Address Book" ng-click="goContacts()" />
         <!--<input type="button" class="btn btn-primary" value="TestGet" ng-click="TestClick()" />
         <input type="button" class="btn btn-primary" value="TestPost" ng-click="SendClick()" />-->
     </div>

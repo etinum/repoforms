@@ -26,18 +26,22 @@ namespace WebApi.Utils
         }
 
 
-        public static void AssignmentWriteUp(string winUser, string investigator)
+        public static void AssignmentWriteUp(string winUser, string investigator, string accountNumber)
         {
 
+#if DEBUG
+            var emailString = WebConfigurationManager.AppSettings["RepoEmailsDev"];
+#else
             var emailString = WebConfigurationManager.AppSettings["RepoEmails"];
-            var emails = emailString.Split(';').ToList();
+#endif
 
+            var emails = emailString.Split(';').ToList();
 
             var mailMessage = new MailMessage
             {
                 From = new MailAddress("assignmentwriteup@portfoliorecovery.com"),
                 Body = $"There is a new assignment write up completed by: {winUser}({investigator})<br>URL: http://plsf",
-                Subject = $"Assignment Write Up for {investigator}", 
+                Subject = $"Assignment Write Up for {investigator} ({accountNumber})", 
                 IsBodyHtml = true
             };
 

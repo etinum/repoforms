@@ -272,12 +272,9 @@
         };
 
     };
-
-
     controller.$inject = ['$scope', 'dataService', '$window', '$routeParams', '$uibModal', '$location', '$anchorScroll'];
     app.controller('repoCtrl', controller);
 })(angular.module("repoFormsApp"));
-
 
 (app => {
     var controller = ($scope, $uibModalInstance, $timeout, $window) => {
@@ -298,10 +295,6 @@
     controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window'];
     app.controller('modalSubmittedCtrl', controller);
 })(angular.module("repoFormsApp"));
-
-
-
-
 
 (app => {
     var controller = ($scope, $dataService, $location, $window) => {

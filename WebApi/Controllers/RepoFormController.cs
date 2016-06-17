@@ -123,7 +123,7 @@ namespace WebApi.Controllers
 
             _ctx.SaveChanges();
 
-            Email.AssignmentWriteUp(user.WinAuthName, repoFormModel.Investigator);
+            Email.AssignmentWriteUp(user.WinAuthName, repoFormModel.Investigator, repoFormModel.AccountNumber);
 
             return repoFormModel;
         }
