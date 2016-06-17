@@ -48,6 +48,10 @@
             $location.path('/admin');
         };
 
+        $scope.ViewSubmissions = () => {
+            $location.path('/submissions');
+        };
+
 
         $scope.goContacts = () => {
             window.location.href = 'contacts.pdf';
@@ -56,8 +60,6 @@
         $scope.Tbd = () => {
             alert("If you build it, they will come");
         };
-
-
 
     // watch to see if global variable has been set from master control before using it in the current controller.
         $scope.$watch(() => $window.userdata, (n) => {
@@ -71,7 +73,6 @@
 
             }
         });
-
 
         // TODO: Delete after you don't need this anymore. 
         $scope.TestClick = () => {
@@ -471,4 +472,175 @@
 
     controller.$inject = ['$scope', 'dataService', '$location', '$window'];
     app.controller('viewCtrl', controller);
+})(angular.module("repoFormsApp"));
+
+(app => {
+    var controller = ($scope, $dataService, $location, $window) => {
+
+        $scope.enumFilterType = {
+            ATT: 1,
+            AUDIT: 2,
+            SCORE: 3,
+            ALL: 4
+            //LPR: 5
+        }
+
+        // watch to see if global variable has been set from master control before using it in the current controller.
+        $scope.$watch(() => $window.userdata, (n) => {
+            if (n !== undefined) {
+                // Set permissions: 
+                $scope.isSuperAdmin = $dataService.isSuperAdmin();
+                $scope.isAuditor = $dataService.isAuditor();
+                $scope.isManagement = $dataService.isManagement();
+            }
+        });
+
+        var hub = $.connection.repoHub;
+
+        $scope.processData = () => {
+
+            $scope.addAdminVerified($scope.allItems);
+            $scope.filter();
+
+        }
+
+        $scope.addAdminVerified = (data) => {
+            data.forEach(item => {
+                item.administered = item.initializedDate !== null && $dataService.isTrue(item.verified);
+            });
+        };
+
+        $scope.getForms = () => {
+            $scope.load = $dataService.getForms()
+                .then(data => {
+                    $scope.allItems = <modeltypings.RepoFormViewModel[]>data;
+                    $scope.processData();
+                });
+        };
+
+
+        $scope.scored = (row) => {
+            var saveobj = angular.copy(row);
+            saveobj.verified = true;
+            $scope.load = $dataService.saveForm(saveobj)
+                .then(() => {
+                    $scope.getForms();
+                });
+        };
+
+        //$scope.username = $window.userdata;
+        $scope.update = () => {
+            $scope.getForms();
+        };
+
+        $scope.edit = (row) => {
+            var rowee = <modeltypings.RepoFormViewModel>row;
+            $location.path('/repoform/' + rowee.id);
+
+        };
+
+        $scope.filterOptions = [
+            {
+                'label': 'All',
+                'id': $scope.enumFilterType.ALL
+            },
+            {
+                'label': 'Need Attention',
+                'id': $scope.enumFilterType.ATT
+            },
+            {
+                'label': 'Audit',
+                'id': $scope.enumFilterType.AUDIT
+            },
+            {
+                'label': 'Score',
+                'id': $scope.enumFilterType.SCORE
+            }
+            //{
+            //    'label': 'LPR',
+            //    'id': $scope.enumFilterType.LPR
+            //}
+
+        ];
+
+        // default value
+        $scope.filterSelected = $scope.filterOptions.filter(item => item.id === $scope.enumFilterType.ALL)[0];
+
+        $scope.filter = () => {
+
+            switch ($scope.filterSelected.id) {
+                case $scope.enumFilterType.ALL:
+                    $scope.fms = $scope.allItems;
+                    break;
+                case $scope.enumFilterType.ATT:
+                    $scope.fms = $scope.allItems.filter(item => !item.administered);
+                    break;
+                case $scope.enumFilterType.AUDIT:
+                    $scope.fms = $scope.allItems.filter(item => item.initializedDate == null);
+                    break;
+                case $scope.enumFilterType.SCORE:
+                    $scope.fms = $scope.allItems.filter(item => !item.verified);
+                    break;
+                case $scope.enumFilterType.LPR:
+                    $scope.fms = $scope.allItems.filter(item => item.closeType === 'LPR');
+                    break;
+                default:
+            }
+
+            $scope.totalItems = $scope.fms.length;
+
+        };
+
+        // Paging variables.
+        $scope.itemsPerPage = 12;
+        $scope.currentPage = 1;
+        $scope.maxSize = 5;
+
+
+        hub.client.UpdateList = (updatedForm: modeltypings.RepoFormViewModel) => {
+
+            var index = $dataService.arrayObjectIndexOf($scope.allItems, updatedForm.id, "id");
+
+            if (index === -1) {
+                $scope.$evalAsync(() => {
+                    $scope.allItems.push(updatedForm);
+                    $scope.addAdminVerified($scope.allItems);
+                    $scope.filter();
+                });
+            } else {
+                $scope.$evalAsync(() => {
+                    //$scope.allItems.splice(index, 1);
+                    $scope.allItems.splice(index, 1, updatedForm);
+                    $scope.addAdminVerified($scope.allItems);
+                    $scope.filter();
+                });
+
+            }
+
+        };
+
+
+        // Testing signalR
+        hub.client.SendAlert = (value) => {
+            alert('hello value: ' + value);
+        };
+
+        hub.client.test2 = () => {
+            ;
+            alert("first testing?");
+        };
+
+        hub.client.test = () => {
+            alert("testing works");
+        };
+
+
+        $.connection.hub.start()
+            .done(() => {
+                $scope.update();
+            });
+    };
+
+    controller.$inject = ['$scope', 'dataService', '$location', '$window'];
+    app.controller('submissionsCtrl', controller);
 })(angular.module("repoFormsApp"));

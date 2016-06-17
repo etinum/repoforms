@@ -22,6 +22,9 @@
         $scope.ViewRepos = function () {
             $location.path('/admin');
         };
+        $scope.ViewSubmissions = function () {
+            $location.path('/submissions');
+        };
         $scope.goContacts = function () {
             window.location.href = 'contacts.pdf';
         };
@@ -341,5 +344,130 @@
     };
     controller.$inject = ['$scope', 'dataService', '$location', '$window'];
     app.controller('viewCtrl', controller);
+})(angular.module("repoFormsApp"));
+(function (app) {
+    var controller = function ($scope, $dataService, $location, $window) {
+        $scope.enumFilterType = {
+            ATT: 1,
+            AUDIT: 2,
+            SCORE: 3,
+            ALL: 4
+        };
+        $scope.$watch(function () { return $window.userdata; }, function (n) {
+            if (n !== undefined) {
+                $scope.isSuperAdmin = $dataService.isSuperAdmin();
+                $scope.isAuditor = $dataService.isAuditor();
+                $scope.isManagement = $dataService.isManagement();
+            }
+        });
+        var hub = $.connection.repoHub;
+        $scope.processData = function () {
+            $scope.addAdminVerified($scope.allItems);
+            $scope.filter();
+        };
+        $scope.addAdminVerified = function (data) {
+            data.forEach(function (item) {
+                item.administered = item.initializedDate !== null && $dataService.isTrue(item.verified);
+            });
+        };
+        $scope.getForms = function () {
+            $scope.load = $dataService.getForms()
+                .then(function (data) {
+                $scope.allItems = data;
+                $scope.processData();
+            });
+        };
+        $scope.scored = function (row) {
+            var saveobj = angular.copy(row);
+            saveobj.verified = true;
+            $scope.load = $dataService.saveForm(saveobj)
+                .then(function () {
+                $scope.getForms();
+            });
+        };
+        $scope.update = function () {
+            $scope.getForms();
+        };
+        $scope.edit = function (row) {
+            var rowee = row;
+            $location.path('/repoform/' + rowee.id);
+        };
+        $scope.filterOptions = [
+            {
+                'label': 'All',
+                'id': $scope.enumFilterType.ALL
+            },
+            {
+                'label': 'Need Attention',
+                'id': $scope.enumFilterType.ATT
+            },
+            {
+                'label': 'Audit',
+                'id': $scope.enumFilterType.AUDIT
+            },
+            {
+                'label': 'Score',
+                'id': $scope.enumFilterType.SCORE
+            }
+        ];
+        $scope.filterSelected = $scope.filterOptions.filter(function (item) { return item.id === $scope.enumFilterType.ALL; })[0];
+        $scope.filter = function () {
+            switch ($scope.filterSelected.id) {
+                case $scope.enumFilterType.ALL:
+                    $scope.fms = $scope.allItems;
+                    break;
+                case $scope.enumFilterType.ATT:
+                    $scope.fms = $scope.allItems.filter(function (item) { return !item.administered; });
+                    break;
+                case $scope.enumFilterType.AUDIT:
+                    $scope.fms = $scope.allItems.filter(function (item) { return item.initializedDate == null; });
+                    break;
+                case $scope.enumFilterType.SCORE:
+                    $scope.fms = $scope.allItems.filter(function (item) { return !item.verified; });
+                    break;
+                case $scope.enumFilterType.LPR:
+                    $scope.fms = $scope.allItems.filter(function (item) { return item.closeType === 'LPR'; });
+                    break;
+                default:
+            }
+            $scope.totalItems = $scope.fms.length;
+        };
+        $scope.itemsPerPage = 12;
+        $scope.currentPage = 1;
+        $scope.maxSize = 5;
+        hub.client.UpdateList = function (updatedForm) {
+            var index = $dataService.arrayObjectIndexOf($scope.allItems, updatedForm.id, "id");
+            if (index === -1) {
+                $scope.$evalAsync(function () {
+                    $scope.allItems.push(updatedForm);
+                    $scope.addAdminVerified($scope.allItems);
+                    $scope.filter();
+                });
+            }
+            else {
+                $scope.$evalAsync(function () {
+                    $scope.allItems.splice(index, 1, updatedForm);
+                    $scope.addAdminVerified($scope.allItems);
+                    $scope.filter();
+                });
+            }
+        };
+        hub.client.SendAlert = function (value) {
+            alert('hello value: ' + value);
+        };
+        hub.client.test2 = function () {
+            ;
+            alert("first testing?");
+        };
+        hub.client.test = function () {
+            alert("testing works");
+        };
+        $.connection.hub.start()
+            .done(function () {
+            $scope.update();
+        });
+    };
+    controller.$inject = ['$scope', 'dataService', '$location', '$window'];
+    app.controller('submissionsCtrl', controller);
 })(angular.module("repoFormsApp"));
 //# sourceMappingURL=Ctrl.js.map
