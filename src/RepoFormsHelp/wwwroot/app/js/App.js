@@ -22,7 +22,7 @@ angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'enviro
             controller: "viewCtrl"
         })
             .when("/submissions", {
-            templateUrl: "app/html/ViewReports.html",
+            templateUrl: "app/html/ViewSubmissions.html",
             controller: "submissionsCtrl"
         })
             .otherwise({

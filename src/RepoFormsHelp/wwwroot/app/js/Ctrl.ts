@@ -278,27 +278,7 @@
 })(angular.module("repoFormsApp"));
 
 (app => {
-    var controller = ($scope, $uibModalInstance, $timeout, $window) => {
-
-        var timer = $timeout(() => {
-            $scope.close();
-        },
-            3000);
-
-
-        $scope.close = () => {
-            $timeout.cancel(timer);
-            $uibModalInstance.dismiss();
-            $window.history.back();
-        };
-
-    };
-    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window'];
-    app.controller('modalSubmittedCtrl', controller);
-})(angular.module("repoFormsApp"));
-
-(app => {
-    var controller = ($scope, $dataService, $location, $window) => {
+    var controller = ($scope, $dataService, $location, $window, $uibModal) => {
 
 
         //$scope.delay = 0;
@@ -362,6 +342,29 @@
         $scope.update = () => {
             $scope.getForms();
         };
+
+        $scope.requestDelete = () => {
+
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    templateUrl: 'modalConfirmDeleteCtrl.html',
+                    controller: 'modalConfirmDeleteCtrl',
+                    size: 'sm'
+                    //resolve: {
+                    //    items() {
+                    //        return $scope.items;
+                    //    }
+                    //}
+                });
+
+                modalInstance.result.then(() => {
+                    // handing when close, you can get the parameter...
+                }, () => {
+                    // handling when cancel, you can get the value... 
+                });
+
+        };
+
 
         $scope.edit = (row) => {
             var rowee = <modeltypings.RepoFormViewModel>row;
@@ -470,30 +473,13 @@
             });
     };
 
-    controller.$inject = ['$scope', 'dataService', '$location', '$window'];
+    controller.$inject = ['$scope', 'dataService', '$location', '$window', '$uibModal'];
     app.controller('viewCtrl', controller);
 })(angular.module("repoFormsApp"));
 
 (app => {
     var controller = ($scope, $dataService, $location, $window) => {
 
-        $scope.enumFilterType = {
-            ATT: 1,
-            AUDIT: 2,
-            SCORE: 3,
-            ALL: 4
-            //LPR: 5
-        }
-
-        // watch to see if global variable has been set from master control before using it in the current controller.
-        $scope.$watch(() => $window.userdata, (n) => {
-            if (n !== undefined) {
-                // Set permissions: 
-                $scope.isSuperAdmin = $dataService.isSuperAdmin();
-                $scope.isAuditor = $dataService.isAuditor();
-                $scope.isManagement = $dataService.isManagement();
-            }
-        });
 
         var hub = $.connection.repoHub;
 
@@ -539,54 +525,10 @@
 
         };
 
-        $scope.filterOptions = [
-            {
-                'label': 'All',
-                'id': $scope.enumFilterType.ALL
-            },
-            {
-                'label': 'Need Attention',
-                'id': $scope.enumFilterType.ATT
-            },
-            {
-                'label': 'Audit',
-                'id': $scope.enumFilterType.AUDIT
-            },
-            {
-                'label': 'Score',
-                'id': $scope.enumFilterType.SCORE
-            }
-            //{
-            //    'label': 'LPR',
-            //    'id': $scope.enumFilterType.LPR
-            //}
-
-        ];
-
-        // default value
-        $scope.filterSelected = $scope.filterOptions.filter(item => item.id === $scope.enumFilterType.ALL)[0];
 
         $scope.filter = () => {
 
-            switch ($scope.filterSelected.id) {
-                case $scope.enumFilterType.ALL:
-                    $scope.fms = $scope.allItems;
-                    break;
-                case $scope.enumFilterType.ATT:
-                    $scope.fms = $scope.allItems.filter(item => !item.administered);
-                    break;
-                case $scope.enumFilterType.AUDIT:
-                    $scope.fms = $scope.allItems.filter(item => item.initializedDate == null);
-                    break;
-                case $scope.enumFilterType.SCORE:
-                    $scope.fms = $scope.allItems.filter(item => !item.verified);
-                    break;
-                case $scope.enumFilterType.LPR:
-                    $scope.fms = $scope.allItems.filter(item => item.closeType === 'LPR');
-                    break;
-                default:
-            }
-
+            $scope.fms = $scope.allItems;
             $scope.totalItems = $scope.fms.length;
 
         };
@@ -643,4 +585,45 @@
 
     controller.$inject = ['$scope', 'dataService', '$location', '$window'];
     app.controller('submissionsCtrl', controller);
+})(angular.module("repoFormsApp"));
+
+//All our wonderful modals will stay at the bottom here... 
+(app => {
+    var controller = ($scope, $uibModalInstance, $timeout, $window) => {
+
+        var timer = $timeout(() => {
+            $scope.close();
+        },
+            3000);
+
+
+        $scope.close = () => {
+            $timeout.cancel(timer);
+            $uibModalInstance.dismiss();
+            $window.history.back();
+        };
+
+    };
+    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window'];
+    app.controller('modalSubmittedCtrl', controller);
+})(angular.module("repoFormsApp"));
+
+(app => {
+    var controller = ($scope, $uibModalInstance, $timeout, $window) => {
+
+        var timer = $timeout(() => {
+            $scope.close();
+        },
+            3000);
+
+
+        $scope.close = () => {
+            $timeout.cancel(timer);
+            $uibModalInstance.dismiss();
+            $window.history.back();
+        };
+
+    };
+    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window'];
+    app.controller('modalConfirmDeleteCtrl', controller);
 })(angular.module("repoFormsApp"));

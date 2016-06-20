@@ -11,13 +11,7 @@
             <th st-sort="points">Points</th>
         </tr>
         <tr>
-            <th colspan="4"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
-            <th colspan="5">
-
-                <select ng-model="filterSelected" ng-change="filter()" class="form-control" ng-options="filter as filter.label for filter in filterOptions track by filter.id">
-                </select>
-
-            </th>
+            <th colspan="9"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
         </tr>
         </thead>
         <tbody>
@@ -29,24 +23,6 @@
             <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.closeType}}</td>
             <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.customerName}}</td>
             <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.points}}</td>
-            <td>
-                <button type="button" ng-hide="row.verified || !isAuditor" ng-click="scored(row)" class="btn btn-sm btn-info" uib-tooltip="Click this box after you are done recording for scoring purpose.">
-                    <i class="glyphicon glyphicon-check">
-                    </i>
-                </button>
-            </td>
-            <td>
-                <button type="button" ng-hide="!isAuditor" ng-click="edit(row)" class="btn btn-sm btn-default">
-                    <i class="glyphicon glyphicon-edit">
-                    </i>
-                </button>
-            </td>
-            <td>
-                <button type="button" ng-hide="!isSuperAdmin" ng-click="requestDelete(row)" class="btn btn-sm btn-danger">
-                    <i class="glyphicon glyphicon-remove">
-                    </i>
-                </button>
-            </td>
         </tr>
         </tbody>
     </table>

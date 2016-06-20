@@ -207,21 +207,7 @@
     app.controller('repoCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
-    var controller = function ($scope, $uibModalInstance, $timeout, $window) {
-        var timer = $timeout(function () {
-            $scope.close();
-        }, 3000);
-        $scope.close = function () {
-            $timeout.cancel(timer);
-            $uibModalInstance.dismiss();
-            $window.history.back();
-        };
-    };
-    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window'];
-    app.controller('modalSubmittedCtrl', controller);
-})(angular.module("repoFormsApp"));
-(function (app) {
-    var controller = function ($scope, $dataService, $location, $window) {
+    var controller = function ($scope, $dataService, $location, $window, $uibModal) {
         $scope.enumFilterType = {
             ATT: 1,
             AUDIT: 2,
@@ -262,6 +248,17 @@
         };
         $scope.update = function () {
             $scope.getForms();
+        };
+        $scope.requestDelete = function () {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'modalConfirmDeleteCtrl.html',
+                controller: 'modalConfirmDeleteCtrl',
+                size: 'sm'
+            });
+            modalInstance.result.then(function () {
+            }, function () {
+            });
         };
         $scope.edit = function (row) {
             var rowee = row;
@@ -342,24 +339,11 @@
             $scope.update();
         });
     };
-    controller.$inject = ['$scope', 'dataService', '$location', '$window'];
+    controller.$inject = ['$scope', 'dataService', '$location', '$window', '$uibModal'];
     app.controller('viewCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
     var controller = function ($scope, $dataService, $location, $window) {
-        $scope.enumFilterType = {
-            ATT: 1,
-            AUDIT: 2,
-            SCORE: 3,
-            ALL: 4
-        };
-        $scope.$watch(function () { return $window.userdata; }, function (n) {
-            if (n !== undefined) {
-                $scope.isSuperAdmin = $dataService.isSuperAdmin();
-                $scope.isAuditor = $dataService.isAuditor();
-                $scope.isManagement = $dataService.isManagement();
-            }
-        });
         var hub = $.connection.repoHub;
         $scope.processData = function () {
             $scope.addAdminVerified($scope.allItems);
@@ -392,44 +376,8 @@
             var rowee = row;
             $location.path('/repoform/' + rowee.id);
         };
-        $scope.filterOptions = [
-            {
-                'label': 'All',
-                'id': $scope.enumFilterType.ALL
-            },
-            {
-                'label': 'Need Attention',
-                'id': $scope.enumFilterType.ATT
-            },
-            {
-                'label': 'Audit',
-                'id': $scope.enumFilterType.AUDIT
-            },
-            {
-                'label': 'Score',
-                'id': $scope.enumFilterType.SCORE
-            }
-        ];
-        $scope.filterSelected = $scope.filterOptions.filter(function (item) { return item.id === $scope.enumFilterType.ALL; })[0];
         $scope.filter = function () {
-            switch ($scope.filterSelected.id) {
-                case $scope.enumFilterType.ALL:
-                    $scope.fms = $scope.allItems;
-                    break;
-                case $scope.enumFilterType.ATT:
-                    $scope.fms = $scope.allItems.filter(function (item) { return !item.administered; });
-                    break;
-                case $scope.enumFilterType.AUDIT:
-                    $scope.fms = $scope.allItems.filter(function (item) { return item.initializedDate == null; });
-                    break;
-                case $scope.enumFilterType.SCORE:
-                    $scope.fms = $scope.allItems.filter(function (item) { return !item.verified; });
-                    break;
-                case $scope.enumFilterType.LPR:
-                    $scope.fms = $scope.allItems.filter(function (item) { return item.closeType === 'LPR'; });
-                    break;
-                default:
-            }
+            $scope.fms = $scope.allItems;
             $scope.totalItems = $scope.fms.length;
         };
         $scope.itemsPerPage = 12;
@@ -469,5 +417,33 @@
     };
     controller.$inject = ['$scope', 'dataService', '$location', '$window'];
     app.controller('submissionsCtrl', controller);
+})(angular.module("repoFormsApp"));
+(function (app) {
+    var controller = function ($scope, $uibModalInstance, $timeout, $window) {
+        var timer = $timeout(function () {
+            $scope.close();
+        }, 3000);
+        $scope.close = function () {
+            $timeout.cancel(timer);
+            $uibModalInstance.dismiss();
+            $window.history.back();
+        };
+    };
+    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window'];
+    app.controller('modalSubmittedCtrl', controller);
+})(angular.module("repoFormsApp"));
+(function (app) {
+    var controller = function ($scope, $uibModalInstance, $timeout, $window) {
+        var timer = $timeout(function () {
+            $scope.close();
+        }, 3000);
+        $scope.close = function () {
+            $timeout.cancel(timer);
+            $uibModalInstance.dismiss();
+            $window.history.back();
+        };
+    };
+    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window'];
+    app.controller('modalConfirmDeleteCtrl', controller);
 })(angular.module("repoFormsApp"));
 //# sourceMappingURL=Ctrl.js.map
