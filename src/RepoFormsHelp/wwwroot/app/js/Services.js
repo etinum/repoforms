@@ -82,32 +82,6 @@
         var alertFailed = function (response) {
             alert("There was a problem with the back end call, here is your status code: " + response.status);
         };
-        var getPersons = function () {
-            var url = baseWebApiUrl + 'api/values/get';
-            var deferred = $q.defer();
-            $http.get(url)
-                .then(function (response) {
-                trimObjectProperties(response.data);
-                deferred.resolve(response.data);
-            }, function (response) {
-                alertFailed(response);
-                deferred.reject(response);
-            });
-            return deferred.promise;
-        };
-        var addPerson = function (person) {
-            var url = baseWebApiUrl + 'api/values/post';
-            var deferred = $q.defer();
-            $http.post(url, person)
-                .then(function () {
-                alert("Successfully saved.");
-                deferred.resolve();
-            }, function (response) {
-                alertFailed(response);
-                deferred.reject(response);
-            });
-            return deferred.promise;
-        };
         var saveForm = function (formdata) {
             var url = baseWebApiUrl + 'api/RepoForm/SaveForm';
             var deferred = $q.defer();
@@ -120,8 +94,19 @@
             });
             return deferred.promise;
         };
+        var deleteForm = function (id) {
+            var url = baseWebApiUrl + 'api/RepoForm/DeleteForm';
+            var deferred = $q.defer();
+            $http.post(url, id)
+                .then(function () {
+                deferred.resolve();
+            }, function (response) {
+                alertFailed(response);
+                deferred.reject(response);
+            });
+            return deferred.promise;
+        };
         var getLocation = function (val) {
-            var url = baseWebApiUrl + 'api/RepoForm/SaveForm';
             var deferred = $q.defer();
             $http.get('//maps.googleapis.com/maps/api/geocode/json', {
                 params: {
@@ -197,8 +182,7 @@
             getUser: getUser,
             getTypeAheadData: getTypeAheadData,
             saveForm: saveForm,
-            getPersons: getPersons,
-            addPerson: addPerson,
+            deleteForm: deleteForm,
             getLocation: getLocation,
             getForms: getForms,
             getForm: getForm,

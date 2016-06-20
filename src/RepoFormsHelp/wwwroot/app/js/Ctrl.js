@@ -249,15 +249,24 @@
         $scope.update = function () {
             $scope.getForms();
         };
-        $scope.requestDelete = function () {
+        $scope.requestDelete = function (row) {
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'modalConfirmDeleteCtrl.html',
                 controller: 'modalConfirmDeleteCtrl',
-                size: 'sm'
+                size: 'sm',
+                resolve: {
+                    row: function () {
+                        return row;
+                    }
+                }
             });
-            modalInstance.result.then(function () {
-            }, function () {
+            modalInstance.result.then(function (id) {
+                $scope.load = $dataService.deleteForm(id)
+                    .then(function () {
+                    $scope.getForms();
+                });
+            }, function (id) {
             });
         };
         $scope.edit = function (row) {
@@ -433,17 +442,16 @@
     app.controller('modalSubmittedCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
-    var controller = function ($scope, $uibModalInstance, $timeout, $window) {
-        var timer = $timeout(function () {
-            $scope.close();
-        }, 3000);
-        $scope.close = function () {
-            $timeout.cancel(timer);
-            $uibModalInstance.dismiss();
-            $window.history.back();
+    var controller = function ($scope, $uibModalInstance, $timeout, $window, row) {
+        $scope.row = row;
+        $scope.delete = function () {
+            $uibModalInstance.close(row.id);
+        };
+        $scope.cancel = function () {
+            $uibModalInstance.dismiss(row.id);
         };
     };
-    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window'];
+    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window', 'row'];
     app.controller('modalConfirmDeleteCtrl', controller);
 })(angular.module("repoFormsApp"));
 //# sourceMappingURL=Ctrl.js.map

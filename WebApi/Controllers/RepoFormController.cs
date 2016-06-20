@@ -83,6 +83,24 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
+        public bool DeleteForm([FromBody]int id)
+        {
+            try
+            {
+                var rf = new RepoForm { Id = id };
+                _ctx.RepoForms.Attach(rf);
+                _ctx.RepoForms.Remove(rf);
+                _ctx.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+
+        [HttpPost]
         public int SaveForm(RepoFormViewModel formViewModel)
         {
             

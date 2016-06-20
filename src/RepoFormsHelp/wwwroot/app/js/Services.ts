@@ -116,48 +116,12 @@
         };
 
 
-
-
-
         var baseWebApiUrl = $envService.read('apiUrl');
 
         // Error messages
         var alertFailed = (response) => {
             alert("There was a problem with the back end call, here is your status code: " + response.status);
         };
-
-
-        // Testing service calls, can be removed later. 
-        var getPersons = () => {
-            var url = baseWebApiUrl + 'api/values/get';
-            var deferred = $q.defer();
-
-            $http.get(url)
-                .then(response => {
-                    trimObjectProperties(response.data);
-                    deferred.resolve(response.data);
-                }, (response) => {
-                    alertFailed(response);
-                    deferred.reject(response);
-                });
-            return deferred.promise;
-        };
-
-        var addPerson = (person) => {
-            var url = baseWebApiUrl + 'api/values/post';
-            var deferred = $q.defer();
-
-            $http.post(url, person)
-                .then(() => {
-                    alert("Successfully saved.");
-                    deferred.resolve();
-                }, (response) => {
-                    alertFailed(response);
-                    deferred.reject(response);
-                });
-            return deferred.promise;
-        };
-
 
         // Repo Form services
         var saveForm = (formdata) => {
@@ -174,10 +138,23 @@
             return deferred.promise;
         }
 
+        var deleteForm = (id) => {
+            var url = baseWebApiUrl + 'api/RepoForm/DeleteForm';
+            var deferred = $q.defer();
+
+            $http.post(url, id)
+                .then(() => {
+                    deferred.resolve();
+                }, (response) => {
+                    alertFailed(response);
+                    deferred.reject(response);
+                });
+            return deferred.promise;
+        }
+
 
         // Google api 
         var getLocation = (val) => {
-            var url = baseWebApiUrl + 'api/RepoForm/SaveForm';
             var deferred = $q.defer();
 
             $http.get('//maps.googleapis.com/maps/api/geocode/json',
@@ -268,8 +245,7 @@
             getUser: getUser,
             getTypeAheadData: getTypeAheadData,
             saveForm: saveForm,
-            getPersons: getPersons,
-            addPerson: addPerson,
+            deleteForm: deleteForm,
             getLocation: getLocation,
             getForms: getForms,
             getForm: getForm,

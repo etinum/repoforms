@@ -176,7 +176,6 @@
             $scope.rf.initializedDate = null;
         };
 
-
         $scope.openDatePopup = popup => {
             switch (popup) {
                 case $scope.enumPopupType.CREATED:
@@ -192,7 +191,6 @@
             }
         };
 
-
         $scope.datePopupStatus = {
             created: false,
             repo: false,
@@ -200,7 +198,6 @@
         };
 
         // Form button handling
-
         $scope.submitForm = () => {
 
             $scope.submitted = true;
@@ -328,7 +325,6 @@
                 });
         };
 
-
         $scope.scored = (row) => {
             var saveobj = angular.copy(row);
             saveobj.verified = true;
@@ -343,24 +339,28 @@
             $scope.getForms();
         };
 
-        $scope.requestDelete = () => {
+        $scope.requestDelete = (row) => {
 
                 var modalInstance = $uibModal.open({
                     animation: true,
                     templateUrl: 'modalConfirmDeleteCtrl.html',
                     controller: 'modalConfirmDeleteCtrl',
-                    size: 'sm'
-                    //resolve: {
-                    //    items() {
-                    //        return $scope.items;
-                    //    }
-                    //}
+                    size: 'sm',
+                    resolve: {
+                        row() {
+                            return row;
+                        }
+                    }
                 });
 
-                modalInstance.result.then(() => {
-                    // handing when close, you can get the parameter...
-                }, () => {
+                modalInstance.result.then((id) => {
+                    $scope.load = $dataService.deleteForm(id)
+                        .then(() => {
+                            $scope.getForms();
+                        });
+                }, (id) => {
                     // handling when cancel, you can get the value... 
+                    // alert('row is cancelled: ' + id);
                 });
 
         };
@@ -447,11 +447,8 @@
                     $scope.addAdminVerified($scope.allItems);
                     $scope.filter();
                 });
-
             }
-
         };
-
 
         // Testing signalR
         hub.client.SendAlert = (value) => {
@@ -609,21 +606,21 @@
 })(angular.module("repoFormsApp"));
 
 (app => {
-    var controller = ($scope, $uibModalInstance, $timeout, $window) => {
-
-        var timer = $timeout(() => {
-            $scope.close();
-        },
-            3000);
+    var controller = ($scope, $uibModalInstance, $timeout, $window, row) => {
 
 
-        $scope.close = () => {
-            $timeout.cancel(timer);
-            $uibModalInstance.dismiss();
-            $window.history.back();
+        $scope.row = row;
+
+        $scope.delete = () => {
+            $uibModalInstance.close(row.id);
+        };
+
+
+        $scope.cancel = () => {
+            $uibModalInstance.dismiss(row.id);
         };
 
     };
-    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window'];
+    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window', 'row'];
     app.controller('modalConfirmDeleteCtrl', controller);
 })(angular.module("repoFormsApp"));

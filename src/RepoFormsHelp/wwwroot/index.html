@@ -60,11 +60,11 @@
         <h3 class="modal-title">Notice</h3>
     </div>
     <div class="modal-body">
-        Are you sure you want to delete?
+        Are you sure you want to delete account# {{row.accountNumber}} for investigator: {{row.investigator}}?
     </div>
     <div class="modal-footer">
         <button class="btn btn-danger" type="button" ng-click="delete()">Delete</button>
-        <button class="btn btn-primary" type="button" ng-click="close()">Cancel</button>
+        <button class="btn btn-primary" type="button" ng-click="cancel()">Cancel</button>
     </div>
 </script>
 
