@@ -428,17 +428,17 @@
     app.controller('submissionsCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
-    var controller = function ($scope, $uibModalInstance, $timeout, $window) {
+    var controller = function ($scope, $uibModalInstance, $timeout, $window, $location) {
         var timer = $timeout(function () {
             $scope.close();
         }, 3000);
         $scope.close = function () {
             $timeout.cancel(timer);
             $uibModalInstance.dismiss();
-            $window.history.back();
+            $location.path('/submissions');
         };
     };
-    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window'];
+    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window', '$location'];
     app.controller('modalSubmittedCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {

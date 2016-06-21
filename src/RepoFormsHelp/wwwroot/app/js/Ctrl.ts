@@ -586,7 +586,7 @@
 
 //All our wonderful modals will stay at the bottom here... 
 (app => {
-    var controller = ($scope, $uibModalInstance, $timeout, $window) => {
+    var controller = ($scope, $uibModalInstance, $timeout, $window, $location) => {
 
         var timer = $timeout(() => {
             $scope.close();
@@ -597,11 +597,11 @@
         $scope.close = () => {
             $timeout.cancel(timer);
             $uibModalInstance.dismiss();
-            $window.history.back();
+            $location.path('/submissions');
         };
 
     };
-    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window'];
+    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window', '$location'];
     app.controller('modalSubmittedCtrl', controller);
 })(angular.module("repoFormsApp"));
 

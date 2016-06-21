@@ -43,26 +43,26 @@
 <!-- This is where all our wonderful modals will be places -->
 
 <script type="text/ng-template" id="modalSubmittedCtrl.html">
-    <div class="modal-header">
+    <div class="modal-header bg-primary">
         <h3 class="modal-title">Notice</h3>
     </div>
-    <div class="modal-body">
+    <div class="modal-body bg-primary">
         Submission a success!
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer bg-primary">
         <button class="btn btn-primary" type="button" ng-click="close()">OK</button>
     </div>
 </script>
 
 
 <script type="text/ng-template" id="modalConfirmDeleteCtrl.html">
-    <div class="modal-header">
+    <div class="modal-header bg-primary">
         <h3 class="modal-title">Notice</h3>
     </div>
-    <div class="modal-body">
+    <div class="modal-body  bg-primary">
         Are you sure you want to delete account# {{row.accountNumber}} for investigator: {{row.investigator}}?
     </div>
-    <div class="modal-footer">
+    <div class="modal-footer  bg-primary">
         <button class="btn btn-danger" type="button" ng-click="delete()">Delete</button>
         <button class="btn btn-primary" type="button" ng-click="cancel()">Cancel</button>
     </div>
