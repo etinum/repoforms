@@ -13,38 +13,41 @@
 
 </fieldset>
 
-<fieldset ng-hide="!isAuditor">
-    <legend>Admin</legend>
+<fieldset ng-show="isAuditor">
+    <legend>Administrators</legend>
     <div class="form-group">
         <input type="button" class="btn btn-primary" value="Admin Verification" ng-click="ViewRepos()" />
-        <!--<input type="button" class="btn btn-primary" value="TestGet" ng-click="TestClick()" />
-        <input type="button" class="btn btn-primary" value="TestPost" ng-click="SendClick()" />-->
     </div>
 </fieldset>
 
-<fieldset ng-hide="!isManagement">
+<fieldset ng-show="isManagement">
     <legend>Management</legend>
     <div class="form-group">
         <input type="button" class="btn btn-primary" value="Daily Reports" ng-click="Tbd()" />
-        <!--<input type="button" class="btn btn-primary" value="TestGet" ng-click="TestClick()" />
-        <input type="button" class="btn btn-primary" value="TestPost" ng-click="SendClick()" />-->
     </div>
 </fieldset>
 
-<fieldset ng-hide="!isManagement">
+<fieldset ng-show="isManagement">
     <legend>Floor Display</legend>
     <div class="form-group">
-        <input type="button" class="btn btn-primary" value="Scores" ng-click="Tbd()" />
-        <!--<input type="button" class="btn btn-primary" value="TestGet" ng-click="TestClick()" />
-        <input type="button" class="btn btn-primary" value="TestPost" ng-click="SendClick()" />-->
+        <input type="button" class="btn btn-primary" value="Scores" ng-click="Tbd()"/>
     </div>
 </fieldset>
 
-<fieldset ng-hide="!isManagement">
+<fieldset ng-show="isManagement">
+    <legend>System Configuration</legend>
+    <div class="form-group">
+        <input type="button" class="btn btn-primary" value="Users" ng-click="Tbd()"/>
+    </div>
+    <div class="form-group">
+        <input type="button" class="btn btn-primary" value="Roles" ng-click="Tbd()" />
+    </div>
+
+</fieldset>
+
+<fieldset ng-show="isManagement">
     <legend>Misc</legend>
     <div class="form-group">
-        <input type="button" class="btn btn-primary" value="PLS Address Book" ng-click="goContacts()" />
-        <!--<input type="button" class="btn btn-primary" value="TestGet" ng-click="TestClick()" />
-        <input type="button" class="btn btn-primary" value="TestPost" ng-click="SendClick()" />-->
+        <a href="~/contacts.pdf" class="btn btn-info"><span class="glyphicon glyphicon-book"></span> PLS Address Book</a>
     </div>
 </fieldset>

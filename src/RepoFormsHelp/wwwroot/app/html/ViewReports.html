@@ -36,13 +36,13 @@
                 </button>
             </td>
             <td>
-                <button type="button" ng-hide="!isAuditor" ng-click="edit(row)" class="btn btn-sm btn-default">
+                <button type="button" ng-show="isAuditor" ng-click="edit(row)" class="btn btn-sm btn-default">
                     <i class="glyphicon glyphicon-edit">
                     </i>
                 </button>
             </td>
             <td>
-                <button type="button" ng-hide="!isSuperAdmin" ng-click="requestDelete(row)" class="btn btn-sm btn-danger">
+                <button type="button" ng-show="isSuperAdmin" ng-click="requestDelete(row)" class="btn btn-sm btn-danger">
                     <i class="glyphicon glyphicon-remove">
                     </i>
                 </button>
