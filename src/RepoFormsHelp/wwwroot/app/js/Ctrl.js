@@ -3,6 +3,10 @@
         $scope.load = $dataService.getUser()
             .then(function (data) {
             $window.userdata = data;
+            $rootScope.welcome = "Welcome " + data.toLowerCase().split("\\")[1];
+            $rootScope.isSuperAdmin = $dataService.isSuperAdmin();
+            $rootScope.isAuditor = $dataService.isAuditor();
+            $rootScope.isManagement = $dataService.isManagement();
         });
     };
     controller.$inject = ['$scope', '$window', 'dataService', 'envService', '$rootScope'];
@@ -31,14 +35,6 @@
         $scope.Tbd = function () {
             alert("If you build it, they will come");
         };
-        $scope.$watch(function () { return $window.userdata; }, function (n) {
-            if (n !== undefined) {
-                $scope.welcome = "Welcome " + $window.userdata.toLowerCase().split("\\")[1];
-                $scope.isSuperAdmin = $dataService.isSuperAdmin();
-                $scope.isAuditor = $dataService.isAuditor();
-                $scope.isManagement = $dataService.isManagement();
-            }
-        });
         $scope.TestClick = function () {
             $dataService.getPersons()
                 .then(function (data) {
@@ -214,13 +210,6 @@
             SCORE: 3,
             ALL: 4
         };
-        $scope.$watch(function () { return $window.userdata; }, function (n) {
-            if (n !== undefined) {
-                $scope.isSuperAdmin = $dataService.isSuperAdmin();
-                $scope.isAuditor = $dataService.isAuditor();
-                $scope.isManagement = $dataService.isManagement();
-            }
-        });
         var hub = $.connection.repoHub;
         $scope.processData = function () {
             $scope.addAdminVerified($scope.allItems);

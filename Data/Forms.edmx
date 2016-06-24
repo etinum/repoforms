@@ -12,6 +12,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="IsTieredPoints" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="CloseType">
           <Key>
@@ -21,6 +23,8 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Tiered" Type="bit" />
           <Property Name="DefaultPointValue" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Department">
           <Key>
@@ -29,6 +33,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="LeadUserId" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="RepoClientFormula">
           <Key>
@@ -38,6 +44,8 @@
           <Property Name="ClientId" Type="int" Nullable="false" />
           <Property Name="RepoCount" Type="int" Nullable="false" />
           <Property Name="Points" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="RepoForm">
           <Key>
@@ -79,6 +87,7 @@
           <Property Name="OriginalUserId" Type="int" />
           <Property Name="AdminUserId" Type="int" />
           <Property Name="Verified" Type="bit" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -87,6 +96,8 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Assignable" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -107,6 +118,8 @@
           <Property Name="LastLoggedIn" Type="datetime" />
           <Property Name="FirstLoggedIn" Type="datetime" />
           <Property Name="Active" Type="bit" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="X_User_Role">
           <Key>
@@ -308,6 +321,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsTieredPoints" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="RepoClientFormulas" Relationship="PLSFormsDBModel.FK_RepoClientFormula_Client" FromRole="Client" ToRole="RepoClientFormula" />
           <NavigationProperty Name="RepoForms" Relationship="PLSFormsDBModel.FK_RepoForm_Client" FromRole="Client" ToRole="RepoForm" />
         </EntityType>
@@ -319,6 +334,8 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Tiered" Type="Boolean" />
           <Property Name="DefaultPointValue" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="RepoForms" Relationship="PLSFormsDBModel.FK_RepoForm_CloseType" FromRole="CloseType" ToRole="RepoForm" />
         </EntityType>
         <EntityType Name="Department">
@@ -328,6 +345,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LeadUserId" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="User" Relationship="PLSFormsDBModel.FK_Department_User" FromRole="Department" ToRole="User" />
         </EntityType>
         <EntityType Name="RepoClientFormula">
@@ -338,6 +357,8 @@
           <Property Name="ClientId" Type="Int32" Nullable="false" />
           <Property Name="RepoCount" Type="Int32" Nullable="false" />
           <Property Name="Points" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Client" Relationship="PLSFormsDBModel.FK_RepoClientFormula_Client" FromRole="RepoClientFormula" ToRole="Client" />
         </EntityType>
         <EntityType Name="RepoForm">
@@ -380,6 +401,7 @@
           <Property Name="OriginalUserId" Type="Int32" />
           <Property Name="AdminUserId" Type="Int32" />
           <Property Name="Verified" Type="Boolean" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Client1" Relationship="PLSFormsDBModel.FK_RepoForm_Client" FromRole="RepoForm" ToRole="Client" />
           <NavigationProperty Name="CloseType1" Relationship="PLSFormsDBModel.FK_RepoForm_CloseType" FromRole="RepoForm" ToRole="CloseType" />
           <NavigationProperty Name="User" Relationship="PLSFormsDBModel.FK_RepoForm_AdminUser" FromRole="RepoForm" ToRole="User" />
@@ -392,6 +414,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Assignable" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="X_User_Role" Relationship="PLSFormsDBModel.FK_X_User_Role_Role" FromRole="Role" ToRole="X_User_Role" />
         </EntityType>
         <EntityType Name="User">
@@ -413,6 +437,8 @@
           <Property Name="LastLoggedIn" Type="DateTime" Precision="3" />
           <Property Name="FirstLoggedIn" Type="DateTime" Precision="3" />
           <Property Name="Active" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Departments" Relationship="PLSFormsDBModel.FK_Department_User" FromRole="User" ToRole="Department" />
           <NavigationProperty Name="RepoForms" Relationship="PLSFormsDBModel.FK_RepoForm_AdminUser" FromRole="User" ToRole="RepoForm" />
           <NavigationProperty Name="RepoForms1" Relationship="PLSFormsDBModel.FK_RepoForm_OriginalUser" FromRole="User" ToRole="RepoForm" />
@@ -534,6 +560,8 @@
           <EntitySetMapping Name="Clients">
             <EntityTypeMapping TypeName="PLSFormsDBModel.Client">
               <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="IsTieredPoints" ColumnName="IsTieredPoints" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -543,6 +571,8 @@
           <EntitySetMapping Name="CloseTypes">
             <EntityTypeMapping TypeName="PLSFormsDBModel.CloseType">
               <MappingFragment StoreEntitySet="CloseType">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="DefaultPointValue" ColumnName="DefaultPointValue" />
                 <ScalarProperty Name="Tiered" ColumnName="Tiered" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -553,6 +583,8 @@
           <EntitySetMapping Name="Departments">
             <EntityTypeMapping TypeName="PLSFormsDBModel.Department">
               <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="LeadUserId" ColumnName="LeadUserId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -562,6 +594,8 @@
           <EntitySetMapping Name="RepoClientFormulas">
             <EntityTypeMapping TypeName="PLSFormsDBModel.RepoClientFormula">
               <MappingFragment StoreEntitySet="RepoClientFormula">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Points" ColumnName="Points" />
                 <ScalarProperty Name="RepoCount" ColumnName="RepoCount" />
                 <ScalarProperty Name="ClientId" ColumnName="ClientId" />
@@ -572,6 +606,7 @@
           <EntitySetMapping Name="RepoForms">
             <EntityTypeMapping TypeName="PLSFormsDBModel.RepoForm">
               <MappingFragment StoreEntitySet="RepoForm">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="Verified" ColumnName="Verified" />
                 <ScalarProperty Name="AdminUserId" ColumnName="AdminUserId" />
                 <ScalarProperty Name="OriginalUserId" ColumnName="OriginalUserId" />
@@ -614,6 +649,8 @@
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="PLSFormsDBModel.Role">
               <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Assignable" ColumnName="Assignable" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -623,6 +660,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="PLSFormsDBModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="FirstLoggedIn" ColumnName="FirstLoggedIn" />
                 <ScalarProperty Name="LastLoggedIn" ColumnName="LastLoggedIn" />

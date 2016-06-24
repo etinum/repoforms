@@ -20,12 +20,12 @@
 
 
         // Helper methods
-        var trimObjectProperties = (objectToTrim) => {
+        //var trimObjectProperties = (objectToTrim) => {
             //for (var key in objectToTrim) {
             //    if (objectToTrim[key] !== null && objectToTrim[key].trim)
             //        objectToTrim[key] = objectToTrim[key].trim();
             //}
-        };
+        //};
 
 
         var arrayUnique = (array) => {
@@ -180,7 +180,6 @@
 
             $http.get(url)
                 .then(response => {
-                    trimObjectProperties(response.data);
                     deferred.resolve(response.data);
                 }, (response) => {
                     alertFailed(response);
@@ -192,12 +191,11 @@
 
         // Misc
         var getUser = () => {
-            var url = baseWebApiUrl + 'api/RepoForm/GetUser';
+            var url = baseWebApiUrl + 'api/User/GetUser';
             var deferred = $q.defer();
 
             $http.get(url)
                 .then(response => {
-                    trimObjectProperties(response.data);
                     deferred.resolve(response.data);
                 }, (response) => {
                     alertFailed(response);
@@ -206,14 +204,12 @@
             return deferred.promise;
         };
 
-        // Misc
         var getForms = () => {
             var url = baseWebApiUrl + 'api/RepoForm/GetForms';
             var deferred = $q.defer();
 
             $http.get(url)
                 .then(response => {
-                    trimObjectProperties(response.data);
                     deferred.resolve(response.data);
                 }, (response) => {
                     alertFailed(response);
@@ -232,7 +228,6 @@
                 }
             })
                 .then(response => {
-                    trimObjectProperties(response.data);
                     deferred.resolve(response.data);
                 }, (response) => {
                     alertFailed(response);
@@ -250,7 +245,6 @@
             getForms: getForms,
             getForm: getForm,
             // Helper Methods
-            trimObjectProperties: trimObjectProperties,
             arrayUnique: arrayUnique,
             arrayObjectIndexOf: arrayObjectIndexOf,
             isFalse: isFalse,

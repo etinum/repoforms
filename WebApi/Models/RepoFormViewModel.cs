@@ -6,11 +6,14 @@ namespace WebApi.Models
     {
         public int Id { get; set; }
         public DateTime? CreatedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
         public DateTime? RepoDate { get; set; }
         public string AccountNumber { get; set; }
         public string Investigator { get; set; }
         public string Client { get; set; }
+        public int? ClientId { get; set; }
         public string CloseType { get; set; }
+        public int? CloseTypeId { get; set; }
         public string CustomerName { get; set; }
         public int? Points { get; set; }
         public string RecoveryAgent { get; set; }

@@ -35,11 +35,7 @@ namespace WebApi.Controllers
             _mapper = mapConfig.CreateMapper();
         }
 
-        [HttpGet]
-        public string GetUser()
-        {
-            return User.Identity.Name;
-        }
+
 
 
         [HttpGet]

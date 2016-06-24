@@ -18,6 +18,8 @@ namespace Data
         public int ClientId { get; set; }
         public int RepoCount { get; set; }
         public Nullable<int> Points { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual Client Client { get; set; }
     }

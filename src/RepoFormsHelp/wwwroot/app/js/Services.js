@@ -1,7 +1,5 @@
 (function (app) {
     var service = function ($http, $q, $envService, $window) {
-        var trimObjectProperties = function (objectToTrim) {
-        };
         var arrayUnique = function (array) {
             var a = array.concat();
             for (var i = 0; i < a.length; ++i) {
@@ -127,7 +125,6 @@
             var deferred = $q.defer();
             $http.get(url)
                 .then(function (response) {
-                trimObjectProperties(response.data);
                 deferred.resolve(response.data);
             }, function (response) {
                 alertFailed(response);
@@ -136,11 +133,10 @@
             return deferred.promise;
         };
         var getUser = function () {
-            var url = baseWebApiUrl + 'api/RepoForm/GetUser';
+            var url = baseWebApiUrl + 'api/User/GetUser';
             var deferred = $q.defer();
             $http.get(url)
                 .then(function (response) {
-                trimObjectProperties(response.data);
                 deferred.resolve(response.data);
             }, function (response) {
                 alertFailed(response);
@@ -153,7 +149,6 @@
             var deferred = $q.defer();
             $http.get(url)
                 .then(function (response) {
-                trimObjectProperties(response.data);
                 deferred.resolve(response.data);
             }, function (response) {
                 alertFailed(response);
@@ -170,7 +165,6 @@
                 }
             })
                 .then(function (response) {
-                trimObjectProperties(response.data);
                 deferred.resolve(response.data);
             }, function (response) {
                 alertFailed(response);
@@ -186,7 +180,6 @@
             getLocation: getLocation,
             getForms: getForms,
             getForm: getForm,
-            trimObjectProperties: trimObjectProperties,
             arrayUnique: arrayUnique,
             arrayObjectIndexOf: arrayObjectIndexOf,
             isFalse: isFalse,

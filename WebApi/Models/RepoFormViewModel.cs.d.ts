@@ -2,11 +2,14 @@
 	interface RepoFormViewModel {
 		id: number;
 		createdDate: Date;
+		modifiedDate: Date;
 		repoDate: Date;
 		accountNumber: string;
 		investigator: string;
 		client: string;
+		clientId: number;
 		closeType: string;
+		closeTypeId: number;
 		customerName: string;
 		points: number;
 		recoveryAgent: string;

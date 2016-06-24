@@ -38,6 +38,8 @@ namespace Data
         public Nullable<System.DateTime> LastLoggedIn { get; set; }
         public Nullable<System.DateTime> FirstLoggedIn { get; set; }
         public Nullable<bool> Active { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Department> Departments { get; set; }

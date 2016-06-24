@@ -17,6 +17,8 @@ namespace Data
         public int Id { get; set; }
         public string Name { get; set; }
         public Nullable<int> LeadUserId { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual User User { get; set; }
     }

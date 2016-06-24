@@ -204,6 +204,7 @@
     <Compile Include="Controllers\ApiControllerWithHub.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RepoFormController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -211,9 +212,9 @@
     <Compile Include="Hub\RepoHub.cs" />
     <Compile Include="Hub\TestHub.cs" />
     <Compile Include="Mapper\MapperProfile.cs" />
-    <Compile Include="Models\PersonTest.cs" />
     <Compile Include="Models\RepoFormTypeAheadModel.cs" />
     <Compile Include="Models\RepoFormViewModel.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\Email.cs" />
@@ -289,14 +290,14 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Models\PersonTest.cs.d.ts">
-      <DependentUpon>PersonTest.cs</DependentUpon>
-    </TypeScriptCompile>
     <TypeScriptCompile Include="Models\RepoFormTypeAheadModel.cs.d.ts">
       <DependentUpon>RepoFormTypeAheadModel.cs</DependentUpon>
     </TypeScriptCompile>
     <TypeScriptCompile Include="Models\RepoFormViewModel.cs.d.ts">
       <DependentUpon>RepoFormViewModel.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Models\UserViewModel.cs.d.ts">
+      <DependentUpon>UserViewModel.cs</DependentUpon>
     </TypeScriptCompile>
   </ItemGroup>
   <ItemGroup>

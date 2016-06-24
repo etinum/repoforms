@@ -14,8 +14,11 @@ namespace WebApi.Mapper
         {
 
             this.CreateMap<RepoFormViewModel, RepoForm>();
-
             this.CreateMap<RepoForm, RepoFormViewModel>();
+
+            this.CreateMap<UserViewModel, User>();
+            this.CreateMap<User, UserViewModel>();
+
 
 
         }
