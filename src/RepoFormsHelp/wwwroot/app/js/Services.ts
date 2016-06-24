@@ -190,8 +190,8 @@
 
 
         // Misc
-        var getUser = () => {
-            var url = baseWebApiUrl + 'api/User/GetUser';
+        var getLoggedUser = () => {
+            var url = baseWebApiUrl + 'api/User/GetLoggedUser';
             var deferred = $q.defer();
 
             $http.get(url)
@@ -203,6 +203,53 @@
                 });
             return deferred.promise;
         };
+
+        var getUser = (id) => {
+            var url = baseWebApiUrl + 'api/User/GetUser';
+            var deferred = $q.defer();
+
+            $http.get(url, {
+                params: {
+                    id: id
+                }
+            })
+                .then(response => {
+                    deferred.resolve(response.data);
+                }, (response) => {
+                    alertFailed(response);
+                    deferred.reject(response);
+                });
+            return deferred.promise;
+        };
+
+        var getAllUsers = () => {
+            var url = baseWebApiUrl + 'api/User/GetAllUsers';
+            var deferred = $q.defer();
+
+            $http.get(url)
+                .then(response => {
+                    deferred.resolve(response.data);
+                }, (response) => {
+                    alertFailed(response);
+                    deferred.reject(response);
+                });
+            return deferred.promise;
+        };
+
+        var saveUser = (formdata) => {
+            var url = baseWebApiUrl + 'api/RepoForm/SaveUser';
+            var deferred = $q.defer();
+
+            $http.post(url, formdata)
+                .then(() => {
+                    deferred.resolve();
+                }, (response) => {
+                    alertFailed(response);
+                    deferred.reject(response);
+                });
+            return deferred.promise;
+        }
+
 
         var getForms = () => {
             var url = baseWebApiUrl + 'api/RepoForm/GetForms';
@@ -238,12 +285,15 @@
 
         return {
             getUser: getUser,
+            getLoggedUser: getLoggedUser,
+            getAllUsers: getAllUsers,
             getTypeAheadData: getTypeAheadData,
             saveForm: saveForm,
             deleteForm: deleteForm,
             getLocation: getLocation,
             getForms: getForms,
             getForm: getForm,
+            saveUser: saveUser,
             // Helper Methods
             arrayUnique: arrayUnique,
             arrayObjectIndexOf: arrayObjectIndexOf,

@@ -5,13 +5,13 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="35f5716319c14fc79925df930369582a" Name="Diagram1" ZoomLevel="88">
-        <EntityTypeShape EntityType="PLSFormsDBModel.Client" Width="1.5" PointX="3.75" PointY="11.25" />
-        <EntityTypeShape EntityType="PLSFormsDBModel.CloseType" Width="1.5" PointX="3.75" PointY="4.125" />
-        <EntityTypeShape EntityType="PLSFormsDBModel.Department" Width="1.5" PointX="3" PointY="20.125" />
-        <EntityTypeShape EntityType="PLSFormsDBModel.RepoClientFormula" Width="1.5" PointX="6" PointY="14.25" />
+        <EntityTypeShape EntityType="PLSFormsDBModel.Client" Width="1.5" PointX="3.75" PointY="4.125" />
+        <EntityTypeShape EntityType="PLSFormsDBModel.CloseType" Width="1.5" PointX="3.75" PointY="11.25" />
+        <EntityTypeShape EntityType="PLSFormsDBModel.Department" Width="1.5" PointX="2" PointY="14.125" />
+        <EntityTypeShape EntityType="PLSFormsDBModel.RepoClientFormula" Width="1.5" PointX="6" PointY="1.125" />
         <EntityTypeShape EntityType="PLSFormsDBModel.RepoForm" Width="1.5" PointX="6" PointY="4.375" />
         <EntityTypeShape EntityType="PLSFormsDBModel.Role" Width="1.5" PointX="0.75" PointY="2.75" />
-        <EntityTypeShape EntityType="PLSFormsDBModel.User" Width="1.5" PointX="0.75" PointY="6.25" />
+        <EntityTypeShape EntityType="PLSFormsDBModel.User" Width="1.5" PointX="0.75" PointY="5.75" />
         <EntityTypeShape EntityType="PLSFormsDBModel.X_User_Role" Width="1.5" PointX="3" PointY="7.875" />
         <AssociationConnector Association="PLSFormsDBModel.FK_RepoClientFormula_Client" />
         <AssociationConnector Association="PLSFormsDBModel.FK_RepoForm_Client" />
@@ -20,6 +20,8 @@
         <AssociationConnector Association="PLSFormsDBModel.FK_RepoForm_AdminUser" />
         <AssociationConnector Association="PLSFormsDBModel.FK_RepoForm_OriginalUser" />
         <AssociationConnector Association="PLSFormsDBModel.FK_X_User_Role_Role" />
+        <AssociationConnector Association="PLSFormsDBModel.FK_User_User" />
+        <AssociationConnector Association="PLSFormsDBModel.FK_User_User1" />
         <AssociationConnector Association="PLSFormsDBModel.FK_X_User_Role_User" />
       </Diagram>
     </edmx:Diagrams>

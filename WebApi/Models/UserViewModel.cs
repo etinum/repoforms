@@ -8,6 +8,7 @@ namespace WebApi.Models
         public int Id { get; set; }
         public string WinAuthName { get; set; }
         public int? DepartmentId { get; set; }
+        public int? Department { get; set; }
         public string Position { get; set; }
         public string JobFunction { get; set; }
         public byte[] Picture { get; set; }
@@ -23,6 +24,10 @@ namespace WebApi.Models
         public List<string> Roles { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
+        public int? DirectReportUserId { get; set; }
+        public int? DirectReportUser { get; set; }
+        public int? DottedLineReportUserId { get; set; }
+        public int? DottedLineReportUser { get; set; }
 
     }
 }

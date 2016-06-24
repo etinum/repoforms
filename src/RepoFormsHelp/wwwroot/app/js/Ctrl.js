@@ -1,12 +1,16 @@
 (function (app) {
     var controller = function ($scope, $window, $dataService, $envService, $rootScope) {
-        $scope.load = $dataService.getUser()
+        $scope.load = $dataService.getLoggedUser()
             .then(function (data) {
             $window.userdata = data;
-            $rootScope.welcome = "Welcome " + data.toLowerCase().split("\\")[1];
-            $rootScope.isSuperAdmin = $dataService.isSuperAdmin();
-            $rootScope.isAuditor = $dataService.isAuditor();
-            $rootScope.isManagement = $dataService.isManagement();
+            var winAuthName = $window.userdata.winAuthName;
+            var roles = $window.userdata.roles;
+            $rootScope.welcome = "Welcome " + winAuthName.toLowerCase().split("\\")[1];
+            var isSuper = $rootScope.isSuperAdmin = roles.indexOf('SuperAdmin') > -1;
+            $rootScope.isSystemAdmin = roles.indexOf('SystemAdmin') > -1 || isSuper;
+            $rootScope.isManagement = roles.indexOf('Management') > -1 || isSuper;
+            $rootScope.isAuditor = roles.indexOf('Auditor') > -1 || isSuper;
+            $rootScope.isSkipTracer = roles.indexOf('SkipTracer') > -1 || isSuper;
         });
     };
     controller.$inject = ['$scope', '$window', 'dataService', 'envService', '$rootScope'];
@@ -32,19 +36,11 @@
         $scope.goContacts = function () {
             window.location.href = 'contacts.pdf';
         };
+        $scope.ViewUsers = function () {
+            $location.path('/viewusers');
+        };
         $scope.Tbd = function () {
             alert("If you build it, they will come");
-        };
-        $scope.TestClick = function () {
-            $dataService.getPersons()
-                .then(function (data) {
-                var testlist = data;
-                $scope.tempPerson = testlist[0];
-                alert($scope.tempPerson.age);
-            });
-        };
-        $scope.SendClick = function () {
-            $dataService.addPerson($scope.tempPerson);
         };
     };
     controller.$inject = ['$scope', '$location', 'dataService', '$window', 'envService'];
@@ -338,7 +334,7 @@
         });
     };
     controller.$inject = ['$scope', 'dataService', '$location', '$window', '$uibModal'];
-    app.controller('viewCtrl', controller);
+    app.controller('viewRepoFormCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
     var controller = function ($scope, $dataService, $location, $window) {
@@ -442,5 +438,64 @@
     };
     controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window', 'row'];
     app.controller('modalConfirmDeleteCtrl', controller);
+})(angular.module("repoFormsApp"));
+(function (app) {
+    var controller = function ($scope, $window, $dataService, $routeParams) {
+        $scope.submitForm = function () {
+            $scope.submitted = true;
+            $scope.$broadcast('show-errors-event');
+            if ($scope.myForm.$invalid)
+                return;
+            $scope.load = $dataService.saveUser($scope.uf).then(function () {
+                $scope.open();
+            });
+        };
+        $scope.cancelForm = function () {
+            $window.history.back();
+        };
+        $scope.resetForm = function () {
+            location.reload();
+        };
+        if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id) && $routeParams.id > -1) {
+            if ($routeParams.id === 0) {
+            }
+            else {
+                $scope.load = $dataService.getUser($routeParams.id)
+                    .then(function (data) {
+                    $scope.uf = data;
+                    $scope.ouf = angular.copy($scope.uf);
+                });
+            }
+        }
+        else {
+            alert("Error loading user");
+        }
+    };
+    controller.$inject = ['$scope', '$window', 'dataService', '$routeParams'];
+    app.controller('userCtrl', controller);
+})(angular.module("repoFormsApp"));
+(function (app) {
+    var controller = function ($scope, $window, $dataService, $location) {
+        $scope.getUsers = function () {
+            $scope.load = $dataService.getAllUsers()
+                .then(function (data) {
+                $scope.fms = data;
+                $scope.totalItems = $scope.fms.length;
+            });
+        };
+        $scope.update = function () {
+            $scope.getUsers();
+        };
+        $scope.edit = function (row) {
+            var rowee = row;
+            $location.path('/userform/' + rowee.id);
+        };
+        $scope.itemsPerPage = 12;
+        $scope.currentPage = 1;
+        $scope.maxSize = 5;
+        $scope.update();
+    };
+    controller.$inject = ['$scope', '$window', 'dataService', '$location'];
+    app.controller('viewUsersCtrl', controller);
 })(angular.module("repoFormsApp"));
 //# sourceMappingURL=Ctrl.js.map

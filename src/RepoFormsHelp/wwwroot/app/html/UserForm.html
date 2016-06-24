@@ -1,0 +1,202 @@
+<form class="form-horizontal" name="myForm" role="form" novalidate>
+    <div cg-busy="load">
+
+
+        <!-- *************** HTML TEMPLATE (winAuthName) **************** -->
+        <div class="form-group" show-errors>
+            <label for="winAuthName" class="col-sm-3 control-label">Windows User Name</label>
+            <div class="col-sm-9">
+                <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="winAuthName" name="winAuthName" class="form-control"
+                       ng-model="uf.winAuthName" ng-required="false" autocomplete="off" />
+                <div class="help-block" ng-messages="myForm.winAuthName.$error" ng-show="myForm.winAuthName.$touched || submitted">
+                    <div ng-messages-include="app/html/error-messages.html"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- *************** HTML TEMPLATE (first) **************** -->
+        <div class="form-group" show-errors>
+            <label for="first" class="col-sm-3 control-label">First Name</label>
+            <div class="col-sm-9">
+                <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="first" name="first" class="form-control"
+                       ng-model="uf.first" ng-required="false" autocomplete="off" />
+                <div class="help-block" ng-messages="myForm.first.$error" ng-show="myForm.first.$touched || submitted">
+                    <div ng-messages-include="app/html/error-messages.html"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- *************** HTML TEMPLATE (last) **************** -->
+        <div class="form-group" show-errors>
+            <label for="last" class="col-sm-3 control-label">Last Name</label>
+            <div class="col-sm-9">
+                <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="last" name="last" class="form-control"
+                       ng-model="uf.last" ng-required="false" autocomplete="off" />
+                <div class="help-block" ng-messages="myForm.last.$error" ng-show="myForm.last.$touched || submitted">
+                    <div ng-messages-include="app/html/error-messages.html"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- *************** HTML TEMPLATE (departmentId) **************** -->
+        <div class="form-group" show-errors>
+            <label for="departmentId" class="col-sm-3 control-label">Department</label>
+            <div class="col-sm-9">
+                <select id="departmentId" name="departmentId" class="form-control" data-ng-options="item for item in departmentIdOptions track by item"
+                        data-ng-model="rf.departmentId" ng-required="false">
+                    <option value="">---Please select---</option>
+                </select>
+                <div class="help-block" ng-messages="myForm.departmentId.$error" ng-show="myForm.departmentId.$touched || submitted">
+                    <div ng-messages-include="app/html/error-messages.html"></div>
+                </div>
+            </div>
+        </div>
+        <!-- XXXXXXX Javascript dropdown for: (departmentId) XXXXXXX -->
+        <!-- YOu will need to add the options manually in Javascript -->
+        $scope.departmentIdOptions = ['Opt1', 'Opt2'];
+
+
+        <!-- *************** HTML TEMPLATE (position) **************** -->
+        <div class="form-group" show-errors>
+            <label for="position" class="col-sm-3 control-label">Position</label>
+            <div class="col-sm-9">
+                <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="position" name="position" class="form-control"
+                       ng-model="uf.position" ng-required="false" autocomplete="off" />
+                <div class="help-block" ng-messages="myForm.position.$error" ng-show="myForm.position.$touched || submitted">
+                    <div ng-messages-include="app/html/error-messages.html"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- *************** HTML TEMPLATE (jobFunction) **************** -->
+        <div class="form-group" show-errors>
+            <label for="jobFunction" class="col-sm-3 control-label">Job Function</label>
+            <div class="col-sm-9">
+                <textarea ng-maxlength="1000" maxlength="1000" id="jobFunction" name="jobFunction" class="form-control"
+                          ng-model="uf.jobFunction" ng-required="false" autocomplete="off"></textarea>
+                <div class="help-block" ng-messages="myForm.jobFunction.$error" ng-show="myForm.jobFunction.$touched || submitted">
+                    <div ng-messages-include="app/html/error-messages.html"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- *************** HTML TEMPLATE (email) **************** -->
+        <div class="form-group" show-errors>
+            <label for="email" class="col-sm-3 control-label">Email Address</label>
+            <div class="col-sm-9">
+                <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="email" name="email" class="form-control"
+                       ng-model="uf.email" ng-required="false" autocomplete="off" />
+                <div class="help-block" ng-messages="myForm.email.$error" ng-show="myForm.email.$touched || submitted">
+                    <div ng-messages-include="app/html/error-messages.html"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- *************** HTML TEMPLATE (extension) **************** -->
+        <div class="form-group" show-errors>
+            <label for="extension" class="col-sm-3 control-label">Extension</label>
+            <div class="col-sm-9">
+                <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="extension" name="extension" class="form-control"
+                       ng-model="uf.extension" ng-required="false" autocomplete="off" />
+                <div class="help-block" ng-messages="myForm.extension.$error" ng-show="myForm.extension.$touched || submitted">
+                    <div ng-messages-include="app/html/error-messages.html"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- *************** HTML TEMPLATE (cellPhone) **************** -->
+        <div class="form-group" show-errors>
+            <label for="cellPhone" class="col-sm-3 control-label">Cell Phone Number</label>
+            <div class="col-sm-9">
+                <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="cellPhone" name="cellPhone" class="form-control"
+                       ng-model="uf.cellPhone" ng-required="false" autocomplete="off" />
+                <div class="help-block" ng-messages="myForm.cellPhone.$error" ng-show="myForm.cellPhone.$touched || submitted">
+                    <div ng-messages-include="app/html/error-messages.html"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- *************** HTML TEMPLATE (otherPhone) **************** -->
+        <div class="form-group" show-errors>
+            <label for="otherPhone" class="col-sm-3 control-label">Other Phone Number</label>
+            <div class="col-sm-9">
+                <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="otherPhone" name="otherPhone" class="form-control"
+                       ng-model="uf.otherPhone" ng-required="false" autocomplete="off" />
+                <div class="help-block" ng-messages="myForm.otherPhone.$error" ng-show="myForm.otherPhone.$touched || submitted">
+                    <div ng-messages-include="app/html/error-messages.html"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- *************** HTML TEMPLATE (directReportUser) **************** -->
+        <div class="form-group" show-errors>
+            <label for="directReportUser" class="col-sm-3 control-label">Direct Report</label>
+            <div class="col-sm-9">
+                <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="directReportUser" name="directReportUser" class="form-control"
+                       ng-model="uf.directReportUser" ng-required="false" autocomplete="off" />
+                <div class="help-block" ng-messages="myForm.directReportUser.$error" ng-show="myForm.directReportUser.$touched || submitted">
+                    <div ng-messages-include="app/html/error-messages.html"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- *************** HTML TEMPLATE (dottedLineReportUser) **************** -->
+        <div class="form-group" show-errors>
+            <label for="dottedLineReportUser" class="col-sm-3 control-label">Dotted Line Report</label>
+            <div class="col-sm-9">
+                <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="dottedLineReportUser" name="dottedLineReportUser" class="form-control"
+                       ng-model="uf.dottedLineReportUser" ng-required="false" autocomplete="off" />
+                <div class="help-block" ng-messages="myForm.dottedLineReportUser.$error" ng-show="myForm.dottedLineReportUser.$touched || submitted">
+                    <div ng-messages-include="app/html/error-messages.html"></div>
+                </div>
+            </div>
+        </div>
+
+
+
+            <!-- *************** HTML TEMPLATE (active) **************** -->
+            <div class="form-group">
+                <div class="col-sm-offset-3 col-sm-9">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"
+                                   ng-model="uf.active" />Still Active?
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+
+            <br /><br /><br />
+            <div class="col-sm-offset-3 col-sm-9">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-3 col-sm-2 col-lg-1 ">
+                            <input type="button" class="btn btn-default" value="Cancel"
+                                   ng-click="cancelForm()" />
+                        </div>
+                        <div class="col-xs-3 col-sm-2 col-lg-1">
+                            <input type="button" class="btn btn-primary" value="Submit"
+                                   ng-click="submitForm()" />
+                        </div>
+                        <div class="col-xs-6 col-sm-8 col-lg-10 ">
+                            <input type="reset" class="btn btn-warning" value="Reset"
+                                   ng-click="resetForm()" />
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-danger" ng-if="hasFormError">{{formErrors}}</div>
+            </div>
+
+
+        </div>
+</form>

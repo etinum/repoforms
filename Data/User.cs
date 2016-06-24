@@ -20,6 +20,8 @@ namespace Data
             this.Departments = new HashSet<Department>();
             this.RepoForms = new HashSet<RepoForm>();
             this.RepoForms1 = new HashSet<RepoForm>();
+            this.User1 = new HashSet<User>();
+            this.User11 = new HashSet<User>();
             this.X_User_Role = new HashSet<X_User_Role>();
         }
     
@@ -40,6 +42,8 @@ namespace Data
         public Nullable<bool> Active { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> ModifiedDate { get; set; }
+        public Nullable<int> DirectReportUserId { get; set; }
+        public Nullable<int> DottedLineReportUserId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Department> Departments { get; set; }
@@ -47,6 +51,12 @@ namespace Data
         public virtual ICollection<RepoForm> RepoForms { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RepoForm> RepoForms1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> User1 { get; set; }
+        public virtual User User2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> User11 { get; set; }
+        public virtual User User3 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<X_User_Role> X_User_Role { get; set; }
     }

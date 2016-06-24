@@ -16,6 +16,7 @@ namespace Data
     {
         public int Id { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
         public Nullable<System.DateTime> RepoDate { get; set; }
         public string AccountNumber { get; set; }
         public string Investigator { get; set; }
@@ -50,7 +51,6 @@ namespace Data
         public Nullable<int> OriginalUserId { get; set; }
         public Nullable<int> AdminUserId { get; set; }
         public Nullable<bool> Verified { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual Client Client1 { get; set; }
         public virtual CloseType CloseType1 { get; set; }

@@ -53,6 +53,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="ModifiedDate" Type="datetime" />
           <Property Name="RepoDate" Type="datetime" />
           <Property Name="AccountNumber" Type="nvarchar" MaxLength="100" />
           <Property Name="Investigator" Type="nvarchar" MaxLength="100" />
@@ -87,7 +88,6 @@
           <Property Name="OriginalUserId" Type="int" />
           <Property Name="AdminUserId" Type="int" />
           <Property Name="Verified" Type="bit" />
-          <Property Name="ModifiedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -120,6 +120,8 @@
           <Property Name="Active" Type="bit" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="DirectReportUserId" Type="int" />
+          <Property Name="DottedLineReportUserId" Type="int" />
         </EntityType>
         <EntityType Name="X_User_Role">
           <Key>
@@ -202,6 +204,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User1" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User1">
+              <PropertyRef Name="DirectReportUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_User1">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User1" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User1">
+              <PropertyRef Name="DottedLineReportUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_X_User_Role_Role">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
           <End Role="X_User_Role" Type="Self.X_User_Role" Multiplicity="*" />
@@ -259,6 +285,14 @@
             <End Role="User" EntitySet="User" />
             <End Role="RepoForm" EntitySet="RepoForm" />
           </AssociationSet>
+          <AssociationSet Name="FK_User_User" Association="Self.FK_User_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="User1" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_User1" Association="Self.FK_User_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="User1" EntitySet="User" />
+          </AssociationSet>
           <AssociationSet Name="FK_X_User_Role_Role" Association="Self.FK_X_User_Role_Role">
             <End Role="Role" EntitySet="Role" />
             <End Role="X_User_Role" EntitySet="X_User_Role" />
@@ -308,6 +342,14 @@
           <AssociationSet Name="FK_X_User_Role_Role" Association="PLSFormsDBModel.FK_X_User_Role_Role">
             <End Role="Role" EntitySet="Roles" />
             <End Role="X_User_Role" EntitySet="X_User_Role" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_User" Association="PLSFormsDBModel.FK_User_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="User1" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_User1" Association="PLSFormsDBModel.FK_User_User1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="User1" EntitySet="Users" />
           </AssociationSet>
           <AssociationSet Name="FK_X_User_Role_User" Association="PLSFormsDBModel.FK_X_User_Role_User">
             <End Role="User" EntitySet="Users" />
@@ -367,6 +409,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <Property Name="RepoDate" Type="DateTime" Precision="3" />
           <Property Name="AccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Investigator" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -401,7 +444,6 @@
           <Property Name="OriginalUserId" Type="Int32" />
           <Property Name="AdminUserId" Type="Int32" />
           <Property Name="Verified" Type="Boolean" />
-          <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Client1" Relationship="PLSFormsDBModel.FK_RepoForm_Client" FromRole="RepoForm" ToRole="Client" />
           <NavigationProperty Name="CloseType1" Relationship="PLSFormsDBModel.FK_RepoForm_CloseType" FromRole="RepoForm" ToRole="CloseType" />
           <NavigationProperty Name="User" Relationship="PLSFormsDBModel.FK_RepoForm_AdminUser" FromRole="RepoForm" ToRole="User" />
@@ -439,9 +481,15 @@
           <Property Name="Active" Type="Boolean" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="DirectReportUserId" Type="Int32" />
+          <Property Name="DottedLineReportUserId" Type="Int32" />
           <NavigationProperty Name="Departments" Relationship="PLSFormsDBModel.FK_Department_User" FromRole="User" ToRole="Department" />
           <NavigationProperty Name="RepoForms" Relationship="PLSFormsDBModel.FK_RepoForm_AdminUser" FromRole="User" ToRole="RepoForm" />
           <NavigationProperty Name="RepoForms1" Relationship="PLSFormsDBModel.FK_RepoForm_OriginalUser" FromRole="User" ToRole="RepoForm" />
+          <NavigationProperty Name="User1" Relationship="PLSFormsDBModel.FK_User_User" FromRole="User" ToRole="User1" />
+          <NavigationProperty Name="User2" Relationship="PLSFormsDBModel.FK_User_User" FromRole="User1" ToRole="User" />
+          <NavigationProperty Name="User11" Relationship="PLSFormsDBModel.FK_User_User1" FromRole="User" ToRole="User1" />
+          <NavigationProperty Name="User3" Relationship="PLSFormsDBModel.FK_User_User1" FromRole="User1" ToRole="User" />
           <NavigationProperty Name="X_User_Role" Relationship="PLSFormsDBModel.FK_X_User_Role_User" FromRole="User" ToRole="X_User_Role" />
         </EntityType>
         <EntityType Name="X_User_Role">
@@ -539,6 +587,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_User">
+          <End Type="PLSFormsDBModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="PLSFormsDBModel.User" Role="User1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User1">
+              <PropertyRef Name="DirectReportUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_User1">
+          <End Type="PLSFormsDBModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="PLSFormsDBModel.User" Role="User1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User1">
+              <PropertyRef Name="DottedLineReportUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_X_User_Role_User">
           <End Type="PLSFormsDBModel.User" Role="User" Multiplicity="1" />
           <End Type="PLSFormsDBModel.X_User_Role" Role="X_User_Role" Multiplicity="*" />
@@ -606,7 +678,6 @@
           <EntitySetMapping Name="RepoForms">
             <EntityTypeMapping TypeName="PLSFormsDBModel.RepoForm">
               <MappingFragment StoreEntitySet="RepoForm">
-                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="Verified" ColumnName="Verified" />
                 <ScalarProperty Name="AdminUserId" ColumnName="AdminUserId" />
                 <ScalarProperty Name="OriginalUserId" ColumnName="OriginalUserId" />
@@ -641,6 +712,7 @@
                 <ScalarProperty Name="Investigator" ColumnName="Investigator" />
                 <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
                 <ScalarProperty Name="RepoDate" ColumnName="RepoDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -660,6 +732,8 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="PLSFormsDBModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="DottedLineReportUserId" ColumnName="DottedLineReportUserId" />
+                <ScalarProperty Name="DirectReportUserId" ColumnName="DirectReportUserId" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Active" ColumnName="Active" />

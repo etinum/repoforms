@@ -60,6 +60,10 @@
         firstLoggedIn: Date;
         active: boolean;
         roles: string[];
+        createdDate: Date;
+        modifiedDate: Date;
+        directReportUserId: number;
+        dottedLineReportUserId: number;
     }
 
 }

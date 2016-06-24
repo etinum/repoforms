@@ -30,9 +30,17 @@ angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'enviro
                 templateUrl: "app/html/RepoForm.html",
                 controller: "repoCtrl"
             })
+            .when("/userform/:id", {
+                templateUrl: "app/html/UserForm.html",
+                controller: "userCtrl"
+            })
+            .when("/viewusers", {
+                templateUrl: "app/html/ViewUsers.html",
+                controller: "viewUsersCtrl"
+            })
             .when("/admin", {
                 templateUrl: "app/html/ViewReports.html",
-                controller: "viewCtrl"
+                controller: "viewRepoFormCtrl"
             })
             .when("/submissions", {
                 templateUrl: "app/html/ViewSubmissions.html",

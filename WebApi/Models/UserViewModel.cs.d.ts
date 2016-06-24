@@ -3,6 +3,7 @@
 		id: number;
 		winAuthName: string;
 		departmentId: number;
+		department: number;
 		position: string;
 		jobFunction: string;
 		picture: any[];
@@ -18,5 +19,9 @@
 		roles: string[];
 		createdDate: Date;
 		modifiedDate: Date;
+		directReportUserId: number;
+		directReportUser: number;
+		dottedLineReportUserId: number;
+		dottedLineReportUser: number;
 	}
 }

@@ -27,8 +27,17 @@ namespace WebApi.Controllers
             _mapper = mapConfig.CreateMapper();
         }
 
+
+        //TODO: For all user objects, we need to convert the foreignkey ID's to add the readable object name
         [HttpGet]
-        public IHttpActionResult GetUser()
+        public IHttpActionResult GetUser(int id)
+        {
+            var user = _ctx.Users.FirstOrDefault(r => r.Id == id);
+            return Ok(_mapper.Map<UserViewModel>(user));
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetLoggedUser()
         {
 
             var user = _ctx.Users.FirstOrDefault(r => r.WinAuthName == User.Identity.Name);
@@ -56,6 +65,23 @@ namespace WebApi.Controllers
 
             return Ok(userViewModel);
 
+        }
+
+        [HttpGet]
+        public IHttpActionResult GetAllUsers()
+        {
+
+            var users = _ctx.Users.ToList();
+
+            return Ok(_mapper.Map<List<UserViewModel>>(users));
+
+        }
+
+
+        [HttpPost]
+        public IHttpActionResult SaveUser(int id)
+        {
+            return Ok();
         }
 
 

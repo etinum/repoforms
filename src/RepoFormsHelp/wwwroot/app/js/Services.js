@@ -132,12 +132,52 @@
             });
             return deferred.promise;
         };
-        var getUser = function () {
-            var url = baseWebApiUrl + 'api/User/GetUser';
+        var getLoggedUser = function () {
+            var url = baseWebApiUrl + 'api/User/GetLoggedUser';
             var deferred = $q.defer();
             $http.get(url)
                 .then(function (response) {
                 deferred.resolve(response.data);
+            }, function (response) {
+                alertFailed(response);
+                deferred.reject(response);
+            });
+            return deferred.promise;
+        };
+        var getUser = function (id) {
+            var url = baseWebApiUrl + 'api/User/GetUser';
+            var deferred = $q.defer();
+            $http.get(url, {
+                params: {
+                    id: id
+                }
+            })
+                .then(function (response) {
+                deferred.resolve(response.data);
+            }, function (response) {
+                alertFailed(response);
+                deferred.reject(response);
+            });
+            return deferred.promise;
+        };
+        var getAllUsers = function () {
+            var url = baseWebApiUrl + 'api/User/GetAllUsers';
+            var deferred = $q.defer();
+            $http.get(url)
+                .then(function (response) {
+                deferred.resolve(response.data);
+            }, function (response) {
+                alertFailed(response);
+                deferred.reject(response);
+            });
+            return deferred.promise;
+        };
+        var saveUser = function (formdata) {
+            var url = baseWebApiUrl + 'api/RepoForm/SaveUser';
+            var deferred = $q.defer();
+            $http.post(url, formdata)
+                .then(function () {
+                deferred.resolve();
             }, function (response) {
                 alertFailed(response);
                 deferred.reject(response);
@@ -174,12 +214,15 @@
         };
         return {
             getUser: getUser,
+            getLoggedUser: getLoggedUser,
+            getAllUsers: getAllUsers,
             getTypeAheadData: getTypeAheadData,
             saveForm: saveForm,
             deleteForm: deleteForm,
             getLocation: getLocation,
             getForms: getForms,
             getForm: getForm,
+            saveUser: saveUser,
             arrayUnique: arrayUnique,
             arrayObjectIndexOf: arrayObjectIndexOf,
             isFalse: isFalse,
