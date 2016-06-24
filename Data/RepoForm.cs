@@ -20,7 +20,9 @@ namespace Data
         public string AccountNumber { get; set; }
         public string Investigator { get; set; }
         public string Client { get; set; }
+        public Nullable<int> ClientId { get; set; }
         public string CloseType { get; set; }
+        public Nullable<int> CloseTypeId { get; set; }
         public string CustomerName { get; set; }
         public Nullable<int> Points { get; set; }
         public string RecoveryAgent { get; set; }
@@ -49,6 +51,8 @@ namespace Data
         public Nullable<int> AdminUserId { get; set; }
         public Nullable<bool> Verified { get; set; }
     
+        public virtual Client Client1 { get; set; }
+        public virtual CloseType CloseType1 { get; set; }
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }
     }

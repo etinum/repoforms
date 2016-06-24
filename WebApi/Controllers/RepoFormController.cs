@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Optimization;
 using AutoMapper;
 using Data;
 using WebApi.Hub;
@@ -141,7 +142,10 @@ namespace WebApi.Controllers
 
             _ctx.SaveChanges();
 
-            Email.AssignmentWriteUp(user.WinAuthName, repoFormModel.Investigator, repoFormModel.AccountNumber);
+            if (!user.WinAuthName.Contains("ertran"))
+            {
+                Email.AssignmentWriteUp(user.WinAuthName, repoFormModel.Investigator, repoFormModel.AccountNumber);
+            }
 
             return repoFormModel;
         }
@@ -153,7 +157,6 @@ namespace WebApi.Controllers
             var user = GetExistingUser() ?? new User()
             {
                 WinAuthName = User.Identity.Name,
-                Investigator = repoFormModel.Investigator,
                 FirstLoggedIn = DateTime.Now
             };
 

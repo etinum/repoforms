@@ -77,7 +77,6 @@ namespace WebApi.Controllers
 
                 var myobj = new User
                 {
-                    Investigator = "Eric Tran",
                     WinAuthName = "Prant_1/blah",
                     LastLoggedIn = DateTime.Today,
                     FirstLoggedIn = DateTime.Today

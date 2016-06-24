@@ -5,6 +5,40 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="PLSFormsDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsTieredPoints" Type="bit" />
+        </EntityType>
+        <EntityType Name="CloseType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tiered" Type="bit" />
+          <Property Name="DefaultPointValue" Type="int" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="LeadUserId" Type="int" />
+        </EntityType>
+        <EntityType Name="RepoClientFormula">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientId" Type="int" Nullable="false" />
+          <Property Name="RepoCount" Type="int" Nullable="false" />
+          <Property Name="Points" Type="int" />
+        </EntityType>
         <EntityType Name="RepoForm">
           <Key>
             <PropertyRef Name="Id" />
@@ -15,7 +49,9 @@
           <Property Name="AccountNumber" Type="nvarchar" MaxLength="100" />
           <Property Name="Investigator" Type="nvarchar" MaxLength="100" />
           <Property Name="Client" Type="nvarchar" MaxLength="100" />
+          <Property Name="ClientId" Type="int" />
           <Property Name="CloseType" Type="nvarchar" MaxLength="100" />
+          <Property Name="CloseTypeId" Type="int" />
           <Property Name="CustomerName" Type="nvarchar" MaxLength="100" />
           <Property Name="Points" Type="int" />
           <Property Name="RecoveryAgent" Type="nvarchar" MaxLength="100" />
@@ -44,16 +80,67 @@
           <Property Name="AdminUserId" Type="int" />
           <Property Name="Verified" Type="bit" />
         </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Assignable" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="WinAuthName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Investigator" Type="nvarchar" MaxLength="50" />
+          <Property Name="DepartmentId" Type="int" />
+          <Property Name="Position" Type="nvarchar" MaxLength="50" />
+          <Property Name="JobFunction" Type="nvarchar(max)" />
+          <Property Name="Picture" Type="varbinary(max)" />
+          <Property Name="First" Type="nvarchar" MaxLength="50" />
+          <Property Name="Last" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Extension" Type="nvarchar" MaxLength="50" />
+          <Property Name="CellPhone" Type="nvarchar" MaxLength="50" />
+          <Property Name="OtherPhone" Type="nvarchar" MaxLength="50" />
           <Property Name="LastLoggedIn" Type="datetime" />
           <Property Name="FirstLoggedIn" Type="datetime" />
+          <Property Name="Active" Type="bit" />
         </EntityType>
+        <EntityType Name="X_User_Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Department_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="LeadUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RepoClientFormula_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
+          <End Role="RepoClientFormula" Type="Self.RepoClientFormula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RepoClientFormula">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RepoForm_AdminUser">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="RepoForm" Type="Self.RepoForm" Multiplicity="*" />
@@ -63,6 +150,30 @@
             </Principal>
             <Dependent Role="RepoForm">
               <PropertyRef Name="AdminUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RepoForm_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="0..1" />
+          <End Role="RepoForm" Type="Self.RepoForm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RepoForm">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RepoForm_CloseType">
+          <End Role="CloseType" Type="Self.CloseType" Multiplicity="0..1" />
+          <End Role="RepoForm" Type="Self.RepoForm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CloseType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RepoForm">
+              <PropertyRef Name="CloseTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -78,16 +189,70 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_X_User_Role_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="X_User_Role" Type="Self.X_User_Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="X_User_Role">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_X_User_Role_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="X_User_Role" Type="Self.X_User_Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="X_User_Role">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="PLSFormsDBModelStoreContainer">
+          <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CloseType" EntityType="Self.CloseType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RepoClientFormula" EntityType="Self.RepoClientFormula" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RepoForm" EntityType="Self.RepoForm" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="X_User_Role" EntityType="Self.X_User_Role" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Department_User" Association="Self.FK_Department_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RepoClientFormula_Client" Association="Self.FK_RepoClientFormula_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="RepoClientFormula" EntitySet="RepoClientFormula" />
+          </AssociationSet>
           <AssociationSet Name="FK_RepoForm_AdminUser" Association="Self.FK_RepoForm_AdminUser">
             <End Role="User" EntitySet="User" />
+            <End Role="RepoForm" EntitySet="RepoForm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RepoForm_Client" Association="Self.FK_RepoForm_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="RepoForm" EntitySet="RepoForm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RepoForm_CloseType" Association="Self.FK_RepoForm_CloseType">
+            <End Role="CloseType" EntitySet="CloseType" />
             <End Role="RepoForm" EntitySet="RepoForm" />
           </AssociationSet>
           <AssociationSet Name="FK_RepoForm_OriginalUser" Association="Self.FK_RepoForm_OriginalUser">
             <End Role="User" EntitySet="User" />
             <End Role="RepoForm" EntitySet="RepoForm" />
+          </AssociationSet>
+          <AssociationSet Name="FK_X_User_Role_Role" Association="Self.FK_X_User_Role_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="X_User_Role" EntitySet="X_User_Role" />
+          </AssociationSet>
+          <AssociationSet Name="FK_X_User_Role_User" Association="Self.FK_X_User_Role_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="X_User_Role" EntitySet="X_User_Role" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -95,8 +260,30 @@
     <edmx:ConceptualModels>
       <Schema Namespace="PLSFormsDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="PLSFormsDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="PLSFormsDBModel.Client" />
+          <EntitySet Name="CloseTypes" EntityType="PLSFormsDBModel.CloseType" />
+          <EntitySet Name="Departments" EntityType="PLSFormsDBModel.Department" />
+          <EntitySet Name="RepoClientFormulas" EntityType="PLSFormsDBModel.RepoClientFormula" />
           <EntitySet Name="RepoForms" EntityType="PLSFormsDBModel.RepoForm" />
+          <EntitySet Name="Roles" EntityType="PLSFormsDBModel.Role" />
           <EntitySet Name="Users" EntityType="PLSFormsDBModel.User" />
+          <EntitySet Name="X_User_Role" EntityType="PLSFormsDBModel.X_User_Role" />
+          <AssociationSet Name="FK_RepoClientFormula_Client" Association="PLSFormsDBModel.FK_RepoClientFormula_Client">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="RepoClientFormula" EntitySet="RepoClientFormulas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RepoForm_Client" Association="PLSFormsDBModel.FK_RepoForm_Client">
+            <End Role="Client" EntitySet="Clients" />
+            <End Role="RepoForm" EntitySet="RepoForms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RepoForm_CloseType" Association="PLSFormsDBModel.FK_RepoForm_CloseType">
+            <End Role="CloseType" EntitySet="CloseTypes" />
+            <End Role="RepoForm" EntitySet="RepoForms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Department_User" Association="PLSFormsDBModel.FK_Department_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Department" EntitySet="Departments" />
+          </AssociationSet>
           <AssociationSet Name="FK_RepoForm_AdminUser" Association="PLSFormsDBModel.FK_RepoForm_AdminUser">
             <End Role="User" EntitySet="Users" />
             <End Role="RepoForm" EntitySet="RepoForms" />
@@ -105,7 +292,54 @@
             <End Role="User" EntitySet="Users" />
             <End Role="RepoForm" EntitySet="RepoForms" />
           </AssociationSet>
+          <AssociationSet Name="FK_X_User_Role_Role" Association="PLSFormsDBModel.FK_X_User_Role_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="X_User_Role" EntitySet="X_User_Role" />
+          </AssociationSet>
+          <AssociationSet Name="FK_X_User_Role_User" Association="PLSFormsDBModel.FK_X_User_Role_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="X_User_Role" EntitySet="X_User_Role" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Client">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsTieredPoints" Type="Boolean" />
+          <NavigationProperty Name="RepoClientFormulas" Relationship="PLSFormsDBModel.FK_RepoClientFormula_Client" FromRole="Client" ToRole="RepoClientFormula" />
+          <NavigationProperty Name="RepoForms" Relationship="PLSFormsDBModel.FK_RepoForm_Client" FromRole="Client" ToRole="RepoForm" />
+        </EntityType>
+        <EntityType Name="CloseType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tiered" Type="Boolean" />
+          <Property Name="DefaultPointValue" Type="Int32" />
+          <NavigationProperty Name="RepoForms" Relationship="PLSFormsDBModel.FK_RepoForm_CloseType" FromRole="CloseType" ToRole="RepoForm" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LeadUserId" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="PLSFormsDBModel.FK_Department_User" FromRole="Department" ToRole="User" />
+        </EntityType>
+        <EntityType Name="RepoClientFormula">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientId" Type="Int32" Nullable="false" />
+          <Property Name="RepoCount" Type="Int32" Nullable="false" />
+          <Property Name="Points" Type="Int32" />
+          <NavigationProperty Name="Client" Relationship="PLSFormsDBModel.FK_RepoClientFormula_Client" FromRole="RepoClientFormula" ToRole="Client" />
+        </EntityType>
         <EntityType Name="RepoForm">
           <Key>
             <PropertyRef Name="Id" />
@@ -116,7 +350,9 @@
           <Property Name="AccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Investigator" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Client" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ClientId" Type="Int32" />
           <Property Name="CloseType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CloseTypeId" Type="Int32" />
           <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Points" Type="Int32" />
           <Property Name="RecoveryAgent" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -144,8 +380,19 @@
           <Property Name="OriginalUserId" Type="Int32" />
           <Property Name="AdminUserId" Type="Int32" />
           <Property Name="Verified" Type="Boolean" />
+          <NavigationProperty Name="Client1" Relationship="PLSFormsDBModel.FK_RepoForm_Client" FromRole="RepoForm" ToRole="Client" />
+          <NavigationProperty Name="CloseType1" Relationship="PLSFormsDBModel.FK_RepoForm_CloseType" FromRole="RepoForm" ToRole="CloseType" />
           <NavigationProperty Name="User" Relationship="PLSFormsDBModel.FK_RepoForm_AdminUser" FromRole="RepoForm" ToRole="User" />
           <NavigationProperty Name="User1" Relationship="PLSFormsDBModel.FK_RepoForm_OriginalUser" FromRole="RepoForm" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Assignable" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="X_User_Role" Relationship="PLSFormsDBModel.FK_X_User_Role_Role" FromRole="Role" ToRole="X_User_Role" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -153,12 +400,83 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="WinAuthName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Investigator" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentId" Type="Int32" />
+          <Property Name="Position" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="JobFunction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="First" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Last" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Extension" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CellPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OtherPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LastLoggedIn" Type="DateTime" Precision="3" />
           <Property Name="FirstLoggedIn" Type="DateTime" Precision="3" />
+          <Property Name="Active" Type="Boolean" />
+          <NavigationProperty Name="Departments" Relationship="PLSFormsDBModel.FK_Department_User" FromRole="User" ToRole="Department" />
           <NavigationProperty Name="RepoForms" Relationship="PLSFormsDBModel.FK_RepoForm_AdminUser" FromRole="User" ToRole="RepoForm" />
           <NavigationProperty Name="RepoForms1" Relationship="PLSFormsDBModel.FK_RepoForm_OriginalUser" FromRole="User" ToRole="RepoForm" />
+          <NavigationProperty Name="X_User_Role" Relationship="PLSFormsDBModel.FK_X_User_Role_User" FromRole="User" ToRole="X_User_Role" />
         </EntityType>
+        <EntityType Name="X_User_Role">
+          <Key>
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Role" Relationship="PLSFormsDBModel.FK_X_User_Role_Role" FromRole="X_User_Role" ToRole="Role" />
+          <NavigationProperty Name="User" Relationship="PLSFormsDBModel.FK_X_User_Role_User" FromRole="X_User_Role" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_RepoClientFormula_Client">
+          <End Type="PLSFormsDBModel.Client" Role="Client" Multiplicity="1" />
+          <End Type="PLSFormsDBModel.RepoClientFormula" Role="RepoClientFormula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RepoClientFormula">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RepoForm_Client">
+          <End Type="PLSFormsDBModel.Client" Role="Client" Multiplicity="0..1" />
+          <End Type="PLSFormsDBModel.RepoForm" Role="RepoForm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RepoForm">
+              <PropertyRef Name="ClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RepoForm_CloseType">
+          <End Type="PLSFormsDBModel.CloseType" Role="CloseType" Multiplicity="0..1" />
+          <End Type="PLSFormsDBModel.RepoForm" Role="RepoForm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CloseType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RepoForm">
+              <PropertyRef Name="CloseTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Department_User">
+          <End Type="PLSFormsDBModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="PLSFormsDBModel.Department" Role="Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="LeadUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RepoForm_AdminUser">
           <End Type="PLSFormsDBModel.User" Role="User" Multiplicity="0..1" />
           <End Type="PLSFormsDBModel.RepoForm" Role="RepoForm" Multiplicity="*" />
@@ -183,12 +501,74 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <Association Name="FK_X_User_Role_Role">
+          <End Type="PLSFormsDBModel.Role" Role="Role" Multiplicity="1" />
+          <End Type="PLSFormsDBModel.X_User_Role" Role="X_User_Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="X_User_Role">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_X_User_Role_User">
+          <End Type="PLSFormsDBModel.User" Role="User" Multiplicity="1" />
+          <End Type="PLSFormsDBModel.X_User_Role" Role="X_User_Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="X_User_Role">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="PLSFormsDBModelStoreContainer" CdmEntityContainer="PLSFormsDBEntities">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="PLSFormsDBModel.Client">
+              <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="IsTieredPoints" ColumnName="IsTieredPoints" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CloseTypes">
+            <EntityTypeMapping TypeName="PLSFormsDBModel.CloseType">
+              <MappingFragment StoreEntitySet="CloseType">
+                <ScalarProperty Name="DefaultPointValue" ColumnName="DefaultPointValue" />
+                <ScalarProperty Name="Tiered" ColumnName="Tiered" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="PLSFormsDBModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="LeadUserId" ColumnName="LeadUserId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RepoClientFormulas">
+            <EntityTypeMapping TypeName="PLSFormsDBModel.RepoClientFormula">
+              <MappingFragment StoreEntitySet="RepoClientFormula">
+                <ScalarProperty Name="Points" ColumnName="Points" />
+                <ScalarProperty Name="RepoCount" ColumnName="RepoCount" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="RepoForms">
             <EntityTypeMapping TypeName="PLSFormsDBModel.RepoForm">
               <MappingFragment StoreEntitySet="RepoForm">
@@ -219,7 +599,9 @@
                 <ScalarProperty Name="RecoveryAgent" ColumnName="RecoveryAgent" />
                 <ScalarProperty Name="Points" ColumnName="Points" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CloseTypeId" ColumnName="CloseTypeId" />
                 <ScalarProperty Name="CloseType" ColumnName="CloseType" />
+                <ScalarProperty Name="ClientId" ColumnName="ClientId" />
                 <ScalarProperty Name="Client" ColumnName="Client" />
                 <ScalarProperty Name="Investigator" ColumnName="Investigator" />
                 <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
@@ -229,14 +611,42 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="PLSFormsDBModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Assignable" ColumnName="Assignable" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="PLSFormsDBModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="FirstLoggedIn" ColumnName="FirstLoggedIn" />
                 <ScalarProperty Name="LastLoggedIn" ColumnName="LastLoggedIn" />
-                <ScalarProperty Name="Investigator" ColumnName="Investigator" />
+                <ScalarProperty Name="OtherPhone" ColumnName="OtherPhone" />
+                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
+                <ScalarProperty Name="Extension" ColumnName="Extension" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Last" ColumnName="Last" />
+                <ScalarProperty Name="First" ColumnName="First" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="JobFunction" ColumnName="JobFunction" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
                 <ScalarProperty Name="WinAuthName" ColumnName="WinAuthName" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="X_User_Role">
+            <EntityTypeMapping TypeName="PLSFormsDBModel.X_User_Role">
+              <MappingFragment StoreEntitySet="X_User_Role">
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -52,6 +52,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Client.cs">
+      <DependentUpon>Forms.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CloseType.cs">
+      <DependentUpon>Forms.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Department.cs">
+      <DependentUpon>Forms.tt</DependentUpon>
+    </Compile>
     <Compile Include="Forms.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -68,10 +77,19 @@
       <DependentUpon>Forms.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepoClientFormula.cs">
+      <DependentUpon>Forms.tt</DependentUpon>
+    </Compile>
     <Compile Include="RepoForm.cs">
       <DependentUpon>Forms.tt</DependentUpon>
     </Compile>
+    <Compile Include="Role.cs">
+      <DependentUpon>Forms.tt</DependentUpon>
+    </Compile>
     <Compile Include="User.cs">
+      <DependentUpon>Forms.tt</DependentUpon>
+    </Compile>
+    <Compile Include="X_User_Role.cs">
       <DependentUpon>Forms.tt</DependentUpon>
     </Compile>
   </ItemGroup>

@@ -17,19 +17,35 @@ namespace Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
+            this.Departments = new HashSet<Department>();
             this.RepoForms = new HashSet<RepoForm>();
             this.RepoForms1 = new HashSet<RepoForm>();
+            this.X_User_Role = new HashSet<X_User_Role>();
         }
     
         public int Id { get; set; }
         public string WinAuthName { get; set; }
-        public string Investigator { get; set; }
+        public Nullable<int> DepartmentId { get; set; }
+        public string Position { get; set; }
+        public string JobFunction { get; set; }
+        public byte[] Picture { get; set; }
+        public string First { get; set; }
+        public string Last { get; set; }
+        public string Email { get; set; }
+        public string Extension { get; set; }
+        public string CellPhone { get; set; }
+        public string OtherPhone { get; set; }
         public Nullable<System.DateTime> LastLoggedIn { get; set; }
         public Nullable<System.DateTime> FirstLoggedIn { get; set; }
+        public Nullable<bool> Active { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Department> Departments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RepoForm> RepoForms { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RepoForm> RepoForms1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<X_User_Role> X_User_Role { get; set; }
     }
 }
