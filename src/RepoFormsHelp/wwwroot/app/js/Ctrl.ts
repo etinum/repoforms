@@ -608,10 +608,25 @@
         //TODO: In this controller we will need to populate the user foreign key elements as needed... 
 
 
+        $scope.userSelect = ($item, $type) => {
+            if ($type === 'direct') {
+                $scope.uf.directReportUserId = $item.id;
+            } else if ($type === 'dotted') {
+                $scope.uf.dottedLineReportUserId = $item.id;
+            }
+        };
+
+
         // Form button handling
         $scope.submitForm = () => {
 
             $scope.submitted = true;
+
+            // process
+            if ($scope.uf.department != null) {
+                $scope.uf.departmentId = $scope.uf.department.id;    
+            }
+            
 
             $scope.$broadcast('show-errors-event');
             if ($scope.myForm.$invalid)
@@ -619,7 +634,7 @@
 
 
             $scope.load = $dataService.saveUser($scope.uf).then(() => {
-                $scope.open();
+                //$scope.open();
             });
 
         };

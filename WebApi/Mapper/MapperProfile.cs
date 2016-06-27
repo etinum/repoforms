@@ -19,8 +19,6 @@ namespace WebApi.Mapper
             this.CreateMap<UserViewModel, User>();
             this.CreateMap<User, UserViewModel>();
 
-
-
         }
     }
 }

@@ -237,7 +237,7 @@
         };
 
         var saveUser = (formdata) => {
-            var url = baseWebApiUrl + 'api/RepoForm/SaveUser';
+            var url = baseWebApiUrl + 'api/User/SaveUser';
             var deferred = $q.defer();
 
             $http.post(url, formdata)

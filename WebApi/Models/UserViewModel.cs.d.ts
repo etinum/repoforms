@@ -3,7 +3,6 @@
 		id: number;
 		winAuthName: string;
 		departmentId: number;
-		department: number;
 		position: string;
 		jobFunction: string;
 		picture: any[];
@@ -23,5 +22,18 @@
 		directReportUser: number;
 		dottedLineReportUserId: number;
 		dottedLineReportUser: number;
+		departmentOptions: server.DepartmentOption[];
+		userOptions: server.UserOption[];
+	}
+	interface DepartmentOption {
+		id: number;
+		name: string;
+	}
+	interface UserOption {
+		id: number;
+		winAuthName: string;
+		first: string;
+		last: string;
+		label: string;
 	}
 }

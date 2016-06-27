@@ -64,6 +64,20 @@
         modifiedDate: Date;
         directReportUserId: number;
         dottedLineReportUserId: number;
+        departmentOptions: DepartmentOption[];
+        userOptions: UserOption[];
+    }
+    interface DepartmentOption {
+        id: number;
+        name: string;
+    }
+    interface UserOption {
+        id: number;
+        winAuthName: string;
+        first: string;
+        last: string;
+        label: string;
+
     }
 
 }

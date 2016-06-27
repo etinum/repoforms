@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using AutoMapper;
 using Data;
 using WebApi.Mapper;
@@ -10,6 +12,9 @@ using WebApi.Models;
 
 namespace WebApi.Controllers
 {
+
+    [Authorize]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class UserController : ApiController
     {
         private readonly IMapper _mapper;
@@ -33,7 +38,23 @@ namespace WebApi.Controllers
         public IHttpActionResult GetUser(int id)
         {
             var user = _ctx.Users.FirstOrDefault(r => r.Id == id);
-            return Ok(_mapper.Map<UserViewModel>(user));
+            var userViewModel = _mapper.Map<UserViewModel>(user);
+
+            userViewModel.DepartmentOptions = _ctx.Departments.Select(r => new DepartmentOption()
+            {
+                Id = r.Id,
+                Name = r.Name
+            }).ToList();
+
+            userViewModel.UserOptions = _ctx.Users.Select(r => new UserOption()
+            {
+                Id = r.Id,
+                First = r.First,
+                Last = r.Last,
+                WinAuthName = r.WinAuthName
+            }).ToList();
+
+            return Ok(userViewModel);
         }
 
         [HttpGet]
@@ -79,9 +100,25 @@ namespace WebApi.Controllers
 
 
         [HttpPost]
-        public IHttpActionResult SaveUser(int id)
+        public IHttpActionResult SaveUser(UserViewModel userViewModel)
         {
-            return Ok();
+            var user = _mapper.Map<User>(userViewModel);
+
+            if (userViewModel.Id == 0)
+            {
+                user.ModifiedDate = DateTime.Now;
+                user.CreatedDate = DateTime.Now;
+                _ctx.Users.Add(user);
+            }
+            else
+            {
+                _ctx.Entry(user).State = EntityState.Modified;
+            }
+
+            _ctx.SaveChanges();
+
+            return Ok(user.Id);
+
         }
 
 

@@ -405,21 +405,14 @@
 
 
         <div class="col-sm-offset-3 col-sm-9">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-3 col-sm-2 col-lg-1 ">
-                        <input type="button" class="btn btn-default" value="Cancel"
-                               ng-click="cancelForm()" />
-                    </div>
-                    <div class="col-xs-3 col-sm-2 col-lg-1">
-                        <input type="button" class="btn btn-primary" value="Submit"
-                               ng-click="submitForm()" />
-                    </div>
-                    <div class="col-xs-6 col-sm-8 col-lg-10 ">
-                        <input type="reset" class="btn btn-warning" value="Reset"
-                               ng-click="resetForm()" />
-                    </div>
-                </div>
+
+            <div class="btn-group">
+                <input type="button" class="btn btn-default" value="Cancel"
+                       ng-click="cancelForm()" style="margin: 20px" />
+                <input type="button" class="btn btn-primary" value="Submit"
+                       ng-click="submitForm()" style="margin: 20px" />
+                <input type="reset" class="btn btn-warning" value="Reset"
+                       ng-click="resetForm()" style="margin: 20px" />
             </div>
             <div class="alert alert-danger" ng-if="hasFormError">{{formErrors}}</div>
         </div>

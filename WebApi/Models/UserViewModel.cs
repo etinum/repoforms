@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Data;
 
 namespace WebApi.Models
 {
@@ -8,7 +9,6 @@ namespace WebApi.Models
         public int Id { get; set; }
         public string WinAuthName { get; set; }
         public int? DepartmentId { get; set; }
-        public int? Department { get; set; }
         public string Position { get; set; }
         public string JobFunction { get; set; }
         public byte[] Picture { get; set; }
@@ -29,5 +29,28 @@ namespace WebApi.Models
         public int? DottedLineReportUserId { get; set; }
         public int? DottedLineReportUser { get; set; }
 
+        public List<DepartmentOption> DepartmentOptions { get; set; }
+        public List<UserOption> UserOptions { get; set; }
+
     }
+
+    public class DepartmentOption
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class UserOption
+    {
+        public int Id { get; set; }
+        public string WinAuthName { get; set; }
+        public string First { get; set; }
+        public string Last { get; set; }
+
+        public string Label
+        {
+            get { return $"{First} {Last}({WinAuthName})"; }
+        }
+    }
+
 }

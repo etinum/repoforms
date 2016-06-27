@@ -441,8 +441,19 @@
 })(angular.module("repoFormsApp"));
 (function (app) {
     var controller = function ($scope, $window, $dataService, $routeParams) {
+        $scope.userSelect = function ($item, $type) {
+            if ($type === 'direct') {
+                $scope.uf.directReportUserId = $item.id;
+            }
+            else if ($type === 'dotted') {
+                $scope.uf.dottedLineReportUserId = $item.id;
+            }
+        };
         $scope.submitForm = function () {
             $scope.submitted = true;
+            if ($scope.uf.department != null) {
+                $scope.uf.departmentId = $scope.uf.department.id;
+            }
             $scope.$broadcast('show-errors-event');
             if ($scope.myForm.$invalid)
                 return;

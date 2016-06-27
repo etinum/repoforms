@@ -173,7 +173,7 @@
             return deferred.promise;
         };
         var saveUser = function (formdata) {
-            var url = baseWebApiUrl + 'api/RepoForm/SaveUser';
+            var url = baseWebApiUrl + 'api/User/SaveUser';
             var deferred = $q.defer();
             $http.post(url, formdata)
                 .then(function () {

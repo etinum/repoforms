@@ -212,6 +212,7 @@
     <Compile Include="Hub\RepoHub.cs" />
     <Compile Include="Hub\TestHub.cs" />
     <Compile Include="Mapper\MapperProfile.cs" />
+    <Compile Include="Models\DepartmentViewModel.cs" />
     <Compile Include="Models\RepoFormTypeAheadModel.cs" />
     <Compile Include="Models\RepoFormViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
