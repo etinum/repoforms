@@ -80,7 +80,7 @@
 })(angular.module("repoFormsApp"));
 
 (app => {
-    var controller = ($scope, $dataService, $window, $routeParams, $uibModal, $location, $anchorScroll) => {
+    var controller = ($scope, $dataService, $window, $routeParams, $uibModal, $location, $anchorScroll, $q) => {
 
 
 
@@ -134,6 +134,43 @@
                 }
             }
         };
+
+        $scope.searchVin = (searchString: string) => {
+
+            var deferred = $q.defer();
+
+            if (searchString.length > 5) {
+                $dataService.searchVin(searchString)
+                    .then(data => {
+                        return deferred.resolve(data);
+                    });
+            } else if (searchString.length === 7) {
+                deferred.resolve([
+                    'hi',
+                    'there'
+                ]);
+            } else {
+                deferred.resolve(null);
+            }
+
+            return deferred.promise;
+        };
+
+        //var saveUser = (formdata) => {
+        //    var url = baseWebApiUrl + 'api/User/SaveUser';
+        //    var deferred = $q.defer();
+
+        //    $http.post(url, formdata)
+        //        .then(() => {
+        //            deferred.resolve();
+        //        }, (response) => {
+        //            alertFailed(response);
+        //            deferred.reject(response);
+        //        });
+        //    return deferred.promise;
+        //}
+
+
 
         $scope.submitted = false;
 
@@ -256,7 +293,7 @@
         };
 
     };
-    controller.$inject = ['$scope', 'dataService', '$window', '$routeParams', '$uibModal', '$location', '$anchorScroll'];
+    controller.$inject = ['$scope', 'dataService', '$window', '$routeParams', '$uibModal', '$location', '$anchorScroll', '$q'];
     app.controller('repoCtrl', controller);
 })(angular.module("repoFormsApp"));
 

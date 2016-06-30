@@ -76,6 +76,24 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Forms.edmx</DependentUpon>
     </Compile>
+    <Compile Include="MasterQueueDw.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MasterQueueDw.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MasterQueueDw.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MasterQueueDw.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MasterQueueDw.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MasterQueueDw.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="pra_accountsStoreProc_Result.cs">
+      <DependentUpon>MasterQueueDw.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepoClientFormula.cs">
       <DependentUpon>Forms.tt</DependentUpon>
@@ -104,6 +122,13 @@
     <None Include="Forms.edmx.diagram">
       <DependentUpon>Forms.edmx</DependentUpon>
     </None>
+    <EntityDeploy Include="MasterQueueDw.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MasterQueueDw.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="MasterQueueDw.edmx.diagram">
+      <DependentUpon>MasterQueueDw.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +141,16 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Forms.edmx</DependentUpon>
       <LastGenOutput>Forms.cs</LastGenOutput>
+    </Content>
+    <Content Include="MasterQueueDw.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MasterQueueDw.edmx</DependentUpon>
+      <LastGenOutput>MasterQueueDw.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="MasterQueueDw.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MasterQueueDw.edmx</DependentUpon>
+      <LastGenOutput>MasterQueueDw.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

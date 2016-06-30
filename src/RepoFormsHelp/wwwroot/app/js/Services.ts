@@ -152,6 +152,24 @@
             return deferred.promise;
         }
 
+        var searchVin = (data: string) => {
+            var url = baseWebApiUrl + 'api/RepoForm/SearchVin';
+            var deferred = $q.defer();
+
+            $http.get(url, {
+                params: {
+                    searchVinString: data
+                }
+            })
+                .then(response => {
+                    deferred.resolve(response.data);
+                }, (response) => {
+                    alertFailed(response);
+                    deferred.reject(response);
+                });
+            return deferred.promise;
+        };
+
 
         // Google api 
         var getLocation = (val) => {
@@ -288,6 +306,7 @@
             getLoggedUser: getLoggedUser,
             getAllUsers: getAllUsers,
             getTypeAheadData: getTypeAheadData,
+            searchVin: searchVin,
             saveForm: saveForm,
             deleteForm: deleteForm,
             getLocation: getLocation,

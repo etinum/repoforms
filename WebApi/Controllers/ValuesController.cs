@@ -58,9 +58,20 @@ namespace WebApi.Controllers
             return false;
 #endif
 
+        }
 
+        [HttpGet]
+        public IHttpActionResult SearchVin(string searchVinString)
+        {
+
+            var mctx = new MQEntities();
+
+            var list = mctx.pra_accountsStoreProc(searchVinString).Select(r => r.veh_vin).Distinct();
+          
+            return Ok(list);
 
         }
+
 
 
         // PUT api/values/5

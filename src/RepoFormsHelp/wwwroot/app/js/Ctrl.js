@@ -47,7 +47,7 @@
     app.controller('homeCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
-    var controller = function ($scope, $dataService, $window, $routeParams, $uibModal, $location, $anchorScroll) {
+    var controller = function ($scope, $dataService, $window, $routeParams, $uibModal, $location, $anchorScroll, $q) {
         $scope.ng_maxLength = 50;
         $scope.maxLength = 50;
         $dataService.getTypeAheadData()
@@ -111,6 +111,25 @@
                     $scope.rf.recoveryAddress = (stnumber + ' ' + street).trim();
                 }
             }
+        };
+        $scope.searchVin = function (searchString) {
+            var deferred = $q.defer();
+            if (searchString.length > 5) {
+                $dataService.searchVin(searchString)
+                    .then(function (data) {
+                    return deferred.resolve(data);
+                });
+            }
+            else if (searchString.length === 7) {
+                deferred.resolve([
+                    'hi',
+                    'there'
+                ]);
+            }
+            else {
+                deferred.resolve(null);
+            }
+            return deferred.promise;
         };
         $scope.submitted = false;
         $scope.closeTypeOptions = $dataService.closeTypeOptions;
@@ -195,7 +214,7 @@
             });
         };
     };
-    controller.$inject = ['$scope', 'dataService', '$window', '$routeParams', '$uibModal', '$location', '$anchorScroll'];
+    controller.$inject = ['$scope', 'dataService', '$window', '$routeParams', '$uibModal', '$location', '$anchorScroll', '$q'];
     app.controller('repoCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {

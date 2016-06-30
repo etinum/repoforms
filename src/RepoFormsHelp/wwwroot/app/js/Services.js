@@ -104,6 +104,22 @@
             });
             return deferred.promise;
         };
+        var searchVin = function (data) {
+            var url = baseWebApiUrl + 'api/RepoForm/SearchVin';
+            var deferred = $q.defer();
+            $http.get(url, {
+                params: {
+                    searchVinString: data
+                }
+            })
+                .then(function (response) {
+                deferred.resolve(response.data);
+            }, function (response) {
+                alertFailed(response);
+                deferred.reject(response);
+            });
+            return deferred.promise;
+        };
         var getLocation = function (val) {
             var deferred = $q.defer();
             $http.get('//maps.googleapis.com/maps/api/geocode/json', {
@@ -217,6 +233,7 @@
             getLoggedUser: getLoggedUser,
             getAllUsers: getAllUsers,
             getTypeAheadData: getTypeAheadData,
+            searchVin: searchVin,
             saveForm: saveForm,
             deleteForm: deleteForm,
             getLocation: getLocation,

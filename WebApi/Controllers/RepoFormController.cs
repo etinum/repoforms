@@ -108,6 +108,21 @@ namespace WebApi.Controllers
             return rf.Id;
         }
 
+
+        [HttpGet]
+        public IHttpActionResult SearchVin(string searchVinString)
+        {
+            IEnumerable<pra_accountsStoreProc_Result> list;
+            using (var mctx = new MQEntities())
+            {
+                list = mctx.pra_accountsStoreProc(searchVinString).ToList();
+            }
+
+            return Ok(list);
+
+        }
+
+
         private RepoForm UpdateForm(RepoFormViewModel formViewModel)
         {
 
