@@ -27,20 +27,16 @@
                     <div class="form-group" show-errors>
                         <label for="accountNumber" class="col-sm-3 control-label">Vin #</label>
                         <div class="col-sm-9">
-                            <p class="input-group">
-                                <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="accountNumber" name="accountNumber" class="form-control"
-                                       ng-model="rf.accountNumber" ng-required="true" placeholder="Enter at least six characters and do a lookup"
-                                       uib-typeahead="item for item in searchVin($viewValue)" autocomplete="off" typeahead-loading="vinLoading" typeahead-no-results="noVinResults" />
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="searchVin()"><i class="glyphicon glyphicon-search"></i></button>
-                                </span>
-                                <i ng-show="vinLoading" class="glyphicon glyphicon-refresh"></i>
-                                <div ng-show="noVinResults">
-                                    <i class="glyphicon glyphicon-remove"></i> No Results Found
-                                </div>
-                                <div class="help-block" ng-messages="myForm.accountNumber.$error" ng-show="myForm.accountNumber.$touched || submitted">
-                                    <div ng-messages-include="app/html/error-messages.html"></div>
-                                </div>
+                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="accountNumber" name="accountNumber" class="form-control"
+                                   ng-model="rf.accountNumber" ng-required="true" placeholder="Enter at least six characters and do a vin lookup"
+                                   uib-typeahead="item.vehVin for item in searchVin($viewValue)" autocomplete="off" typeahead-loading="vinLoading" typeahead-no-results="noVinResults" typeahead-on-select="onVinSelect($item)"/>
+                            <i ng-show="vinLoading" class="glyphicon glyphicon-refresh"></i>
+                            <div ng-show="noVinResults">
+                                <i class="glyphicon glyphicon-remove"></i> Need to type six chars before search intiates.
+                            </div>
+                            <div class="help-block" ng-messages="myForm.accountNumber.$error" ng-show="myForm.accountNumber.$touched || submitted">
+                                <div ng-messages-include="app/html/error-messages.html"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group" show-errors>
@@ -108,20 +104,6 @@
                         </div>
                     </div>
 
-
-                    <!--<div class="form-group" show-errors>
-                        <label for="favColor" class="col-sm-3 control-label">Favorite Color</label>
-                        <div class="col-sm-9">
-                            <select id="favColor" name="favColor" class="form-control" data-ng-options="color for color in favColorOptions track by color"
-                                    data-ng-model="rf.favColor" ng-required="false" uib-tooltip="hi there">
-                                <option value="">---Please select---</option>
-                            </select>
-                            <div class="help-block" ng-messages="myForm.favColor.$error" ng-show="myForm.favColor.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>-->
-
                     <div class="form-group" show-errors>
                         <label for="notes" class="col-sm-3 control-label">Notes</label>
                         <div class="col-sm-9">
@@ -135,270 +117,11 @@
 
                 </div>
             </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">Recovery Address</div>
-                <div class="panel-body">
-                    <div class="form-group" show-errors>
-                        <label for="recoveryAddress" class="col-sm-3 control-label">Address</label>
-                        <div class="col-sm-9">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryAddress" name="recoveryAddress" class="form-control"
-                                   ng-model="rf.recoveryAddress" ng-required="false" placeholder="Type ahead enabled" uib-typeahead="item.formatted_address for item in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-on-select="onSelect($item,'recovery')" typeahead-no-results="noResults" autocomplete="off" />
-                            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
-                            <div ng-show="noResults">
-                                <i class="glyphicon glyphicon-remove"></i> No Results Found
-                            </div>
-                            <div class="help-block" ng-messages="myForm.recoveryAddress.$error" ng-show="myForm.recoveryAddress.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" show-errors>
-                        <label for="recoveryCity" class="col-sm-3 control-label">City</label>
-                        <div class="col-sm-5">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryCity" name="recoveryCity" class="form-control"
-                                   ng-model="rf.recoveryCity" ng-required="false" />
-                            <div class="help-block" ng-messages="myForm.recoveryCity.$error" ng-show="myForm.recoveryCity.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" show-errors>
-                        <label for="recoveryState" class="col-sm-3 control-label">State</label>
-                        <div class="col-sm-4">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryState" name="recoveryState" class="form-control"
-                                   ng-model="rf.recoveryState" ng-required="false" />
-                            <div class="help-block" ng-messages="myForm.recoveryState.$error" ng-show="myForm.recoveryState.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" show-errors>
-                        <label for="recoveryZip" class="col-sm-3 control-label">ZIP</label>
-                        <div class="col-sm-3">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryZip" name="recoveryZip" class="form-control"
-                                   ng-model="rf.recoveryZip" ng-required="false" />
-                            <div class="help-block" ng-messages="myForm.recoveryZip.$error" ng-show="myForm.recoveryZip.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading">Storage Address</div>
-                <div class="panel-body">
-                    <div class="form-group" show-errors>
-                        <label for="storageAddress" class="col-sm-3 control-label">Address</label>
-                        <div class="col-sm-9">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="storageAddress" name="storageAddress" class="form-control"
-                                   ng-model="rf.storageAddress" ng-required="false" placeholder="Type ahead enabled" uib-typeahead="item.formatted_address for item in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-on-select="onSelect($item,'storage')" typeahead-no-results="noResults" />
-                            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
-                            <div ng-show="noResults">
-                                <i class="glyphicon glyphicon-remove"></i> No Results Found
-                            </div>
-                            <div class="help-block" ng-messages="myForm.storageAddress.$error" ng-show="myForm.storageAddress.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" show-errors>
-                        <label for="storageCity" class="col-sm-3 control-label">City</label>
-                        <div class="col-sm-5">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="storageCity" name="storageCity" class="form-control"
-                                   ng-model="rf.storageCity" ng-required="false" />
-                            <div class="help-block" ng-messages="myForm.storageCity.$error" ng-show="myForm.storageCity.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" show-errors>
-                        <label for="storageState" class="col-sm-3 control-label">State</label>
-                        <div class="col-sm-4">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="storageState" name="storageState" class="form-control"
-                                   ng-model="rf.storageState" ng-required="false" />
-                            <div class="help-block" ng-messages="myForm.storageState.$error" ng-show="myForm.storageState.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" show-errors>
-                        <label for="storageZip" class="col-sm-3 control-label">ZIP</label>
-                        <div class="col-sm-3">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="storageZip" name="storageZip" class="form-control"
-                                   ng-model="rf.storageZip" ng-required="false" />
-                            <div class="help-block" ng-messages="myForm.storageZip.$error" ng-show="myForm.storageZip.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" show-errors>
-                        <label for="storageAdditionalFees" class="col-sm-3 control-label">Additional Fees</label>
-                        <div class="col-sm-9">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="storageAdditionalFees" name="storageAdditionalFees" class="form-control"
-                                   ng-model="rf.storageAdditionalFees" ng-required="false" />
-                            <div class="help-block" ng-messages="myForm.storageAdditionalFees.$error" ng-show="myForm.storageAdditionalFees.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" show-errors>
-                        <label for="storageFeeReason" class="col-sm-3 control-label">Reason</label>
-                        <div class="col-sm-9">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="storageFeeReason" name="storageFeeReason" class="form-control"
-                                   ng-model="rf.storageFeeReason" ng-required="false" />
-                            <div class="help-block" ng-messages="myForm.storageFeeReason.$error" ng-show="myForm.storageFeeReason.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">Police Department Info</div>
-                <div class="panel-body">
-                    <div class="form-group" show-errors>
-                        <label for="policeDept" class="col-sm-3 control-label">Dept</label>
-                        <div class="col-sm-9">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="policeDept" name="policeDept" class="form-control"
-                                   ng-model="rf.policeDept" ng-required="false" />
-                            <div class="help-block" ng-messages="myForm.policeDept.$error" ng-show="myForm.policeDept.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" show-errors>
-                        <label for="policeNumber" class="col-sm-3 control-label">Phone #</label>
-                        <div class="col-sm-9">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="policeNumber" name="policeNumber" class="form-control"
-                                   ng-model="rf.policeNumber" ng-required="false" />
-                            <div class="help-block" ng-messages="myForm.policeNumber.$error" ng-show="myForm.policeNumber.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" show-errors>
-                        <label for="policeBadgeNumber" class="col-sm-3 control-label">Badge #</label>
-                        <div class="col-sm-9">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="policeBadgeNumber" name="policeBadgeNumber" class="form-control"
-                                   ng-model="rf.policeBadgeNumber" ng-required="false" />
-                            <div class="help-block" ng-messages="myForm.policeBadgeNumber.$error" ng-show="myForm.policeBadgeNumber.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default">
-                <div class="panel-heading">Vehicle Info</div>
-                <div class="panel-body">
-                    <div class="form-group">
-                        <div class="col-sm-offset-3 col-sm-9">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           ng-model="rf.keysChecked" />Keys
-                                </label>
-                            </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           ng-model="rf.drivableChecked" />Drivable
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" show-errors>
-                        <label for="personals" class="col-sm-3 control-label">Personals</label>
-                        <div class="col-sm-9">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="personals" name="personals" class="form-control"
-                                   ng-model="rf.personals" ng-required="false" />
-                            <div class="help-block" ng-messages="myForm.personals.$error" ng-show="myForm.personals.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="panel panel-default" ng-show="isAdmin">
-                <div class="panel-heading" id="adminPanel">Department confirmation</div>
-                <div class="panel-body">
-                    <div class="form-group" show-errors>
-                        <label for="iPRUpdated" class="col-sm-3 control-label">IPR Updated</label>
-                        <div class="col-sm-9">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="iPRUpdated" name="iPRUpdated" class="form-control"
-                                   ng-model="rf.iPRUpdated" ng-required="false" />
-                            <div class="help-block" ng-messages="myForm.iPRUpdated.$error" ng-show="myForm.iPRUpdated.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" show-errors>
-                        <label for="repoProcessing" class="col-sm-3 control-label">Repo Processing</label>
-                        <div class="col-sm-9">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="repoProcessing" name="repoProcessing" class="form-control"
-                                   ng-model="rf.repoProcessing" ng-required="false" />
-                            <div class="help-block" ng-messages="myForm.repoProcessing.$error" ng-show="myForm.repoProcessing.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" show-errors>
-                        <label for="billing" class="col-sm-3 control-label">Billing</label>
-                        <div class="col-sm-9">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="billing" name="billing" class="form-control"
-                                   ng-model="rf.billing" ng-required="false" />
-                            <div class="help-block" ng-messages="myForm.billing.$error" ng-show="myForm.billing.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" show-errors>
-                        <div>
-                            <label for="initializedDate" class="col-sm-3 control-label">Date</label>
-                            <div class="col-sm-6">
-                                <p class="input-group">
-                                    <input id="initializedDate" name="initializedDate" type="text" ng-click="openDatePopup(enumPopupType.SIGNED)" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.initializedDate" is-open="datePopupStatus.signed" datepicker-options="dateOptions" ng-required="false" close-text="Close" alt-input-formats="altInputFormats" readonly />
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" ng-click="openDatePopup(enumPopupType.SIGNED)"><i class="glyphicon glyphicon-calendar"></i></button>
-                                    </span>
-                                </p>
-                                <div class="help-block" ng-messages="myForm.initializedDate.$error" ng-show="myForm.initializedDate.$touched || submitted">
-                                    <div ng-messages-include="app/html/error-messages.html"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-sm-offset-3 col-sm-9">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"
-                                           ng-model="rf.verified" />Scoring Admin Verified
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!--<div class="form-group" show-errors>
-                        <label class="col-sm-3 control-label">Signature</label>
-                        <div class="col-sm-9">
-                            <div style="border: 2px solid; height: 220px; width: 500px">
-                                <signature-pad accept="accept" height="220" width="500"></signature-pad>
-                            </div>
-                            <button ng-click="clear()">Clear signature</button>
-                            <button ng-click="signature = accept()">Sign</button>
-                        </div>
-                    </div>-->
-                </div>
-            </div>
         </fieldset>
 
 
         <div class="col-sm-offset-3 col-sm-9">
-
             <div class="btn-group">
                 <input type="button" class="btn btn-default" value="Cancel"
                        ng-click="cancelForm()" style="margin: 20px" />

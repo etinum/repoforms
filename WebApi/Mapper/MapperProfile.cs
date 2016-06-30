@@ -19,6 +19,15 @@ namespace WebApi.Mapper
             this.CreateMap<UserViewModel, User>();
             this.CreateMap<User, UserViewModel>();
 
+            this.CreateMap<AccountVinClientViewModel, pra_accountsStoreProc_Result>()
+                .ForMember(des => des.account_client_account_num, opt => opt.MapFrom(src => src.AccountClientAccountNum))
+                .ForMember(des => des.veh_vin, opt => opt.MapFrom(src => src.VehVin));
+            this.CreateMap<pra_accountsStoreProc_Result, AccountVinClientViewModel>()
+                .ForMember(des => des.AccountClientAccountNum, opt => opt.MapFrom(src => src.account_client_account_num))
+                .ForMember(des => des.VehVin, opt => opt.MapFrom(src => src.veh_vin));
+
+
+
         }
     }
 }

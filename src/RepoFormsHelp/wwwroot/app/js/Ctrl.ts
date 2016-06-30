@@ -135,7 +135,9 @@
             }
         };
 
-        $scope.searchVin = (searchString: string) => {
+
+
+        $scope.searchVin = (searchString: string) : modeltypings.AccountVinClientViewModel[] => {
 
             var deferred = $q.defer();
 
@@ -144,31 +146,16 @@
                     .then(data => {
                         return deferred.resolve(data);
                     });
-            } else if (searchString.length === 7) {
-                deferred.resolve([
-                    'hi',
-                    'there'
-                ]);
-            } else {
+            }  else {
                 deferred.resolve(null);
             }
 
             return deferred.promise;
         };
 
-        //var saveUser = (formdata) => {
-        //    var url = baseWebApiUrl + 'api/User/SaveUser';
-        //    var deferred = $q.defer();
-
-        //    $http.post(url, formdata)
-        //        .then(() => {
-        //            deferred.resolve();
-        //        }, (response) => {
-        //            alertFailed(response);
-        //            deferred.reject(response);
-        //        });
-        //    return deferred.promise;
-        //}
+        $scope.onVinSelect = (data: modeltypings.AccountVinClientViewModel) => {
+            $scope.rf.notes = data.accountClientAccountNum;
+        };
 
 
 

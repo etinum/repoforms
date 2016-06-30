@@ -212,6 +212,7 @@
     <Compile Include="Hub\RepoHub.cs" />
     <Compile Include="Hub\TestHub.cs" />
     <Compile Include="Mapper\MapperProfile.cs" />
+    <Compile Include="Models\AccountVinClientViewModel.cs" />
     <Compile Include="Models\DepartmentViewModel.cs" />
     <Compile Include="Models\RepoFormTypeAheadModel.cs" />
     <Compile Include="Models\RepoFormViewModel.cs" />
@@ -291,6 +292,9 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Models\AccountVinClientViewModel.cs.d.ts">
+      <DependentUpon>AccountVinClientViewModel.cs</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Models\RepoFormTypeAheadModel.cs.d.ts">
       <DependentUpon>RepoFormTypeAheadModel.cs</DependentUpon>
     </TypeScriptCompile>

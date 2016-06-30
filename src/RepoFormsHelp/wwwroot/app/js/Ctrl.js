@@ -120,16 +120,13 @@
                     return deferred.resolve(data);
                 });
             }
-            else if (searchString.length === 7) {
-                deferred.resolve([
-                    'hi',
-                    'there'
-                ]);
-            }
             else {
                 deferred.resolve(null);
             }
             return deferred.promise;
+        };
+        $scope.onVinSelect = function (data) {
+            $scope.rf.notes = data.accountClientAccountNum;
         };
         $scope.submitted = false;
         $scope.closeTypeOptions = $dataService.closeTypeOptions;

@@ -152,7 +152,7 @@
             return deferred.promise;
         }
 
-        var searchVin = (data: string) => {
+        var searchVin = (data: string) : modeltypings.AccountVinClientViewModel => {
             var url = baseWebApiUrl + 'api/RepoForm/SearchVin';
             var deferred = $q.defer();
 

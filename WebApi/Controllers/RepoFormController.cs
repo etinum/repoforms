@@ -118,7 +118,7 @@ namespace WebApi.Controllers
                 list = mctx.pra_accountsStoreProc(searchVinString).ToList();
             }
 
-            return Ok(list);
+            return Ok(_mapper.Map<List<AccountVinClientViewModel>>(list));
 
         }
 

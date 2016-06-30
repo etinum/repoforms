@@ -80,5 +80,9 @@
         label: string;
 
     }
+    interface AccountVinClientViewModel {
+        vehVin: string;
+        accountClientAccountNum: string;
+    }
 
 }
