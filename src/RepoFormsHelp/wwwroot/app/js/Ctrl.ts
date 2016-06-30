@@ -607,6 +607,18 @@
 
         //TODO: In this controller we will need to populate the user foreign key elements as needed... 
 
+        // Private Methods
+        $scope.processOptionIds = (data) => {
+            data.department = data.departmentOptions.filter(item => item.id === data.departmentId)[0];
+            
+            data.directReportUser = data.directReportUserId != null ? data.userOptions.filter(item => item.id === data.directReportUserId)[0].label : data.directReportUserId;
+            data.dottedLineReportUser = data.dottedLineReportUserId != null
+                ? data.userOptions.filter(item => item.id === data.dottedLineReportUserId)[0].label
+                : data.dottedLineReportUserId;
+        };
+
+
+        // Handlers
 
         $scope.userSelect = ($item, $type) => {
             if ($type === 'direct') {
@@ -617,7 +629,6 @@
         };
 
 
-        // Form button handling
         $scope.submitForm = () => {
 
             $scope.submitted = true;
@@ -659,6 +670,7 @@
                     .then(data => {
                         $scope.uf = <modeltypings.UserViewModel>data;
                         $scope.ouf = angular.copy($scope.uf);
+                        $scope.processOptionIds($scope.uf);
                     });
             }
 

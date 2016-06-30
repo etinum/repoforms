@@ -8,8 +8,8 @@
 // manager includes auditor
 // auditor ...  etc.  
 var superadmin = 'Ertran,JFountaine,JAZiebro';
-var management = 'JAZiebro,JFountaine,knbaugher';
-var auditor = 'TAKushnir,cashideler,ShHarmon,clwren';
+var management = 'JAZiebro,JFountaine,knbaugher,ajfader';
+var auditor = 'TAKushnir,cashideler,ShHarmon,clwren,mashields';
 
 
 

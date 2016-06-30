@@ -3,6 +3,7 @@
 		id: number;
 		winAuthName: string;
 		departmentId: number;
+		departmentName: string;
 		position: string;
 		jobFunction: string;
 		picture: any[];

@@ -441,6 +441,13 @@
 })(angular.module("repoFormsApp"));
 (function (app) {
     var controller = function ($scope, $window, $dataService, $routeParams) {
+        $scope.processOptionIds = function (data) {
+            data.department = data.departmentOptions.filter(function (item) { return item.id === data.departmentId; })[0];
+            data.directReportUser = data.directReportUserId != null ? data.userOptions.filter(function (item) { return item.id === data.directReportUserId; })[0].label : data.directReportUserId;
+            data.dottedLineReportUser = data.dottedLineReportUserId != null
+                ? data.userOptions.filter(function (item) { return item.id === data.dottedLineReportUserId; })[0].label
+                : data.dottedLineReportUserId;
+        };
         $scope.userSelect = function ($item, $type) {
             if ($type === 'direct') {
                 $scope.uf.directReportUserId = $item.id;
@@ -458,7 +465,6 @@
             if ($scope.myForm.$invalid)
                 return;
             $scope.load = $dataService.saveUser($scope.uf).then(function () {
-                $scope.open();
             });
         };
         $scope.cancelForm = function () {
@@ -475,6 +481,7 @@
                     .then(function (data) {
                     $scope.uf = data;
                     $scope.ouf = angular.copy($scope.uf);
+                    $scope.processOptionIds($scope.uf);
                 });
             }
         }

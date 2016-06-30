@@ -93,8 +93,18 @@ namespace WebApi.Controllers
         {
 
             var users = _ctx.Users.ToList();
+            var userVms = _mapper.Map<List<UserViewModel>>(users);
 
-            return Ok(_mapper.Map<List<UserViewModel>>(users));
+            var deps = _ctx.Departments.ToList();
+
+            userVms.ForEach(r =>
+            {
+                var firstOrDefault = deps.FirstOrDefault(d => d.Id == r.DepartmentId);
+                if (firstOrDefault != null)
+                                        r.DepartmentName = firstOrDefault.Name;
+            });
+
+            return Ok(userVms);
 
         }
 

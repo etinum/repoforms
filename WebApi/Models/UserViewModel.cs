@@ -9,6 +9,7 @@ namespace WebApi.Models
         public int Id { get; set; }
         public string WinAuthName { get; set; }
         public int? DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
         public string Position { get; set; }
         public string JobFunction { get; set; }
         public byte[] Picture { get; set; }
@@ -49,7 +50,7 @@ namespace WebApi.Models
 
         public string Label
         {
-            get { return $"{First} {Last}({WinAuthName})"; }
+            get { return $"{First} {Last} ({WinAuthName})"; }
         }
     }
 
