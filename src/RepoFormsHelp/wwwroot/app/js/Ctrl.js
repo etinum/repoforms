@@ -50,16 +50,7 @@
     var controller = function ($scope, $dataService, $window, $routeParams, $uibModal, $location, $anchorScroll, $q) {
         $scope.ng_maxLength = 50;
         $scope.maxLength = 50;
-        $dataService.getTypeAheadData()
-            .then(function (data) {
-            $scope.typeAheadModel = data;
-            if (!$scope.typeAheadModel) {
-                $scope.investigatorOptions = $dataService.investigatorOptions;
-            }
-            else {
-                $scope.investigatorOptions = $dataService.investigatorOptions.concat($scope.typeAheadModel.investigator);
-            }
-        });
+        $scope.investigatorOptions = $dataService.investigatorOptions;
         $scope.states = $dataService.states;
         $scope.getLocation = $dataService.getLocation;
         $scope.onSelect = function ($item, $type) {
@@ -126,10 +117,11 @@
             return deferred.promise;
         };
         $scope.onVinSelect = function (data) {
-            $scope.rf.notes = data.accountClientAccountNum;
+            $scope.rf.notes = 'Client Account #: ' + data.accountClientAccountNum + ' (' + data.financeClientName + ')';
+            $scope.rf.customerName = data.roName;
+            $scope.rf.accountNumber = data.vehVin;
         };
         $scope.submitted = false;
-        $scope.closeTypeOptions = $dataService.closeTypeOptions;
         $scope.clientOptions = $dataService.clientOptions;
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
@@ -138,12 +130,6 @@
             CREATED: 1,
             REPO: 2,
             SIGNED: 3
-        };
-        $scope.today = function () {
-            var today = new Date().toString();
-            $scope.rf.createdDate = new Date(today);
-            $scope.rf.repoDate = new Date(today);
-            $scope.rf.initializedDate = null;
         };
         $scope.openDatePopup = function (popup) {
             switch (popup) {
@@ -179,25 +165,19 @@
         $scope.resetForm = function () {
             location.reload();
         };
-        var setRfDate = function (data) {
-            $scope.rf.repoDate = data.repoDate ? new Date(data.repoDate.toString()) : null;
-            $scope.rf.createdDate = data.createdDate ? new Date(data.createdDate.toString()) : null;
-            $scope.rf.initializedDate = data.initializedDate ? new Date(data.initializedDate.toString()) : null;
-        };
         if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id)) {
             $scope.load = $dataService.getForm($routeParams.id)
                 .then(function (data) {
                 $scope.rf = data;
-                setRfDate(data);
                 $scope.orf = angular.copy($scope.rf);
-                $scope.isAdmin = true;
             });
         }
         else {
-            $scope.rf = {};
-            $scope.orf = angular.copy($scope.rf);
-            $scope.isAdmin = false;
-            $scope.today();
+            $scope.load = $dataService.getForm(0)
+                .then(function (data) {
+                $scope.rf = data;
+                $scope.orf = angular.copy($scope.rf);
+            });
         }
         $scope.open = function () {
             var modalInstance = $uibModal.open({

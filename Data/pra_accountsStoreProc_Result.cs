@@ -15,5 +15,7 @@ namespace Data
     {
         public string veh_vin { get; set; }
         public string account_client_account_num { get; set; }
+        public string ro_name { get; set; }
+        public string finance_client_name { get; set; }
     }
 }

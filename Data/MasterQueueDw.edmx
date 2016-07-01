@@ -14,7 +14,7 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MQModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="MQEntities1" annotation:LazyLoadingEnabled="true" >
+        <EntityContainer Name="MQEntities" annotation:LazyLoadingEnabled="true" >
           <FunctionImport Name="pra_accountsStoreProc" ReturnType="Collection(MQModel.pra_accountsStoreProc_Result)">
             <Parameter Name="vinSearch" Mode="In" Type="String" />
           </FunctionImport>
@@ -22,18 +22,22 @@
         <ComplexType Name="pra_accountsStoreProc_Result">
           <Property Type="String" Name="veh_vin" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="account_client_account_num" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ro_name" Nullable="true" MaxLength="112" />
+          <Property Type="String" Name="finance_client_name" Nullable="true" MaxLength="100" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="MQModelStoreContainer" CdmEntityContainer="MQEntities1" >
+        <EntityContainerMapping StorageEntityContainer="MQModelStoreContainer" CdmEntityContainer="MQEntities" >
           <FunctionImportMapping FunctionImportName="pra_accountsStoreProc" FunctionName="MQModel.Store.pra_accountsStoreProc">
             <ResultMapping>
               <ComplexTypeMapping TypeName="MQModel.pra_accountsStoreProc_Result">
                 <ScalarProperty Name="veh_vin" ColumnName="veh_vin" />
                 <ScalarProperty Name="account_client_account_num" ColumnName="account_client_account_num" />
+                <ScalarProperty Name="ro_name" ColumnName="ro_name" />
+                <ScalarProperty Name="finance_client_name" ColumnName="finance_client_name" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

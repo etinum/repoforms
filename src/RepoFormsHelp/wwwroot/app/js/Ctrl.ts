@@ -88,16 +88,7 @@
         $scope.ng_maxLength = 50;
         $scope.maxLength = 50;
 
-        $dataService.getTypeAheadData()
-            .then(data => {
-                $scope.typeAheadModel = <modeltypings.RepoFormTypeAheadModel>data;
-                if (!$scope.typeAheadModel) {
-                    $scope.investigatorOptions = $dataService.investigatorOptions;
-                } else {
-                    $scope.investigatorOptions = $dataService.investigatorOptions.concat($scope.typeAheadModel.investigator);
-                }
-            });
-
+        $scope.investigatorOptions = $dataService.investigatorOptions;
 
         $scope.states = $dataService.states;
         $scope.getLocation = $dataService.getLocation;
@@ -154,7 +145,9 @@
         };
 
         $scope.onVinSelect = (data: modeltypings.AccountVinClientViewModel) => {
-            $scope.rf.notes = data.accountClientAccountNum;
+            $scope.rf.notes = 'Client Account #: ' + data.accountClientAccountNum + ' (' + data.financeClientName + ')';
+            $scope.rf.customerName = data.roName;
+            $scope.rf.accountNumber = data.vehVin;
         };
 
 
@@ -162,7 +155,7 @@
         $scope.submitted = false;
 
         // Dropdown configuration
-        $scope.closeTypeOptions = $dataService.closeTypeOptions;
+        //$scope.closeTypeOptions = $dataService.closeTypeOptions;
 
         // Type ahead configuration
         $scope.clientOptions = $dataService.clientOptions;
@@ -178,13 +171,6 @@
             REPO: 2,
             SIGNED: 3
         }
-
-        $scope.today = () => {
-            var today = new Date().toString();
-            $scope.rf.createdDate = new Date(today);
-            $scope.rf.repoDate = new Date(today);
-            $scope.rf.initializedDate = null;
-        };
 
         $scope.openDatePopup = popup => {
             switch (popup) {
@@ -230,30 +216,21 @@
         };
 
 
-        var setRfDate = (data: modeltypings.RepoFormViewModel) => {
-            $scope.rf.repoDate = data.repoDate ? new Date(data.repoDate.toString()) : null;
-            $scope.rf.createdDate = data.createdDate ? new Date(data.createdDate.toString()) : null;
-            $scope.rf.initializedDate = data.initializedDate ? new Date(data.initializedDate.toString()) : null;
-        }; 
-
-
         if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id)) {
             //$scope.id = parseInt($routeParams.id);
             $scope.load = $dataService.getForm($routeParams.id)
                 .then(data => {
                     $scope.rf = <modeltypings.RepoFormViewModel>data;
-                    setRfDate(data);
                     $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
-                    $scope.isAdmin = true;
-                    //$location.hash('adminPanel');
-                    //$anchorScroll();
-
                 });
         } else {
-            $scope.rf = <modeltypings.RepoFormViewModel>{};
-            $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
-            $scope.isAdmin = false;
-            $scope.today();
+
+            $scope.load = $dataService.getForm(0)
+                .then(data => {
+                    $scope.rf = <modeltypings.RepoFormViewModel>data;
+                    $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
+                 });
+
         }
 
 
@@ -264,11 +241,6 @@
                 templateUrl: 'modalSubmittedCtrl.html',
                 controller: 'modalSubmittedCtrl',
                 size: 'sm'
-                //resolve: {
-                //    items() {
-                //        return $scope.items;
-                //    }
-                //}
             });
 
             modalInstance.result.then(() => {

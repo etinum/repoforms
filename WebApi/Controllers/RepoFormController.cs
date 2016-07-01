@@ -37,34 +37,6 @@ namespace WebApi.Controllers
 
 
 
-
-        [HttpGet]
-        public RepoFormTypeAheadModel TypeAheadData()
-        {
-
-            var user = GetExistingUser();
-            if (user == null)
-            {
-                return null;
-            }
-            
-            var repoFormsByUser = _ctx.RepoForms.ToList().FindAll(r => r.OriginalUserId == user.Id);
-
-            var model = new RepoFormTypeAheadModel
-            {
-                Investigator = repoFormsByUser.Select(r => r.Investigator?.Trim()).Distinct().ToList()
-                // ClientList = repoFormsByUser.Select(r => r.Client?.Trim()).Distinct().ToList(),
-                // CustomerList = repoFormsByUser.Select(r => r.CustomerName?.Trim()).Distinct().ToList(),
-                // RecoveryAgentList = repoFormsByUser.Select(r => r.RecoveryAgent?.Trim()).Distinct().ToList()
-        
-            };
-
-            return model;
-
-        }
-
-
-
         [HttpGet]
         public List<RepoFormViewModel> GetForms()
         {
@@ -73,10 +45,30 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public RepoFormViewModel GetForm(int id)
+        public IHttpActionResult GetForm(int id)
         {
-            var formViewModel = _mapper.Map<RepoFormViewModel>(_ctx.RepoForms.Find(id));
-            return formViewModel;
+
+            RepoFormViewModel repoVm;
+
+            if (id == 0)
+            {
+                repoVm = new RepoFormViewModel
+                {
+                    CloseTypeOptions = _mapper.Map<List<CloseTypeViewModel>>(_ctx.CloseTypes),
+                    ClientOptions = _mapper.Map<List<ClientViewModel>>(_ctx.Clients),
+                    CreatedDate = DateTime.Now
+                };
+
+            }
+            else
+            {
+                repoVm = _mapper.Map<RepoFormViewModel>(_ctx.RepoForms.Find(id));
+                repoVm.CloseTypeOptions = _mapper.Map<List<CloseTypeViewModel>>(_ctx.CloseTypes);
+                repoVm.ClientOptions = _mapper.Map<List<ClientViewModel>>(_ctx.Clients);
+            }
+
+
+            return Ok(repoVm);
         }
 
         [HttpPost]
@@ -129,11 +121,6 @@ namespace WebApi.Controllers
             var repoFormModel = _mapper.Map<RepoForm>(formViewModel);
             var user = UpdateUser(repoFormModel);
 
-            if (repoFormModel.InitializedDate != null)
-            {
-                repoFormModel.AdminUserId = user.Id;
-            }
-
             // https://msdn.microsoft.com/en-us/data/jj592676.aspx
             _ctx.Entry(repoFormModel).State = EntityState.Modified;
             _ctx.SaveChanges();
@@ -147,7 +134,7 @@ namespace WebApi.Controllers
             var repoFormModel = _mapper.Map<RepoForm>(formViewModel);
             var user = UpdateUser(repoFormModel);
 
-            repoFormModel.OriginalUserId = user.Id;
+            repoFormModel.CreatorUserId = user.Id;
 
             _ctx.RepoForms.Add(repoFormModel);
 

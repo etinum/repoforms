@@ -213,6 +213,8 @@
     <Compile Include="Hub\TestHub.cs" />
     <Compile Include="Mapper\MapperProfile.cs" />
     <Compile Include="Models\AccountVinClientViewModel.cs" />
+    <Compile Include="Models\ClientViewModel.cs" />
+    <Compile Include="Models\CloseTypeViewModel.cs" />
     <Compile Include="Models\DepartmentViewModel.cs" />
     <Compile Include="Models\RepoFormTypeAheadModel.cs" />
     <Compile Include="Models\RepoFormViewModel.cs" />

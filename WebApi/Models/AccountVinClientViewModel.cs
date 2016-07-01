@@ -10,5 +10,7 @@ namespace WebApi.Models
     {
         public string VehVin { get; set; }
         public string AccountClientAccountNum { get; set; }
+        public string RoName { get; set; }
+        public string FinanceClientName { get; set; }
     }
 }

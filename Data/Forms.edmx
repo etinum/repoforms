@@ -54,40 +54,17 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="ModifiedDate" Type="datetime" />
-          <Property Name="RepoDate" Type="datetime" />
           <Property Name="AccountNumber" Type="nvarchar" MaxLength="100" />
           <Property Name="Investigator" Type="nvarchar" MaxLength="100" />
-          <Property Name="Client" Type="nvarchar" MaxLength="100" />
           <Property Name="ClientId" Type="int" />
-          <Property Name="CloseType" Type="nvarchar" MaxLength="100" />
           <Property Name="CloseTypeId" Type="int" />
           <Property Name="CustomerName" Type="nvarchar" MaxLength="100" />
           <Property Name="Points" Type="int" />
-          <Property Name="RecoveryAgent" Type="nvarchar" MaxLength="100" />
           <Property Name="Notes" Type="nvarchar" MaxLength="1024" />
-          <Property Name="RecoveryAddress" Type="nvarchar" MaxLength="100" />
-          <Property Name="RecoveryCity" Type="nvarchar" MaxLength="100" />
-          <Property Name="RecoveryState" Type="nvarchar" MaxLength="100" />
-          <Property Name="RecoveryZip" Type="nvarchar" MaxLength="100" />
-          <Property Name="StorageAddress" Type="nvarchar" MaxLength="100" />
-          <Property Name="StorageCity" Type="nvarchar" MaxLength="100" />
-          <Property Name="StorageState" Type="nvarchar" MaxLength="100" />
-          <Property Name="StorageZip" Type="nvarchar" MaxLength="100" />
-          <Property Name="StorageAdditionalFees" Type="nvarchar" MaxLength="100" />
-          <Property Name="StorageFeeReason" Type="nvarchar" MaxLength="100" />
-          <Property Name="PoliceDept" Type="nvarchar" MaxLength="100" />
-          <Property Name="PoliceNumber" Type="nvarchar" MaxLength="100" />
-          <Property Name="PoliceBadgeNumber" Type="nvarchar" MaxLength="100" />
-          <Property Name="KeysChecked" Type="bit" />
-          <Property Name="DrivableChecked" Type="bit" />
-          <Property Name="Personals" Type="nvarchar" MaxLength="100" />
-          <Property Name="IPRUpdated" Type="nvarchar" MaxLength="100" />
-          <Property Name="RepoProcessing" Type="nvarchar" MaxLength="100" />
-          <Property Name="Billing" Type="nvarchar" MaxLength="100" />
-          <Property Name="InitializedDate" Type="datetime" />
-          <Property Name="OriginalUserId" Type="int" />
+          <Property Name="CreatorUserId" Type="int" />
+          <Property Name="ModifiedByUserId" Type="nchar" MaxLength="10" />
           <Property Name="AdminUserId" Type="int" />
-          <Property Name="Verified" Type="bit" />
+          <Property Name="AdminOtherUserId" Type="int" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -200,7 +177,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="RepoForm">
-              <PropertyRef Name="OriginalUserId" />
+              <PropertyRef Name="CreatorUserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -410,42 +387,19 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CreatedDate" Type="DateTime" Precision="3" />
           <Property Name="ModifiedDate" Type="DateTime" Precision="3" />
-          <Property Name="RepoDate" Type="DateTime" Precision="3" />
           <Property Name="AccountNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Investigator" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Client" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ClientId" Type="Int32" />
-          <Property Name="CloseType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CloseTypeId" Type="Int32" />
           <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Points" Type="Int32" />
-          <Property Name="RecoveryAgent" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Notes" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
-          <Property Name="RecoveryAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="RecoveryCity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="RecoveryState" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="RecoveryZip" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="StorageAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="StorageCity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="StorageState" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="StorageZip" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="StorageAdditionalFees" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="StorageFeeReason" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PoliceDept" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PoliceNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="PoliceBadgeNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="KeysChecked" Type="Boolean" />
-          <Property Name="DrivableChecked" Type="Boolean" />
-          <Property Name="Personals" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="IPRUpdated" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="RepoProcessing" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Billing" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="InitializedDate" Type="DateTime" Precision="3" />
-          <Property Name="OriginalUserId" Type="Int32" />
+          <Property Name="CreatorUserId" Type="Int32" />
+          <Property Name="ModifiedByUserId" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="AdminUserId" Type="Int32" />
-          <Property Name="Verified" Type="Boolean" />
-          <NavigationProperty Name="Client1" Relationship="PLSFormsDBModel.FK_RepoForm_Client" FromRole="RepoForm" ToRole="Client" />
-          <NavigationProperty Name="CloseType1" Relationship="PLSFormsDBModel.FK_RepoForm_CloseType" FromRole="RepoForm" ToRole="CloseType" />
+          <Property Name="AdminOtherUserId" Type="Int32" />
+          <NavigationProperty Name="Client" Relationship="PLSFormsDBModel.FK_RepoForm_Client" FromRole="RepoForm" ToRole="Client" />
+          <NavigationProperty Name="CloseType" Relationship="PLSFormsDBModel.FK_RepoForm_CloseType" FromRole="RepoForm" ToRole="CloseType" />
           <NavigationProperty Name="User" Relationship="PLSFormsDBModel.FK_RepoForm_AdminUser" FromRole="RepoForm" ToRole="User" />
           <NavigationProperty Name="User1" Relationship="PLSFormsDBModel.FK_RepoForm_OriginalUser" FromRole="RepoForm" ToRole="User" />
         </EntityType>
@@ -571,7 +525,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="RepoForm">
-              <PropertyRef Name="OriginalUserId" />
+              <PropertyRef Name="CreatorUserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -678,40 +632,17 @@
           <EntitySetMapping Name="RepoForms">
             <EntityTypeMapping TypeName="PLSFormsDBModel.RepoForm">
               <MappingFragment StoreEntitySet="RepoForm">
-                <ScalarProperty Name="Verified" ColumnName="Verified" />
+                <ScalarProperty Name="AdminOtherUserId" ColumnName="AdminOtherUserId" />
                 <ScalarProperty Name="AdminUserId" ColumnName="AdminUserId" />
-                <ScalarProperty Name="OriginalUserId" ColumnName="OriginalUserId" />
-                <ScalarProperty Name="InitializedDate" ColumnName="InitializedDate" />
-                <ScalarProperty Name="Billing" ColumnName="Billing" />
-                <ScalarProperty Name="RepoProcessing" ColumnName="RepoProcessing" />
-                <ScalarProperty Name="IPRUpdated" ColumnName="IPRUpdated" />
-                <ScalarProperty Name="Personals" ColumnName="Personals" />
-                <ScalarProperty Name="DrivableChecked" ColumnName="DrivableChecked" />
-                <ScalarProperty Name="KeysChecked" ColumnName="KeysChecked" />
-                <ScalarProperty Name="PoliceBadgeNumber" ColumnName="PoliceBadgeNumber" />
-                <ScalarProperty Name="PoliceNumber" ColumnName="PoliceNumber" />
-                <ScalarProperty Name="PoliceDept" ColumnName="PoliceDept" />
-                <ScalarProperty Name="StorageFeeReason" ColumnName="StorageFeeReason" />
-                <ScalarProperty Name="StorageAdditionalFees" ColumnName="StorageAdditionalFees" />
-                <ScalarProperty Name="StorageZip" ColumnName="StorageZip" />
-                <ScalarProperty Name="StorageState" ColumnName="StorageState" />
-                <ScalarProperty Name="StorageCity" ColumnName="StorageCity" />
-                <ScalarProperty Name="StorageAddress" ColumnName="StorageAddress" />
-                <ScalarProperty Name="RecoveryZip" ColumnName="RecoveryZip" />
-                <ScalarProperty Name="RecoveryState" ColumnName="RecoveryState" />
-                <ScalarProperty Name="RecoveryCity" ColumnName="RecoveryCity" />
-                <ScalarProperty Name="RecoveryAddress" ColumnName="RecoveryAddress" />
+                <ScalarProperty Name="ModifiedByUserId" ColumnName="ModifiedByUserId" />
+                <ScalarProperty Name="CreatorUserId" ColumnName="CreatorUserId" />
                 <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="RecoveryAgent" ColumnName="RecoveryAgent" />
                 <ScalarProperty Name="Points" ColumnName="Points" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="CloseTypeId" ColumnName="CloseTypeId" />
-                <ScalarProperty Name="CloseType" ColumnName="CloseType" />
                 <ScalarProperty Name="ClientId" ColumnName="ClientId" />
-                <ScalarProperty Name="Client" ColumnName="Client" />
                 <ScalarProperty Name="Investigator" ColumnName="Investigator" />
                 <ScalarProperty Name="AccountNumber" ColumnName="AccountNumber" />
-                <ScalarProperty Name="RepoDate" ColumnName="RepoDate" />
                 <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

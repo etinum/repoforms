@@ -10,17 +10,9 @@
 
                     <div class="form-group" show-errors>
                         <div>
-                            <label for="createdDate" class="col-sm-3 control-label">Date</label>
+                            <label class="col-sm-3 control-label">Date</label>
                             <div class="col-sm-6">
-                                <p class="input-group">
-                                    <input id="createdDate" name="createdDate" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="rf.createdDate" is-open="datePopupStatus.created" datepicker-options="dateOptions" ng-required="false" close-text="Close" alt-input-formats="altInputFormats" readonly />
-                                    <!--<span class="input-group-btn">
-                        <button type="button" class="btn btn-default" ng-click="openDatePopup(enumPopupType.CREATED)"><i class="glyphicon glyphicon-calendar"></i></button>
-                    </span>-->
-                                </p>
-                                <div class="help-block" ng-messages="myForm.createdDate.$error" ng-show="myForm.createdDate.$touched || submitted">
-                                    <div ng-messages-include="app/html/error-messages.html"></div>
-                                </div>
+                                <h4>{{rf.createdDate | date:'MM/dd/yyyy' }}</h4>
                             </div>
                         </div>
                     </div>
@@ -29,7 +21,7 @@
                         <div class="col-sm-9">
                             <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="accountNumber" name="accountNumber" class="form-control"
                                    ng-model="rf.accountNumber" ng-required="true" placeholder="Enter at least six characters and do a vin lookup"
-                                   uib-typeahead="item.vehVin for item in searchVin($viewValue)" autocomplete="off" typeahead-loading="vinLoading" typeahead-no-results="noVinResults" typeahead-on-select="onVinSelect($item)"/>
+                                   uib-typeahead="item.vehVin + ' ('+item.roName+')' for item in searchVin($viewValue)" autocomplete="off" typeahead-loading="vinLoading" typeahead-no-results="noVinResults" typeahead-on-select="onVinSelect($item)" typeahead-editable="true"/>
                             <i ng-show="vinLoading" class="glyphicon glyphicon-refresh"></i>
                             <div ng-show="noVinResults">
                                 <i class="glyphicon glyphicon-remove"></i> Need to type six chars before search intiates.
@@ -59,11 +51,10 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="form-group" show-errors>
                         <label for="closeType" class="col-sm-3 control-label">Close Type</label>
                         <div class="col-sm-9">
-                            <select id="closeType" name="closeType" class="form-control" data-ng-options="item for item in closeTypeOptions track by item"
+                            <select id="closeType" name="closeType" class="form-control" data-ng-options="item.name for item in rf.closeTypeOptions track by item.id"
                                     data-ng-model="rf.closeType" ng-required="false">
                                 <option value="">---Please select---</option>
                             </select>
@@ -72,7 +63,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="form-group" show-errors>
                         <label for="customerName" class="col-sm-3 control-label">Customer</label>
                         <div class="col-sm-9">
@@ -89,16 +79,6 @@
                             <input type="number" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="points" name="points" class="form-control"
                                    ng-model="rf.points" ng-required="false" />
                             <div class="help-block" ng-messages="myForm.points.$error" ng-show="myForm.points.$touched || submitted">
-                                <div ng-messages-include="app/html/error-messages.html"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" show-errors>
-                        <label for="recoveryAgent" class="col-sm-3 control-label">Recovery Agent</label>
-                        <div class="col-sm-9">
-                            <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="recoveryAgent" name="recoveryAgent" class="form-control"
-                                   ng-model="rf.recoveryAgent" ng-required="false" uib-typeahead="item for item in typeAheadModel.recoveryAgentList  | filter:$viewValue | limitTo:8" autocomplete="off" />
-                            <div class="help-block" ng-messages="myForm.recoveryAgent.$error" ng-show="myForm.recoveryAgent.$touched || submitted">
                                 <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>
                         </div>
