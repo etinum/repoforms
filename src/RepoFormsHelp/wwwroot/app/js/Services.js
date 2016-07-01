@@ -32,50 +32,6 @@
             return false;
         }
         ;
-        function isSuperAdmin(username) {
-            if (!username) {
-                username = $window.userdata;
-            }
-            if (!username)
-                return false;
-            var lcuser = username.toLowerCase().split("\\")[1];
-            var names = superadmin.toLowerCase().split(",");
-            if (names.indexOf(lcuser) > -1) {
-                return true;
-            }
-            return false;
-        }
-        ;
-        function isManagement(username) {
-            if (!username) {
-                username = $window.userdata;
-            }
-            if (!username)
-                return false;
-            var lcuser = username.toLowerCase().split("\\")[1];
-            var qualified = superadmin + "," + management;
-            var names = qualified.toLowerCase().split(",");
-            if (names.indexOf(lcuser) > -1) {
-                return true;
-            }
-            return false;
-        }
-        ;
-        function isAuditor(username) {
-            if (!username) {
-                username = $window.userdata;
-            }
-            if (!username)
-                return false;
-            var lcuser = username.toLowerCase().split("\\")[1];
-            var qualified = superadmin + "," + management + "," + auditor;
-            var names = qualified.toLowerCase().split(",");
-            if (names.indexOf(lcuser) > -1) {
-                return true;
-            }
-            return false;
-        }
-        ;
         var baseWebApiUrl = $envService.read('apiUrl');
         var alertFailed = function (response) {
             alert("There was a problem with the back end call, here is your status code: " + response.status);
@@ -244,9 +200,6 @@
             arrayObjectIndexOf: arrayObjectIndexOf,
             isFalse: isFalse,
             isTrue: isTrue,
-            isSuperAdmin: isSuperAdmin,
-            isManagement: isManagement,
-            isAuditor: isAuditor,
             closeTypeOptions: ['BK', 'PAID', 'FORWARD', 'LOCATE', 'REPO'],
             clientOptions: ['UTOTRAKK', 'ALLY FINANCIAL', 'BAY ENTERPRISE GROUP', 'BHFC', 'C & F FINANCE', 'CARMAX AUTO FINANCE', 'CFAM', 'CHRYSLER CAPITAL-2', 'CHRYSLER CAPITAL-3', 'CITY WIDE INVESTIGATIONS', 'CLA', 'CONSUMER PORTFOLIO', 'EXETER', 'FORD MOTOR CREDIT', 'HYUNDAI MOTOR FINANCE', 'NISSAN MOTOR ACCEPTANCE ', 'NMAC LOSS RECOVERY IGS', 'SAFCO', 'SANTANDER-1', 'SANTANDER-2', 'SANTANDER-3', 'VW CREDIT-PSC', 'VW CREDIT-CSC', 'WELLS FARGO', 'WESTLAKE FINANCIAL', 'UNIVERSAL ACCEPTANCE CORP', 'TURBO TITLE LOANS', 'PRA RECEIVABLE MANAGEMENT', 'SANTANDER-4', 'PRA RECEIVABLES', 'CHRYSLER CAPITAL-1', 'VW CREDIT', 'SST'],
             investigatorOptions: ['Aaron Brazil', 'Aaron Steele', 'Adam Cuthbertson', 'Aimee Lamoureux', 'Alexandria Velis', 'Alexis Smith', 'Anthony D\'Lallo', 'Brandice Plunkett', 'Brandon Burkhouse', 'Brian Shultis', 'Bryan Olson', 'Casey Flissinger', 'Charles Ruth', 'Cheryl Stuckey', 'Christy Gallow', 'Courtney Kulik', 'Dak Brown', 'Denise Priano', 'Devin Hughes', 'Erica Farley', 'Erika Holiday', 'House', 'Janette Bailey', 'Jason Anderson', 'Jeremy Lynch', 'Jessica Westphal', 'Jinette Hernandez', 'Johanna Johnson', 'Keshia Fisher', 'Kevin Zwahlen', 'Katie Halling', 'Kristina Karavan', 'Kyle Baugher', 'Madison Post', 'Mary Sydloski', 'Nicole Seevers', 'Nicole Ho', 'Oliver Shipp', 'Patrick Mcdonnell', 'Priscilla Nava', 'Rachel Fader', 'Ricklene Smith', 'Roger Goss', 'Rolf Bell', 'Rose Cuellar', 'Sarah Blankenship', 'Sean Sasville', 'Shauna Harris', 'Shay Harmon', 'Stacy Fisher', 'Steve Estey', 'Tatyana Nesterova', 'Thomas Anderson', 'Timothy Beeman', 'Tony Quadra', 'Tonia Gatto', 'Travis Rudnick', 'Trey Jackson', 'Zac Bastien'],

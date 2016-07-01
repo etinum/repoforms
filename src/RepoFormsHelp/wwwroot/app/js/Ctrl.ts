@@ -20,9 +20,10 @@
         $scope.load = $dataService.getLoggedUser()
             .then(data => {
                 $window.userdata = <modeltypings.UserViewModel>data;
-                var winAuthName = $window.userdata.winAuthName;
                 var roles = $window.userdata.roles;
-                $rootScope.welcome = "Welcome " + winAuthName.toLowerCase().split("\\")[1];
+                $rootScope.winAuthName = $window.userdata.winAuthName.toLowerCase().split("\\")[1];
+                $rootScope.welcome = "Welcome " + $rootScope.winAuthName;
+                
 
                 var isSuper = $rootScope.isSuperAdmin = roles.indexOf('SuperAdmin') > -1;
                 $rootScope.isSystemAdmin = roles.indexOf('SystemAdmin') > -1 || isSuper;
@@ -228,6 +229,13 @@
             $scope.load = $dataService.getForm(0)
                 .then(data => {
                     $scope.rf = <modeltypings.RepoFormViewModel>data;
+
+                    if ($window.userdata.first == null || $window.userdata.first === "") {
+                        $scope.rf.investigator = $window.userdata.winAuthName;
+                    } else {
+                        $scope.rf.investigator = $window.userdata.first + " " + $window.userdata.last;
+                    }
+
                     $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
                  });
 
@@ -306,7 +314,7 @@
                 });
         };
 
-        //$scope.username = $window.userdata;
+
         $scope.update = () => {
             $scope.getForms();
         };
@@ -483,7 +491,7 @@
                 });
         };
 
-        //$scope.username = $window.userdata;
+
         $scope.update = () => {
             $scope.getForms();
         };

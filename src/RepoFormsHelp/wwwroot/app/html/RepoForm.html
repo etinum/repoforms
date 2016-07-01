@@ -35,7 +35,7 @@
                         <label for="investigator" class="col-sm-3 control-label">Investigator</label>
                         <div class="col-sm-9">
                             <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="investigator" name="investigator" class="form-control"
-                                   ng-model="rf.investigator" ng-required="false" uib-typeahead="item for item in investigatorOptions  | filter:$viewValue | limitTo:8" autocomplete="off" />
+                                   ng-model="rf.investigator" ng-required="false" uib-typeahead="item for item in investigatorOptions  | filter:$viewValue | limitTo:8" autocomplete="off" readonly/>
                             <div class="help-block" ng-messages="myForm.investigator.$error" ng-show="myForm.investigator.$touched || submitted">
                                 <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>
@@ -45,7 +45,7 @@
                         <label for="client" class="col-sm-3 control-label">Client</label>
                         <div class="col-sm-9">
                             <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="client" name="client" class="form-control"
-                                   ng-model="rf.client" ng-required="false" uib-typeahead="item for item in clientOptions  | filter:$viewValue | limitTo:8" autocomplete="off" />
+                                   ng-model="rf.client" ng-required="true" uib-typeahead="item.name for item in rf.clientOptions  | filter:$viewValue | limitTo:8" autocomplete="off" typeahead-editable="false"/>
                             <div class="help-block" ng-messages="myForm.client.$error" ng-show="myForm.investigator.$touched || submitted">
                                 <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>
@@ -55,7 +55,7 @@
                         <label for="closeType" class="col-sm-3 control-label">Close Type</label>
                         <div class="col-sm-9">
                             <select id="closeType" name="closeType" class="form-control" data-ng-options="item.name for item in rf.closeTypeOptions track by item.id"
-                                    data-ng-model="rf.closeType" ng-required="false">
+                                    data-ng-model="rf.closeType" ng-required="true">
                                 <option value="">---Please select---</option>
                             </select>
                             <div class="help-block" ng-messages="myForm.closeType.$error" ng-show="myForm.closeType.$touched || submitted">
