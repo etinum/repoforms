@@ -12,8 +12,8 @@ var management = 'JAZiebro,JFountaine,knbaugher,ajfader';
 var auditor = 'TAKushnir,cashideler,ShHarmon,clwren,mashields';
 
 
-
 angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'environment', 'smart-table', 'cgBusy']);
+    
 
 (app => {
     var config = ($routeProvider, $envServiceProvider, $locationProvider) => {
@@ -49,6 +49,7 @@ angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'enviro
             .otherwise({
                 redirectTo: "/home"
             });
+
 
         $envServiceProvider.config({
             domains: {
@@ -98,3 +99,10 @@ angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'enviro
     app.config(config);
 })(angular.module("repoFormsApp"));
 
+(app => {
+    var runner = ($rootScope, $dataService) => {
+        $rootScope.load = $dataService.initiateRoles();
+    };
+    runner.$inject = ['$rootScope', 'dataService'];
+    app.run(runner);
+})(angular.module("repoFormsApp"));

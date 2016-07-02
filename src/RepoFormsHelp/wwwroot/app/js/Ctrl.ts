@@ -13,35 +13,10 @@
 })(angular.module("repoFormsApp"));
 */
 
-(app => {
-    var controller = ($scope, $window, $dataService, $envService, $rootScope) => {
-
-
-        $scope.load = $dataService.getLoggedUser()
-            .then(data => {
-                $window.userdata = <modeltypings.UserViewModel>data;
-                var roles = $window.userdata.roles;
-                $rootScope.winAuthName = $window.userdata.winAuthName.toLowerCase().split("\\")[1];
-                $rootScope.welcome = "Welcome " + $rootScope.winAuthName;
-                
-
-                var isSuper = $rootScope.isSuperAdmin = roles.indexOf('SuperAdmin') > -1;
-                $rootScope.isSystemAdmin = roles.indexOf('SystemAdmin') > -1 || isSuper;
-                $rootScope.isManagement = roles.indexOf('Management') > -1 || isSuper;
-                $rootScope.isAuditor = roles.indexOf('Auditor') > -1 || isSuper;
-                $rootScope.isSkipTracer = roles.indexOf('SkipTracer') > -1 || isSuper;
-                
-            });
-
-    };
-    controller.$inject = ['$scope', '$window', 'dataService', 'envService', '$rootScope'];
-    app.controller('masterCtrl', controller);
-})(angular.module("repoFormsApp"));
-
+/* app.controller('homeCtrl', controller); */
 (app => {
 
     var controller = ($scope, $location, $dataService, $window, $envService) => {
-
 
         // configure hiddden fields in production
         if ($envService.is('production')) {
@@ -80,6 +55,7 @@
     app.controller('homeCtrl', controller);
 })(angular.module("repoFormsApp"));
 
+/* app.controller('repoCtrl', controller); */
 (app => {
     var controller = ($scope, $dataService, $window, $routeParams, $uibModal, $location, $anchorScroll, $q) => {
 
@@ -145,10 +121,29 @@
             return deferred.promise;
         };
 
+        $scope.onClientSelect = (data: modeltypings.ClientViewModel) => {
+
+            $scope.rf.clientId = data.id;
+
+        }
+
         $scope.onVinSelect = (data: modeltypings.AccountVinClientViewModel) => {
             $scope.rf.notes = 'Client Account #: ' + data.accountClientAccountNum + ' (' + data.financeClientName + ')';
             $scope.rf.customerName = data.roName;
             $scope.rf.accountNumber = data.vehVin;
+
+
+            //$scope.rf.closeType
+
+            //switch (data.accountType) {
+            //    case 'bankruptcy':
+                    
+            //        break;
+                
+            //default:
+            //}
+        
+
         };
 
 
@@ -217,29 +212,41 @@
         };
 
 
-        if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id)) {
-            //$scope.id = parseInt($routeParams.id);
-            $scope.load = $dataService.getForm($routeParams.id)
-                .then(data => {
-                    $scope.rf = <modeltypings.RepoFormViewModel>data;
-                    $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
-                });
-        } else {
+        //$scope.userData = $dataService.userData;
 
-            $scope.load = $dataService.getForm(0)
-                .then(data => {
-                    $scope.rf = <modeltypings.RepoFormViewModel>data;
+        //$scope.$watch('userData',
+        //    (newval: modeltypings.UserViewModel, oldval: modeltypings.UserViewModel) => {
+        //        if (newval == null) return;
+        //    alert('hi: ' + newval.winAuthName);
+        //});
 
-                    if ($window.userdata.first == null || $window.userdata.first === "") {
-                        $scope.rf.investigator = $window.userdata.winAuthName;
-                    } else {
-                        $scope.rf.investigator = $window.userdata.first + " " + $window.userdata.last;
-                    }
+        $dataService.initiateRoles()
+            .then((userData) => {
 
-                    $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
-                 });
+                if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id)) {
+                    //$scope.id = parseInt($routeParams.id);
+                    $scope.load = $dataService.getForm($routeParams.id)
+                        .then(data => {
+                            $scope.rf = <modeltypings.RepoFormViewModel>data;
+                            $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
+                        });
+                } else {
 
-        }
+                    $scope.load = $dataService.getForm(0)
+                        .then(data => {
+                            $scope.rf = <modeltypings.RepoFormViewModel>data;
+
+                            if (userData.first == null || userData.first === "") {
+                                $scope.rf.investigator = userData.winAuthName.toLowerCase().split("\\")[1];
+                            } else {
+                                $scope.rf.investigator = userData.first + " " + userData.last;
+                            }
+
+                            $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
+                        });
+
+                }
+            });
 
 
         $scope.open = () => {
@@ -264,6 +271,7 @@
     app.controller('repoCtrl', controller);
 })(angular.module("repoFormsApp"));
 
+/* app.controller('viewRepoFormCtrl', controller); */
 (app => {
     var controller = ($scope, $dataService, $location, $window, $uibModal) => {
 
@@ -687,7 +695,6 @@
     controller.$inject = ['$scope', '$window', 'dataService', '$routeParams'];
     app.controller('userCtrl', controller);
 })(angular.module("repoFormsApp"));
-
 
 (app => {
     var controller = ($scope, $window, $dataService, $location) => {

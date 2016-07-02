@@ -1,22 +1,4 @@
 (function (app) {
-    var controller = function ($scope, $window, $dataService, $envService, $rootScope) {
-        $scope.load = $dataService.getLoggedUser()
-            .then(function (data) {
-            $window.userdata = data;
-            var roles = $window.userdata.roles;
-            $rootScope.winAuthName = $window.userdata.winAuthName.toLowerCase().split("\\")[1];
-            $rootScope.welcome = "Welcome " + $rootScope.winAuthName;
-            var isSuper = $rootScope.isSuperAdmin = roles.indexOf('SuperAdmin') > -1;
-            $rootScope.isSystemAdmin = roles.indexOf('SystemAdmin') > -1 || isSuper;
-            $rootScope.isManagement = roles.indexOf('Management') > -1 || isSuper;
-            $rootScope.isAuditor = roles.indexOf('Auditor') > -1 || isSuper;
-            $rootScope.isSkipTracer = roles.indexOf('SkipTracer') > -1 || isSuper;
-        });
-    };
-    controller.$inject = ['$scope', '$window', 'dataService', 'envService', '$rootScope'];
-    app.controller('masterCtrl', controller);
-})(angular.module("repoFormsApp"));
-(function (app) {
     var controller = function ($scope, $location, $dataService, $window, $envService) {
         if ($envService.is('production')) {
             $scope.isProd = true;
@@ -116,6 +98,9 @@
             }
             return deferred.promise;
         };
+        $scope.onClientSelect = function (data) {
+            $scope.rf.clientId = data.id;
+        };
         $scope.onVinSelect = function (data) {
             $scope.rf.notes = 'Client Account #: ' + data.accountClientAccountNum + ' (' + data.financeClientName + ')';
             $scope.rf.customerName = data.roName;
@@ -165,26 +150,29 @@
         $scope.resetForm = function () {
             location.reload();
         };
-        if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id)) {
-            $scope.load = $dataService.getForm($routeParams.id)
-                .then(function (data) {
-                $scope.rf = data;
-                $scope.orf = angular.copy($scope.rf);
-            });
-        }
-        else {
-            $scope.load = $dataService.getForm(0)
-                .then(function (data) {
-                $scope.rf = data;
-                if ($window.userdata.first == null || $window.userdata.first === "") {
-                    $scope.rf.investigator = $window.userdata.winAuthName;
-                }
-                else {
-                    $scope.rf.investigator = $window.userdata.first + " " + $window.userdata.last;
-                }
-                $scope.orf = angular.copy($scope.rf);
-            });
-        }
+        $dataService.initiateRoles()
+            .then(function (userData) {
+            if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id)) {
+                $scope.load = $dataService.getForm($routeParams.id)
+                    .then(function (data) {
+                    $scope.rf = data;
+                    $scope.orf = angular.copy($scope.rf);
+                });
+            }
+            else {
+                $scope.load = $dataService.getForm(0)
+                    .then(function (data) {
+                    $scope.rf = data;
+                    if (userData.first == null || userData.first === "") {
+                        $scope.rf.investigator = userData.winAuthName.toLowerCase().split("\\")[1];
+                    }
+                    else {
+                        $scope.rf.investigator = userData.first + " " + userData.last;
+                    }
+                    $scope.orf = angular.copy($scope.rf);
+                });
+            }
+        });
         $scope.open = function () {
             var modalInstance = $uibModal.open({
                 animation: true,

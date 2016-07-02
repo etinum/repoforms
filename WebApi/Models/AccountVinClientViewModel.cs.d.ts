@@ -4,5 +4,8 @@
 		accountClientAccountNum: string;
 		roName: string;
 		financeClientName: string;
+		accountLastActivity: Date;
+		accountStatus: string;
+		accountType: string;
 	}
 }

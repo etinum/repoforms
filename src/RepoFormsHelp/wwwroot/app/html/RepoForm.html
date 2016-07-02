@@ -23,8 +23,11 @@
                                    ng-model="rf.accountNumber" ng-required="true" placeholder="Enter at least six characters and do a vin lookup"
                                    uib-typeahead="item.vehVin + ' ('+item.roName+')' for item in searchVin($viewValue)" autocomplete="off" typeahead-loading="vinLoading" typeahead-no-results="noVinResults" typeahead-on-select="onVinSelect($item)" typeahead-editable="true"/>
                             <i ng-show="vinLoading" class="glyphicon glyphicon-refresh"></i>
-                            <div ng-show="noVinResults">
-                                <i class="glyphicon glyphicon-remove"></i> Need to type six chars before search intiates.
+                            <div ng-show="noVinResults && rf.accountNumber.length > 5">
+                                <i class="glyphicon glyphicon-remove"></i> Try again, those number '0' and letter 'O' can look similar.
+                            </div>
+                            <div ng-show="noVinResults && rf.accountNumber.length < 6">
+                                <i class="glyphicon glyphicon-remove"></i> Minimum of 6 characters from your vin please.
                             </div>
                             <div class="help-block" ng-messages="myForm.accountNumber.$error" ng-show="myForm.accountNumber.$touched || submitted">
                                 <div ng-messages-include="app/html/error-messages.html"></div>
@@ -45,7 +48,7 @@
                         <label for="client" class="col-sm-3 control-label">Client</label>
                         <div class="col-sm-9">
                             <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="client" name="client" class="form-control"
-                                   ng-model="rf.client" ng-required="true" uib-typeahead="item.name for item in rf.clientOptions  | filter:$viewValue | limitTo:8" autocomplete="off" typeahead-editable="false"/>
+                                   ng-model="rf.client" ng-required="true" uib-typeahead="item.name for item in rf.clientOptions  | filter:$viewValue | limitTo:8" autocomplete="off" typeahead-editable="false" typeahead-on-select="onClientSelect($item)"/>
                             <div class="help-block" ng-messages="myForm.client.$error" ng-show="myForm.investigator.$touched || submitted">
                                 <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>
@@ -77,7 +80,7 @@
                         <label for="points" class="col-sm-3 control-label">Points</label>
                         <div class="col-sm-9">
                             <input type="number" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="points" name="points" class="form-control"
-                                   ng-model="rf.points" ng-required="false" />
+                                   ng-model="rf.points" ng-required="true" />
                             <div class="help-block" ng-messages="myForm.points.$error" ng-show="myForm.points.$touched || submitted">
                                 <div ng-messages-include="app/html/error-messages.html"></div>
                             </div>

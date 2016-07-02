@@ -7,7 +7,9 @@
         accountNumber: string;
         investigator: string;
         clientId: number;
+        client: string;
         closeTypeId: number;
+        closeType: any;
         customerName: string;
         points: number;
         notes: string;
@@ -68,6 +70,21 @@
         accountClientAccountNum: string;
         roName: string;
         financeClientName: string;
+        accountLastActivity: Date;
+        accountStatus: string;
+        accountType: string;
     }
+    interface ClientViewModel {
+        id: number;
+        name: string;
+        isTieredPoints: boolean;
+    }
+    interface CloseTypeViewModel {
+        id: number;
+        name: string;
+        tiered: boolean;
+        defaultPointValue: number;
+    }
+
 
 }

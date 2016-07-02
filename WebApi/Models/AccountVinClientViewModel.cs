@@ -12,5 +12,8 @@ namespace WebApi.Models
         public string AccountClientAccountNum { get; set; }
         public string RoName { get; set; }
         public string FinanceClientName { get; set; }
+        public DateTime? AccountLastActivity { get; set; }
+        public string AccountStatus { get; set; }
+        public string AccountType { get; set; }
     }
 }

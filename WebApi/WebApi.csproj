@@ -297,6 +297,12 @@
     <TypeScriptCompile Include="Models\AccountVinClientViewModel.cs.d.ts">
       <DependentUpon>AccountVinClientViewModel.cs</DependentUpon>
     </TypeScriptCompile>
+    <TypeScriptCompile Include="Models\ClientViewModel.cs.d.ts">
+      <DependentUpon>ClientViewModel.cs</DependentUpon>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="Models\CloseTypeViewModel.cs.d.ts">
+      <DependentUpon>CloseTypeViewModel.cs</DependentUpon>
+    </TypeScriptCompile>
     <TypeScriptCompile Include="Models\RepoFormTypeAheadModel.cs.d.ts">
       <DependentUpon>RepoFormTypeAheadModel.cs</DependentUpon>
     </TypeScriptCompile>

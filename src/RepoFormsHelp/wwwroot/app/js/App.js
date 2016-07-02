@@ -67,4 +67,11 @@ angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'enviro
     config.$inject = ['$routeProvider', 'envServiceProvider', '$locationProvider'];
     app.config(config);
 })(angular.module("repoFormsApp"));
+(function (app) {
+    var runner = function ($rootScope, $dataService) {
+        $rootScope.load = $dataService.initiateRoles();
+    };
+    runner.$inject = ['$rootScope', 'dataService'];
+    app.run(runner);
+})(angular.module("repoFormsApp"));
 //# sourceMappingURL=App.js.map

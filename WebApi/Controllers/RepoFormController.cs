@@ -110,7 +110,15 @@ namespace WebApi.Controllers
                 list = mctx.pra_accountsStoreProc(searchVinString).ToList();
             }
 
-            return Ok(_mapper.Map<List<AccountVinClientViewModel>>(list));
+            // We want to identify duplicates and only select the one with the latest activity date. 
+            var filtered = from a in list
+                group a by a.veh_vin
+                into g
+                where g.Skip(1).Any()
+                from f in g.OrderByDescending(r => r.account_last_activity).Take(1)
+                select f;
+
+            return Ok(_mapper.Map<List<AccountVinClientViewModel>>(filtered));
 
         }
 

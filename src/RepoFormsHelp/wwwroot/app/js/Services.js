@@ -1,5 +1,6 @@
 (function (app) {
-    var service = function ($http, $q, $envService, $window) {
+    var service = function ($http, $q, $envService, $window, $rootScope) {
+        var userData = null;
         var arrayUnique = function (array) {
             var a = array.concat();
             for (var i = 0; i < a.length; ++i) {
@@ -104,16 +105,32 @@
             });
             return deferred.promise;
         };
-        var getLoggedUser = function () {
-            var url = baseWebApiUrl + 'api/User/GetLoggedUser';
+        function configureRolesPlus(user) {
+            var roles = user.roles;
+            $rootScope.welcome = "Welcome " + user.winAuthName.toLowerCase().split("\\")[1];
+            var isSuper = $rootScope.isSuperAdmin = roles.indexOf('SuperAdmin') > -1;
+            $rootScope.isSystemAdmin = roles.indexOf('SystemAdmin') > -1 || isSuper;
+            $rootScope.isManagement = roles.indexOf('Management') > -1 || isSuper;
+            $rootScope.isAuditor = roles.indexOf('Auditor') > -1 || isSuper;
+            $rootScope.isSkipTracer = roles.indexOf('SkipTracer') > -1 || isSuper;
+        }
+        var initiateRoles = function () {
             var deferred = $q.defer();
-            $http.get(url)
-                .then(function (response) {
-                deferred.resolve(response.data);
-            }, function (response) {
-                alertFailed(response);
-                deferred.reject(response);
-            });
+            if (userData == null) {
+                var url = baseWebApiUrl + 'api/User/GetLoggedUser';
+                $http.get(url)
+                    .then(function (response) {
+                    userData = response.data;
+                    configureRolesPlus(userData);
+                    deferred.resolve(userData);
+                }, function (response) {
+                    alertFailed(response);
+                    deferred.reject(response);
+                });
+            }
+            else {
+                deferred.resolve(userData);
+            }
             return deferred.promise;
         };
         var getUser = function (id) {
@@ -186,7 +203,8 @@
         };
         return {
             getUser: getUser,
-            getLoggedUser: getLoggedUser,
+            initiateRoles: initiateRoles,
+            userData: userData,
             getAllUsers: getAllUsers,
             getTypeAheadData: getTypeAheadData,
             searchVin: searchVin,
@@ -206,7 +224,7 @@
             states: ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
         };
     };
-    service.$inject = ['$http', '$q', 'envService', '$window'];
+    service.$inject = ['$http', '$q', 'envService', '$window', '$rootScope'];
     app.factory("dataService", service);
 })(angular.module("repoFormsApp"));
 //# sourceMappingURL=Services.js.map

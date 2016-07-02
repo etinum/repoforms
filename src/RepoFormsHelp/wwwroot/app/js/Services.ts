@@ -16,16 +16,19 @@
 
 (app => {
 
-    var service = ($http, $q, $envService, $window) => {
+    var service = ($http, $q, $envService, $window, $rootScope) => {
 
 
         // Helper methods
         //var trimObjectProperties = (objectToTrim) => {
-            //for (var key in objectToTrim) {
-            //    if (objectToTrim[key] !== null && objectToTrim[key].trim)
-            //        objectToTrim[key] = objectToTrim[key].trim();
-            //}
+        //for (var key in objectToTrim) {
+        //    if (objectToTrim[key] !== null && objectToTrim[key].trim)
+        //        objectToTrim[key] = objectToTrim[key].trim();
+        //}
         //};
+
+
+        var userData = <modeltypings.UserViewModel>null;
 
 
         var arrayUnique = (array) => {
@@ -61,7 +64,6 @@
         };
 
 
-
         var baseWebApiUrl = $envService.read('apiUrl');
 
         // Error messages
@@ -77,7 +79,8 @@
             $http.post(url, formdata)
                 .then(() => {
                     deferred.resolve();
-                }, (response) => {
+                },
+                (response) => {
                     alertFailed(response);
                     deferred.reject(response);
                 });
@@ -91,25 +94,28 @@
             $http.post(url, id)
                 .then(() => {
                     deferred.resolve();
-                }, (response) => {
+                },
+                (response) => {
                     alertFailed(response);
                     deferred.reject(response);
                 });
             return deferred.promise;
         }
 
-        var searchVin = (data: string) : modeltypings.AccountVinClientViewModel => {
+        var searchVin = (data: string): modeltypings.AccountVinClientViewModel => {
             var url = baseWebApiUrl + 'api/RepoForm/SearchVin';
             var deferred = $q.defer();
 
-            $http.get(url, {
-                params: {
-                    searchVinString: data
-                }
-            })
+            $http.get(url,
+                {
+                    params: {
+                        searchVinString: data
+                    }
+                })
                 .then(response => {
                     deferred.resolve(response.data);
-                }, (response) => {
+                },
+                (response) => {
                     alertFailed(response);
                     deferred.reject(response);
                 });
@@ -130,7 +136,8 @@
                 })
                 .then((response) => {
                     deferred.resolve(response.data.results.map(r => r));
-                }, (response) => {
+                },
+                (response) => {
                     alertFailed(response);
                     deferred.reject(response);
                 });
@@ -145,7 +152,8 @@
             $http.get(url)
                 .then(response => {
                     deferred.resolve(response.data);
-                }, (response) => {
+                },
+                (response) => {
                     alertFailed(response);
                     deferred.reject(response);
                 });
@@ -154,21 +162,43 @@
 
 
         // Misc
-        var getLoggedUser = () => {
-            var url = baseWebApiUrl + 'api/User/GetLoggedUser';
+
+        function configureRolesPlus(user: modeltypings.UserViewModel) {
+
+            var roles = user.roles;
+            $rootScope.welcome = "Welcome " + user.winAuthName.toLowerCase().split("\\")[1];
+
+            var isSuper = $rootScope.isSuperAdmin = roles.indexOf('SuperAdmin') > -1;
+            $rootScope.isSystemAdmin = roles.indexOf('SystemAdmin') > -1 || isSuper;
+            $rootScope.isManagement = roles.indexOf('Management') > -1 || isSuper;
+            $rootScope.isAuditor = roles.indexOf('Auditor') > -1 || isSuper;
+            $rootScope.isSkipTracer = roles.indexOf('SkipTracer') > -1 || isSuper;
+
+        }
+
+    var initiateRoles = (): modeltypings.UserViewModel => {
+
             var deferred = $q.defer();
 
-            $http.get(url)
-                .then(response => {
-                    deferred.resolve(response.data);
-                }, (response) => {
-                    alertFailed(response);
-                    deferred.reject(response);
-                });
+            if (userData == null) {
+                var url = baseWebApiUrl + 'api/User/GetLoggedUser';
+                $http.get(url)
+                    .then(response => {
+                        userData = response.data;
+                        configureRolesPlus(userData);
+                        deferred.resolve(userData);
+                    },
+                    (response) => {
+                        alertFailed(response);
+                        deferred.reject(response);
+                    });
+            } else {
+                deferred.resolve(userData);
+            }
             return deferred.promise;
         };
 
-        var getUser = (id) => {
+        var getUser = (id : number) => {
             var url = baseWebApiUrl + 'api/User/GetUser';
             var deferred = $q.defer();
 
@@ -247,9 +277,11 @@
             return deferred.promise;
         };
 
+
         return {
             getUser: getUser,
-            getLoggedUser: getLoggedUser,
+            initiateRoles: initiateRoles,
+            userData: userData,
             getAllUsers: getAllUsers,
             getTypeAheadData: getTypeAheadData,
             searchVin: searchVin,
@@ -273,7 +305,7 @@
         };
     };
 
-    service.$inject = ['$http', '$q', 'envService', '$window'];
+    service.$inject = ['$http', '$q', 'envService', '$window', '$rootScope'];
     app.factory("dataService", service);
 
 })(angular.module("repoFormsApp"));

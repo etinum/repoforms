@@ -24,6 +24,9 @@
           <Property Type="String" Name="account_client_account_num" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="ro_name" Nullable="true" MaxLength="112" />
           <Property Type="String" Name="finance_client_name" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="account_last_activity" Nullable="true" />
+          <Property Type="String" Name="account_status" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="account_type" Nullable="true" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -38,6 +41,9 @@
                 <ScalarProperty Name="account_client_account_num" ColumnName="account_client_account_num" />
                 <ScalarProperty Name="ro_name" ColumnName="ro_name" />
                 <ScalarProperty Name="finance_client_name" ColumnName="finance_client_name" />
+                <ScalarProperty Name="account_last_activity" ColumnName="account_last_activity" />
+                <ScalarProperty Name="account_status" ColumnName="account_status" />
+                <ScalarProperty Name="account_type" ColumnName="account_type" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
