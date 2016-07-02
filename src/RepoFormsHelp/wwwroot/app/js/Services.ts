@@ -16,7 +16,7 @@
 
 (app => {
 
-    var service = ($http, $q, $envService, $window, $rootScope) => {
+    var service = ($http, $q, $envService, $window, $rootScope, $timeout) => {
 
 
         // Helper methods
@@ -176,6 +176,23 @@
 
         }
 
+        //var getLoggedUserData = (): modeltypings.UserViewModel => {
+        //    var deferred = $q.defer();
+
+
+        //    if (userData == null) {
+        //        $timeout(() => {
+        //            if (userData != null) {
+        //                deferred.resolve(userData);
+        //            }
+        //        }, 500);
+        //    }
+
+        //    return deferred.promise;
+
+        //}
+
+
     var initiateRoles = (): modeltypings.UserViewModel => {
 
             var deferred = $q.defer();
@@ -281,7 +298,7 @@
         return {
             getUser: getUser,
             initiateRoles: initiateRoles,
-            userData: userData,
+            getLoggedUserData: getLoggedUserData,
             getAllUsers: getAllUsers,
             getTypeAheadData: getTypeAheadData,
             searchVin: searchVin,
@@ -305,7 +322,7 @@
         };
     };
 
-    service.$inject = ['$http', '$q', 'envService', '$window', '$rootScope'];
+    service.$inject = ['$http', '$q', 'envService', '$window', '$rootScope', '$timeout'];
     app.factory("dataService", service);
 
 })(angular.module("repoFormsApp"));

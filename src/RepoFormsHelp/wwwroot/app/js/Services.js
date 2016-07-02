@@ -1,5 +1,5 @@
 (function (app) {
-    var service = function ($http, $q, $envService, $window, $rootScope) {
+    var service = function ($http, $q, $envService, $window, $rootScope, $timeout) {
         var userData = null;
         var arrayUnique = function (array) {
             var a = array.concat();
@@ -114,6 +114,17 @@
             $rootScope.isAuditor = roles.indexOf('Auditor') > -1 || isSuper;
             $rootScope.isSkipTracer = roles.indexOf('SkipTracer') > -1 || isSuper;
         }
+        var getLoggedUserData = function () {
+            var deferred = $q.defer();
+            if (userData == null) {
+                $timeout(function () {
+                    if (userData != null) {
+                        deferred.resolve(userData);
+                    }
+                }, 500);
+            }
+            return deferred.promise;
+        };
         var initiateRoles = function () {
             var deferred = $q.defer();
             if (userData == null) {
@@ -204,7 +215,7 @@
         return {
             getUser: getUser,
             initiateRoles: initiateRoles,
-            userData: userData,
+            getLoggedUserData: getLoggedUserData,
             getAllUsers: getAllUsers,
             getTypeAheadData: getTypeAheadData,
             searchVin: searchVin,
@@ -224,7 +235,7 @@
             states: ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
         };
     };
-    service.$inject = ['$http', '$q', 'envService', '$window', '$rootScope'];
+    service.$inject = ['$http', '$q', 'envService', '$window', '$rootScope', '$timeout'];
     app.factory("dataService", service);
 })(angular.module("repoFormsApp"));
 //# sourceMappingURL=Services.js.map

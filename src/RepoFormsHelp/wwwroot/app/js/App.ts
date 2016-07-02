@@ -102,6 +102,7 @@ angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'enviro
 (app => {
     var runner = ($rootScope, $dataService) => {
         $rootScope.load = $dataService.initiateRoles();
+
     };
     runner.$inject = ['$rootScope', 'dataService'];
     app.run(runner);
