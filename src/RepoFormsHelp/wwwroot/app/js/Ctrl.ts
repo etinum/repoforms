@@ -364,7 +364,7 @@
 
         $scope.getForms = () => {
             $scope.load = $dataService.getForms()
-                .then(data => {
+                .then((data : modeltypings.RepoFormViewModel[]) => {
                     $scope.allItems = <modeltypings.RepoFormViewModel[]>data.list;
                     $scope.clientOptions = data.clientOptions;
                     $scope.closeTypeOptions = data.closeTypeOptions;
@@ -442,20 +442,7 @@
             {
                 'label': 'Need Attention',
                 'id': $scope.enumFilterType.ATT
-            },
-            {
-                'label': 'Audit',
-                'id': $scope.enumFilterType.AUDIT
-            },
-            {
-                'label': 'Score',
-                'id': $scope.enumFilterType.SCORE
             }
-            //{
-            //    'label': 'LPR',
-            //    'id': $scope.enumFilterType.LPR
-            //}
-
         ];
 
         // default value
@@ -465,19 +452,12 @@
 
             switch ($scope.filterSelected.id) {
                 case $scope.enumFilterType.ALL:
-                    $scope.fms = $scope.allItems.filter(item => item.closeType !== 'LPR');
+                    $scope.fms = $scope.allItems;
                     break;
                 case $scope.enumFilterType.ATT:
-                    $scope.fms = $scope.allItems.filter(item => !item.administered && item.closeType !== 'LPR');
-                    break;
-                case $scope.enumFilterType.AUDIT:
-                    $scope.fms = $scope.allItems.filter(item => item.initializedDate == null && item.closeType !== 'LPR');
-                    break;
-                case $scope.enumFilterType.SCORE:
-                    $scope.fms = $scope.allItems.filter(item => !item.verified && item.closeType !== 'LPR');
-                    break;
-                case $scope.enumFilterType.LPR:
-                    $scope.fms = $scope.allItems.filter(item => item.closeType === 'LPR');
+                    $scope.fms = $scope.allItems.filter(item => {
+                        return item.adminUserId == null || item.adminOtherUserId == null;
+                    });
                     break;
                 default:
             }

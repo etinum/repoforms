@@ -22,13 +22,14 @@
         </thead>
         <tbody>
         <tr ng-repeat="row in displayCollection.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
-            <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.createdDate | date:'MM/dd/yyyy' }}</td>
-            <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.accountNumber}}</td>
-            <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.investigator}}</td>
-            <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.client}}</td>
-            <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.closeType}}</td>
-            <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.customerName}}</td>
-            <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.points}}</td>
+            <td ng-class="{'repo-admin': row.adminOtherUserId == null, 'repo-score': row.adminUserId == null}">{{row.createdDate | date:'MM/dd/yyyy' }}</td>
+            <td ng-class="{'repo-admin': row.adminOtherUserId == null, 'repo-score': row.adminUserId == null}">{{row.accountNumber}}</td>
+            <td ng-class="{'repo-admin': row.adminOtherUserId == null, 'repo-score': row.adminUserId == null}">{{row.investigator}}</td>
+            <td ng-class="{'repo-admin': row.adminOtherUserId == null, 'repo-score': row.adminUserId == null}">{{row.client}}</td>
+            <td ng-class="{'repo-admin': row.adminOtherUserId == null, 'repo-score': row.adminUserId == null}">{{row.closeType}}</td>
+            <td ng-class="{'repo-admin': row.adminOtherUserId == null, 'repo-score': row.adminUserId == null}">{{row.customerName}}</td>
+            <td ng-class="{'repo-admin': row.adminOtherUserId == null, 'repo-score': row.adminUserId == null}">{{row.points}}</td>
+
             <td>
                 <button type="button" ng-hide="(row.adminUserId != null) || !isAuditor" ng-click="adminVerified(row, 'first')" class="btn btn-sm btn-info" uib-tooltip="Click this box after you are done recording for scoring purpose.">
                     <i class="glyphicon glyphicon-check">

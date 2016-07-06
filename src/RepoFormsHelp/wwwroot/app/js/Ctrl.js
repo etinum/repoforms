@@ -325,33 +325,18 @@
             {
                 'label': 'Need Attention',
                 'id': $scope.enumFilterType.ATT
-            },
-            {
-                'label': 'Audit',
-                'id': $scope.enumFilterType.AUDIT
-            },
-            {
-                'label': 'Score',
-                'id': $scope.enumFilterType.SCORE
             }
         ];
         $scope.filterSelected = $scope.filterOptions.filter(function (item) { return item.id === $scope.enumFilterType.ATT; })[0];
         $scope.filter = function () {
             switch ($scope.filterSelected.id) {
                 case $scope.enumFilterType.ALL:
-                    $scope.fms = $scope.allItems.filter(function (item) { return item.closeType !== 'LPR'; });
+                    $scope.fms = $scope.allItems;
                     break;
                 case $scope.enumFilterType.ATT:
-                    $scope.fms = $scope.allItems.filter(function (item) { return !item.administered && item.closeType !== 'LPR'; });
-                    break;
-                case $scope.enumFilterType.AUDIT:
-                    $scope.fms = $scope.allItems.filter(function (item) { return item.initializedDate == null && item.closeType !== 'LPR'; });
-                    break;
-                case $scope.enumFilterType.SCORE:
-                    $scope.fms = $scope.allItems.filter(function (item) { return !item.verified && item.closeType !== 'LPR'; });
-                    break;
-                case $scope.enumFilterType.LPR:
-                    $scope.fms = $scope.allItems.filter(function (item) { return item.closeType === 'LPR'; });
+                    $scope.fms = $scope.allItems.filter(function (item) {
+                        return item.adminUserId == null || item.adminOtherUserId == null;
+                    });
                     break;
                 default:
             }
