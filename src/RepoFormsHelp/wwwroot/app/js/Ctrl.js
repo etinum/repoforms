@@ -261,13 +261,7 @@
                 item.client = $dataService.arrayGetObject($scope.clientOptions, item.clientId, 'id').name;
                 item.closeType = $dataService.arrayGetObject($scope.closeTypeOptions, item.closeTypeId, 'id').name;
             });
-            $scope.addAdminVerified(data);
             $scope.filter();
-        };
-        $scope.addAdminVerified = function (data) {
-            data.forEach(function (item) {
-                item.administered = item.initializedDate !== null && $dataService.isTrue(item.verified);
-            });
         };
         $scope.getForms = function () {
             $scope.load = $dataService.getForms()
@@ -278,12 +272,22 @@
                 $scope.processData($scope.allItems);
             });
         };
-        $scope.scored = function (row) {
-            var saveobj = angular.copy(row);
-            saveobj.verified = true;
-            $scope.load = $dataService.saveForm(saveobj)
-                .then(function () {
-                $scope.getForms();
+        $scope.adminVerified = function (row, type) {
+            $dataService.getLoggedUserData()
+                .then(function (data) {
+                switch (type) {
+                    case "first":
+                        row.adminUserId = data.id;
+                        break;
+                    case "second":
+                        row.adminOtherUserId = data.id;
+                        break;
+                    default:
+                }
+                $scope.load = $dataService.saveForm(row)
+                    .then(function () {
+                    $scope.getForms();
+                });
             });
         };
         $scope.update = function () {
@@ -368,7 +372,6 @@
             else {
                 $scope.$evalAsync(function () {
                     $scope.allItems.splice(index, 1, updatedForm);
-                    $scope.addAdminVerified($scope.allItems);
                     $scope.filter();
                 });
             }
@@ -399,7 +402,6 @@
                 item.client = $dataService.arrayGetObject($scope.clientOptions, item.clientId, 'id').name;
                 item.closeType = $dataService.arrayGetObject($scope.closeTypeOptions, item.closeTypeId, 'id').name;
             });
-            $scope.addAdminVerified(data);
             $scope.filter();
         };
         $scope.addAdminVerified = function (data) {

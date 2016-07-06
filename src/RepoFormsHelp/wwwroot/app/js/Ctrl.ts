@@ -356,16 +356,11 @@
 
             });
 
-            $scope.addAdminVerified(data);
+            //$scope.addAdminVerified(data);
             $scope.filter();
 
         }
 
-        $scope.addAdminVerified = (data) => {
-            data.forEach(item => {
-                item.administered = item.initializedDate !== null && $dataService.isTrue(item.verified);
-            });
-        };
 
         $scope.getForms = () => {
             $scope.load = $dataService.getForms()
@@ -377,13 +372,28 @@
                 });
         };
 
-        $scope.scored = (row) => {
-            var saveobj = angular.copy(row);
-            saveobj.verified = true;
-            $scope.load = $dataService.saveForm(saveobj)
-                .then(() => {
-                    $scope.getForms();
+        $scope.adminVerified = (row: modeltypings.RepoFormViewModel, type: string) => {
+
+            $dataService.getLoggedUserData()
+                .then((data: modeltypings.UserViewModel) => {
+
+                    switch (type) {
+                        case "first":
+                            row.adminUserId = data.id;
+                            break;
+                        case "second":
+                            row.adminOtherUserId = data.id;
+                            break;
+                    default:
+                    }
+
+                    $scope.load = $dataService.saveForm(row)
+                        .then(() => {
+                            $scope.getForms();
+                        });
                 });
+
+
         };
 
 
@@ -496,7 +506,6 @@
                 $scope.$evalAsync(() => {
                     //$scope.allItems.splice(index, 1);
                     $scope.allItems.splice(index, 1, updatedForm);
-                    $scope.addAdminVerified($scope.allItems);
                     $scope.filter();
                 });
             }
@@ -545,7 +554,7 @@
 
             });
 
-            $scope.addAdminVerified(data);
+            //$scope.addAdminVerified(data);
             $scope.filter();
 
         }

@@ -30,11 +30,18 @@
             <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.customerName}}</td>
             <td ng-class="{'repo-admin': row.initializedDate == null, 'repo-score': !row.verified}">{{row.points}}</td>
             <td>
-                <button type="button" ng-hide="row.verified || !isAuditor" ng-click="scored(row)" class="btn btn-sm btn-info" uib-tooltip="Click this box after you are done recording for scoring purpose.">
+                <button type="button" ng-hide="(row.adminUserId != null) || !isAuditor" ng-click="adminVerified(row, 'first')" class="btn btn-sm btn-info" uib-tooltip="Click this box after you are done recording for scoring purpose.">
                     <i class="glyphicon glyphicon-check">
                     </i>
                 </button>
             </td>
+            <td>
+                <button type="button" ng-hide="(row.adminOtherUserId != null) || !isAuditor" ng-click="adminVerified(row, 'second')" class="btn btn-sm btn-warning" uib-tooltip="Click this box after you are done auditing purpose.">
+                    <i class="glyphicon glyphicon-check">
+                    </i>
+                </button>
+            </td>
+
             <td>
                 <button type="button" ng-show="isAuditor" ng-click="edit(row)" class="btn btn-sm btn-default">
                     <i class="glyphicon glyphicon-edit">
