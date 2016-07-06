@@ -787,7 +787,7 @@
     var controller = ($scope, $window, $dataService, $location) => {
 
 
-        var rowEdit = <modeltypings.ClientViewModel>{};
+        var rowEdit = <modeltypings.ClientViewModel>{ 'id':0};
 
         $scope.getClients = () => {
             $scope.load = $dataService.getClients()
@@ -834,17 +834,26 @@
             data.isEditMode = false;
             data.name = rowEdit.name;
             data.isTieredPoints = rowEdit.isTieredPoints;
+            rowEdit.id = 0;
         };
 
         $scope.edit = (data: modeltypings.ClientViewModel) => {
 
-            rowEdit = angular.copy(data);
-            data.isEditMode = true;
+            $dataService.arrayDeleteMatchingObject($scope.fms, 0, 'id');
+
             $scope.fms.forEach(item => {
-                if (item.id !== data.id && item.id !== 0) {
+
+                if (item.isEditMode && item.id === rowEdit.id) {
                     item.isEditMode = false;
+                    item.name = rowEdit.name;
+                    item.isTieredPoints = rowEdit.isTieredPoints;
+                    rowEdit.id = 0;
                 }
+
             });
+            data.isEditMode = true;
+            rowEdit = angular.copy(data);
+
         };
 
 

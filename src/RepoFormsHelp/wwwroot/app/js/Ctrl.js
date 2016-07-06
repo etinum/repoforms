@@ -558,7 +558,7 @@
 })(angular.module("repoFormsApp"));
 (function (app) {
     var controller = function ($scope, $window, $dataService, $location) {
-        var rowEdit = {};
+        var rowEdit = { 'id': 0 };
         $scope.getClients = function () {
             $scope.load = $dataService.getClients()
                 .then(function (data) {
@@ -593,15 +593,20 @@
             data.isEditMode = false;
             data.name = rowEdit.name;
             data.isTieredPoints = rowEdit.isTieredPoints;
+            rowEdit.id = 0;
         };
         $scope.edit = function (data) {
-            rowEdit = angular.copy(data);
-            data.isEditMode = true;
+            $dataService.arrayDeleteMatchingObject($scope.fms, 0, 'id');
             $scope.fms.forEach(function (item) {
-                if (item.id !== data.id && item.id !== 0) {
+                if (item.isEditMode && item.id === rowEdit.id) {
                     item.isEditMode = false;
+                    item.name = rowEdit.name;
+                    item.isTieredPoints = rowEdit.isTieredPoints;
+                    rowEdit.id = 0;
                 }
             });
+            data.isEditMode = true;
+            rowEdit = angular.copy(data);
         };
         $scope.addField = function () {
             if ($dataService.arrayGetObject($scope.fms, 0, 'id') !== null) {
