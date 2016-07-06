@@ -16,7 +16,7 @@
 
 (app => {
 
-    var service = ($http, $q, $envService, $window, $rootScope, $timeout) => {
+    var service = ($http, $q, $envService, $window, $rootScope, $interval) => {
 
 
         // Helper methods
@@ -42,11 +42,50 @@
             return a;
         };
 
-        function arrayObjectIndexOf(myArray, searchTerm, property) {
+
+        function arrayDeleteMatchingObject(myArray, searchTerm, property) : boolean {
             for (var i = 0, len = myArray.length; i < len; i++) {
-                if (myArray[i][property] === searchTerm) return i;
+                var value = myArray[i][property];
+                if (value === parseInt(value, 10)) {
+                    if (parseInt(value, 10) === searchTerm) {
+                        myArray.splice(i, 1);
+                        return true;
+                    }
+                } else {
+                    if (value.toLowerCase() === searchTerm.toLowerCase()) {
+                        myArray.splice(i, 1);
+                        return true;
+                    }
+                }
+
+            }
+            return false;
+        };
+
+        function arrayObjectIndexOf(myArray, searchTerm, property) : number {
+            for (var i = 0, len = myArray.length; i < len; i++) {
+                var value = myArray[i][property];
+                if (value === parseInt(value, 10)) {
+                    if (parseInt(value, 10) === searchTerm) return i;
+                } else {
+                    if (value.toLowerCase() === searchTerm.toLowerCase()) return i;
+                }
+
             }
             return -1;
+        };
+
+        function arrayGetObject(myArray, searchTerm, property) : any {
+            for (var i = 0, len = myArray.length; i < len; i++) {
+                var value = myArray[i][property];
+                if (value === parseInt(value, 10)) {
+                    if (parseInt(value, 10) ===  parseInt(searchTerm, 10)) return myArray[i];
+                } else {
+                    if (value.toLowerCase() === searchTerm.toString().toLowerCase()) return myArray[i];    
+                }
+                
+            }
+            return null;
         };
 
         function isFalse(obj) {
@@ -176,21 +215,27 @@
 
         }
 
-        //var getLoggedUserData = (): modeltypings.UserViewModel => {
-        //    var deferred = $q.defer();
+        var getLoggedUserData = (): modeltypings.UserViewModel => {
+            var deferred = $q.defer();
+
+            var check = $interval(() => {
+                checkUserData();
+            }, 250);
+
+            function checkUserData() {
+                if (userData != null) {
+                    deferred.resolve(userData);
+                }
+                if (angular.isDefined(check)) {
+                    $interval.cancel(check);
+                    check = undefined;
+                }
+            };
 
 
-        //    if (userData == null) {
-        //        $timeout(() => {
-        //            if (userData != null) {
-        //                deferred.resolve(userData);
-        //            }
-        //        }, 500);
-        //    }
+            return deferred.promise;
 
-        //    return deferred.promise;
-
-        //}
+        }
 
 
     var initiateRoles = (): modeltypings.UserViewModel => {
@@ -247,13 +292,43 @@
             return deferred.promise;
         };
 
+        var getClients = () => {
+            var url = baseWebApiUrl + 'api/Client/GetClients';
+            var deferred = $q.defer();
+
+            $http.get(url)
+                .then(response => {
+                    deferred.resolve(response.data);
+                }, (response) => {
+                    alertFailed(response);
+                    deferred.reject(response);
+                });
+            return deferred.promise;
+        };
+
+        var saveClient  = (formdata) => {
+            var url = baseWebApiUrl + 'api/Client/SaveClient';
+            var deferred = $q.defer();
+
+            $http.post(url, formdata)
+                .then((response) => {
+                    deferred.resolve(response.data);
+                }, (response) => {
+                    alertFailed(response);
+                    deferred.reject(response);
+                });
+            return deferred.promise;
+        }
+
+        
+
         var saveUser = (formdata) => {
             var url = baseWebApiUrl + 'api/User/SaveUser';
             var deferred = $q.defer();
 
             $http.post(url, formdata)
-                .then(() => {
-                    deferred.resolve();
+                .then((response) => {
+                    deferred.resolve(response);
                 }, (response) => {
                     alertFailed(response);
                     deferred.reject(response);
@@ -300,6 +375,7 @@
             initiateRoles: initiateRoles,
             getLoggedUserData: getLoggedUserData,
             getAllUsers: getAllUsers,
+            getClients: getClients,
             getTypeAheadData: getTypeAheadData,
             searchVin: searchVin,
             saveForm: saveForm,
@@ -308,9 +384,12 @@
             getForms: getForms,
             getForm: getForm,
             saveUser: saveUser,
+            saveClient: saveClient,
             // Helper Methods
             arrayUnique: arrayUnique,
             arrayObjectIndexOf: arrayObjectIndexOf,
+            arrayGetObject: arrayGetObject,
+            arrayDeleteMatchingObject: arrayDeleteMatchingObject,
             isFalse: isFalse,
             isTrue: isTrue,
             // Static list 
@@ -322,7 +401,7 @@
         };
     };
 
-    service.$inject = ['$http', '$q', 'envService', '$window', '$rootScope', '$timeout'];
+    service.$inject = ['$http', '$q', 'envService', '$window', '$rootScope', '$interval'];
     app.factory("dataService", service);
 
 })(angular.module("repoFormsApp"));

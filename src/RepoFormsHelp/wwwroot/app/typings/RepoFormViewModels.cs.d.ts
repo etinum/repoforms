@@ -14,11 +14,11 @@
         points: number;
         notes: string;
         creatorUserId: number;
-        modifiedByUserId: string;
+        modifiedByUserId: number;
         adminUserId: number;
         adminOtherUserId: number;
-        closeTypeOptions: any[];
-        clientOptions: any[];
+        closeTypeOptions: CloseTypeViewModel[];
+        clientOptions: ClientViewModel[];
     }
 
     interface RepoFormTypeAheadModel {
@@ -78,6 +78,9 @@
         id: number;
         name: string;
         isTieredPoints: boolean;
+        active: boolean;
+
+        isEditMode: boolean;
     }
     interface CloseTypeViewModel {
         id: number;
@@ -86,5 +89,10 @@
         defaultPointValue: number;
     }
 
-
 }
+
+
+
+
+
+

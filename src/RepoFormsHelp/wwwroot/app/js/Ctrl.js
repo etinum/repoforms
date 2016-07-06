@@ -21,6 +21,9 @@
         $scope.ViewUsers = function () {
             $location.path('/viewusers');
         };
+        $scope.ViewClients = function () {
+            $location.path('/viewclients');
+        };
         $scope.Tbd = function () {
             alert("If you build it, they will come");
         };
@@ -30,6 +33,13 @@
 })(angular.module("repoFormsApp"));
 (function (app) {
     var controller = function ($scope, $dataService, $window, $routeParams, $uibModal, $location, $anchorScroll, $q) {
+        var closeTypeOptions = {
+            'REPO': 'REPO',
+            'PAID': 'PAID',
+            'LOCATE': 'LOCATE',
+            'BK': 'BK',
+            'FORWARD': 'FORWARD'
+        };
         $scope.ng_maxLength = 50;
         $scope.maxLength = 50;
         $scope.investigatorOptions = $dataService.investigatorOptions;
@@ -101,13 +111,51 @@
         $scope.onClientSelect = function (data) {
             $scope.rf.clientId = data.id;
         };
+        $scope.onCloseTypeSelect = function () {
+            $scope.rf.closeTypeId = $scope.rf.closeType.id;
+        };
         $scope.onVinSelect = function (data) {
             $scope.rf.notes = 'Client Account #: ' + data.accountClientAccountNum + ' (' + data.financeClientName + ')';
             $scope.rf.customerName = data.roName;
             $scope.rf.accountNumber = data.vehVin;
+            var option;
+            switch (data.accountType) {
+                case 'repo':
+                    option = $dataService
+                        .arrayGetObject($scope.rf.closeTypeOptions, closeTypeOptions.REPO, 'name');
+                    if (option != null) {
+                        $scope.rf.closeType = { 'id': option.id };
+                    }
+                    break;
+                case 'bankruptcy':
+                    option = $dataService
+                        .arrayGetObject($scope.rf.closeTypeOptions, closeTypeOptions.BK, 'name');
+                    if (option != null) {
+                        $scope.rf.closeType = { 'id': option.id };
+                    }
+                    break;
+                case 'paid-current':
+                case 'paid-down':
+                case 'paid-off':
+                    option = $dataService
+                        .arrayGetObject($scope.rf.closeTypeOptions, closeTypeOptions.PAID, 'name');
+                    if (option != null) {
+                        $scope.rf.closeType = { 'id': option.id };
+                    }
+                    break;
+                case 'forward':
+                    option = $dataService
+                        .arrayGetObject($scope.rf.closeTypeOptions, closeTypeOptions.FORWARD, 'name');
+                    if (option != null) {
+                        $scope.rf.closeType = { 'id': option.id };
+                    }
+                    break;
+                default:
+            }
+            if ($scope.rf.closeType != null)
+                $scope.rf.closeTypeId = $scope.rf.closeType.id;
         };
         $scope.submitted = false;
-        $scope.clientOptions = $dataService.clientOptions;
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
         $scope.altInputFormats = ['M!/d!/yyyy'];
@@ -150,35 +198,46 @@
         $scope.resetForm = function () {
             location.reload();
         };
-        $dataService.initiateRoles()
-            .then(function (userData) {
-            if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id)) {
-                $scope.load = $dataService.getForm($routeParams.id)
-                    .then(function (data) {
-                    $scope.rf = data;
-                    $scope.orf = angular.copy($scope.rf);
-                });
-            }
-            else {
-                $scope.load = $dataService.getForm(0)
-                    .then(function (data) {
-                    $scope.rf = data;
+        if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id)) {
+            $scope.load = $dataService.getForm($routeParams.id)
+                .then(function (data) {
+                $scope.rf = data;
+                $scope.rf.client = $dataService.arrayGetObject($scope.rf.clientOptions, $scope.rf.clientId, 'id').name;
+                $scope.rf.closeType = {
+                    'id': $scope.rf.closeTypeId
+                };
+                $scope.orf = angular.copy($scope.rf);
+            });
+        }
+        else {
+            $scope.load = $dataService.getForm(0)
+                .then(function (data) {
+                $scope.rf = data;
+                $dataService.getLoggedUserData()
+                    .then(function (userData) {
                     if (userData.first == null || userData.first === "") {
                         $scope.rf.investigator = userData.winAuthName.toLowerCase().split("\\")[1];
                     }
                     else {
                         $scope.rf.investigator = userData.first + " " + userData.last;
                     }
-                    $scope.orf = angular.copy($scope.rf);
                 });
-            }
-        });
+                $scope.orf = angular.copy($scope.rf);
+            });
+        }
         $scope.open = function () {
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'modalSubmittedCtrl.html',
                 controller: 'modalSubmittedCtrl',
-                size: 'sm'
+                size: 'sm',
+                resolve: {
+                    data: function () {
+                        return {
+                            'endpoint': 'submissions'
+                        };
+                    }
+                }
             });
             modalInstance.result.then(function () {
             }, function () {
@@ -197,8 +256,12 @@
             ALL: 4
         };
         var hub = $.connection.repoHub;
-        $scope.processData = function () {
-            $scope.addAdminVerified($scope.allItems);
+        $scope.processData = function (data) {
+            data.forEach(function (item) {
+                item.client = $dataService.arrayGetObject($scope.clientOptions, item.clientId, 'id').name;
+                item.closeType = $dataService.arrayGetObject($scope.closeTypeOptions, item.closeTypeId, 'id').name;
+            });
+            $scope.addAdminVerified(data);
             $scope.filter();
         };
         $scope.addAdminVerified = function (data) {
@@ -209,8 +272,10 @@
         $scope.getForms = function () {
             $scope.load = $dataService.getForms()
                 .then(function (data) {
-                $scope.allItems = data;
-                $scope.processData();
+                $scope.allItems = data.list;
+                $scope.clientOptions = data.clientOptions;
+                $scope.closeTypeOptions = data.closeTypeOptions;
+                $scope.processData($scope.allItems);
             });
         };
         $scope.scored = function (row) {
@@ -296,7 +361,7 @@
             if (index === -1) {
                 $scope.$evalAsync(function () {
                     $scope.allItems.push(updatedForm);
-                    $scope.addAdminVerified($scope.allItems);
+                    $scope.processData($scope.allItems);
                     $scope.filter();
                 });
             }
@@ -329,8 +394,12 @@
 (function (app) {
     var controller = function ($scope, $dataService, $location, $window) {
         var hub = $.connection.repoHub;
-        $scope.processData = function () {
-            $scope.addAdminVerified($scope.allItems);
+        $scope.processData = function (data) {
+            data.forEach(function (item) {
+                item.client = $dataService.arrayGetObject($scope.clientOptions, item.clientId, 'id').name;
+                item.closeType = $dataService.arrayGetObject($scope.closeTypeOptions, item.closeTypeId, 'id').name;
+            });
+            $scope.addAdminVerified(data);
             $scope.filter();
         };
         $scope.addAdminVerified = function (data) {
@@ -341,8 +410,10 @@
         $scope.getForms = function () {
             $scope.load = $dataService.getForms()
                 .then(function (data) {
-                $scope.allItems = data;
-                $scope.processData();
+                $scope.allItems = data.list;
+                $scope.clientOptions = data.clientOptions;
+                $scope.closeTypeOptions = data.closeTypeOptions;
+                $scope.processData($scope.allItems);
             });
         };
         $scope.scored = function (row) {
@@ -372,7 +443,7 @@
             if (index === -1) {
                 $scope.$evalAsync(function () {
                     $scope.allItems.push(updatedForm);
-                    $scope.addAdminVerified($scope.allItems);
+                    $scope.processData($scope.allItems);
                     $scope.filter();
                 });
             }
@@ -403,34 +474,7 @@
     app.controller('submissionsCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
-    var controller = function ($scope, $uibModalInstance, $timeout, $window, $location) {
-        var timer = $timeout(function () {
-            $scope.close();
-        }, 3000);
-        $scope.close = function () {
-            $timeout.cancel(timer);
-            $uibModalInstance.dismiss();
-            $location.path('/submissions');
-        };
-    };
-    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window', '$location'];
-    app.controller('modalSubmittedCtrl', controller);
-})(angular.module("repoFormsApp"));
-(function (app) {
-    var controller = function ($scope, $uibModalInstance, $timeout, $window, row) {
-        $scope.row = row;
-        $scope.delete = function () {
-            $uibModalInstance.close(row.id);
-        };
-        $scope.cancel = function () {
-            $uibModalInstance.dismiss(row.id);
-        };
-    };
-    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window', 'row'];
-    app.controller('modalConfirmDeleteCtrl', controller);
-})(angular.module("repoFormsApp"));
-(function (app) {
-    var controller = function ($scope, $window, $dataService, $routeParams) {
+    var controller = function ($scope, $window, $dataService, $routeParams, $uibModal) {
         $scope.processOptionIds = function (data) {
             data.department = data.departmentOptions.filter(function (item) { return item.id === data.departmentId; })[0];
             data.directReportUser = data.directReportUserId != null ? data.userOptions.filter(function (item) { return item.id === data.directReportUserId; })[0].label : data.directReportUserId;
@@ -455,6 +499,7 @@
             if ($scope.myForm.$invalid)
                 return;
             $scope.load = $dataService.saveUser($scope.uf).then(function () {
+                $scope.open();
             });
         };
         $scope.cancelForm = function () {
@@ -462,6 +507,24 @@
         };
         $scope.resetForm = function () {
             location.reload();
+        };
+        $scope.open = function () {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'modalSubmittedCtrl.html',
+                controller: 'modalSubmittedCtrl',
+                size: 'sm',
+                resolve: {
+                    data: function () {
+                        return {
+                            'endpoint': 'viewusers'
+                        };
+                    }
+                }
+            });
+            modalInstance.result.then(function () {
+            }, function () {
+            });
         };
         if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id) && $routeParams.id > -1) {
             if ($routeParams.id === 0) {
@@ -479,7 +542,7 @@
             alert("Error loading user");
         }
     };
-    controller.$inject = ['$scope', '$window', 'dataService', '$routeParams'];
+    controller.$inject = ['$scope', '$window', 'dataService', '$routeParams', '$uibModal'];
     app.controller('userCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
@@ -505,5 +568,100 @@
     };
     controller.$inject = ['$scope', '$window', 'dataService', '$location'];
     app.controller('viewUsersCtrl', controller);
+})(angular.module("repoFormsApp"));
+(function (app) {
+    var controller = function ($scope, $window, $dataService, $location) {
+        var rowEdit = {};
+        $scope.getClients = function () {
+            $scope.load = $dataService.getClients()
+                .then(function (data) {
+                $scope.fms = data;
+                updateCounts($scope.fms);
+            });
+        };
+        function updateCounts(data) {
+            $scope.totalItems = data.length;
+            data.forEach(function (item) {
+                if (item.isEditMode == null) {
+                    item.isEditMode = false;
+                }
+            });
+        }
+        $scope.refresh = function () {
+            $scope.getClients();
+        };
+        $scope.save = function (client) {
+            if (!client.name) {
+                alert("Name field cannot be empty");
+                return;
+            }
+            $scope.load = $dataService.saveClient(client)
+                .then(function (id) {
+                client.id = id;
+                client.isEditMode = false;
+            });
+        };
+        $scope.cancel = function (data) {
+            $dataService.arrayDeleteMatchingObject($scope.fms, 0, 'id');
+            data.isEditMode = false;
+            data.name = rowEdit.name;
+            data.isTieredPoints = rowEdit.isTieredPoints;
+        };
+        $scope.edit = function (data) {
+            rowEdit = angular.copy(data);
+            data.isEditMode = true;
+            $scope.fms.forEach(function (item) {
+                if (item.id !== data.id && item.id !== 0) {
+                    item.isEditMode = false;
+                }
+            });
+        };
+        $scope.addField = function () {
+            if ($dataService.arrayGetObject($scope.fms, 0, 'id') !== null) {
+                return;
+            }
+            var item = {};
+            item.id = 0;
+            item.name = "";
+            item.isTieredPoints = false;
+            item.active = true;
+            item.isEditMode = true;
+            $scope.fms.splice(0, 0, item);
+            updateCounts($scope.fms);
+        };
+        $scope.itemsPerPage = 12;
+        $scope.currentPage = 1;
+        $scope.maxSize = 5;
+        $scope.refresh();
+    };
+    controller.$inject = ['$scope', '$window', 'dataService', '$location'];
+    app.controller('viewClientsCtrl', controller);
+})(angular.module("repoFormsApp"));
+(function (app) {
+    var controller = function ($scope, $uibModalInstance, $timeout, $window, $location, data) {
+        var timer = $timeout(function () {
+            $scope.close();
+        }, 3000);
+        $scope.close = function () {
+            $timeout.cancel(timer);
+            $uibModalInstance.dismiss();
+            $location.path('/' + data.endpoint);
+        };
+    };
+    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window', '$location', 'data'];
+    app.controller('modalSubmittedCtrl', controller);
+})(angular.module("repoFormsApp"));
+(function (app) {
+    var controller = function ($scope, $uibModalInstance, $timeout, $window, row) {
+        $scope.row = row;
+        $scope.delete = function () {
+            $uibModalInstance.close(row.id);
+        };
+        $scope.cancel = function () {
+            $uibModalInstance.dismiss(row.id);
+        };
+    };
+    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window', 'row'];
+    app.controller('modalConfirmDeleteCtrl', controller);
 })(angular.module("repoFormsApp"));
 //# sourceMappingURL=Ctrl.js.map

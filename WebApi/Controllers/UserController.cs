@@ -9,6 +9,7 @@ using AutoMapper;
 using Data;
 using WebApi.Mapper;
 using WebApi.Models;
+using WebApi.Utils;
 
 namespace WebApi.Controllers
 {
@@ -76,9 +77,14 @@ namespace WebApi.Controllers
                 };
 
                 _ctx.Users.Add(user);
-                _ctx.SaveChanges();
 
             }
+            else
+            {
+                user.LastLoggedIn = DateTime.Now;
+            }
+
+            _ctx.SaveChanges();
 
             var userViewModel = _mapper.Map<UserViewModel>(user);
 
@@ -122,11 +128,11 @@ namespace WebApi.Controllers
             }
             else
             {
-                _ctx.Entry(user).State = EntityState.Modified;
+                var userTarget = _ctx.Users.First(r => r.Id == user.Id);
+                Common.MergeObjects(user, userTarget);
             }
 
             _ctx.SaveChanges();
-
             return Ok(user.Id);
 
         }

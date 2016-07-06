@@ -3,5 +3,6 @@
 		id: number;
 		name: string;
 		isTieredPoints: boolean;
+		active: boolean;
 	}
 }

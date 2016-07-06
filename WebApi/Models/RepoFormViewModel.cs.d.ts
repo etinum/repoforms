@@ -1,4 +1,7 @@
-﻿declare module server {
+﻿/// <reference path="CloseTypeViewModel.cs.d.ts" />
+/// <reference path="ClientViewModel.cs.d.ts" />
+
+declare module server {
 	interface RepoFormViewModel {
 		id: number;
 		createdDate: Date;
@@ -11,10 +14,10 @@
 		points: number;
 		notes: string;
 		creatorUserId: number;
-		modifiedByUserId: string;
+		modifiedByUserId: number;
 		adminUserId: number;
 		adminOtherUserId: number;
-		closeTypeOptions: any[];
-		clientOptions: any[];
+		closeTypeOptions: server.CloseTypeViewModel[];
+		clientOptions: server.ClientViewModel[];
 	}
 }

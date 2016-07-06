@@ -141,7 +141,7 @@
             <label for="directReportUser" class="col-sm-3 control-label">Direct Report</label>
             <div class="col-sm-9">
                 <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="directReportUser" name="directReportUser" class="form-control"
-                       ng-model="uf.directReportUser" ng-required="false" autocomplete="off" uib-typeahead="item.label for item in uf.userOptions  | filter:$viewValue | limitTo:8" typeahead-on-select="userSelect($item,'direct')"/>
+                       ng-model="uf.directReportUser" ng-required="false" autocomplete="off" uib-typeahead="item.label for item in uf.userOptions  | filter:$viewValue | limitTo:8" typeahead-on-select="userSelect($item,'direct')" typeahead-editable="false"/>
                 <div class="help-block" ng-messages="myForm.directReportUser.$error" ng-show="myForm.directReportUser.$touched || submitted">
                     <div ng-messages-include="app/html/error-messages.html"></div>
                 </div>
@@ -154,7 +154,7 @@
             <label for="dottedLineReportUser" class="col-sm-3 control-label">Dotted Line Report</label>
             <div class="col-sm-9">
                 <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="dottedLineReportUser" name="dottedLineReportUser" class="form-control"
-                       ng-model="uf.dottedLineReportUser" ng-required="false" autocomplete="off" uib-typeahead="item.label for item in uf.userOptions  | filter:$viewValue | limitTo:8" typeahead-on-select="userSelect($item,'dotted')"/>
+                       ng-model="uf.dottedLineReportUser" ng-required="false" autocomplete="off" uib-typeahead="item.label for item in uf.userOptions  | filter:$viewValue | limitTo:8" typeahead-on-select="userSelect($item,'dotted')" typeahead-editable="false"/>
                 <div class="help-block" ng-messages="myForm.dottedLineReportUser.$error" ng-show="myForm.dottedLineReportUser.$touched || submitted">
                     <div ng-messages-include="app/html/error-messages.html"></div>
                 </div>

@@ -33,6 +33,10 @@ angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'enviro
             templateUrl: "app/html/ViewSubmissions.html",
             controller: "submissionsCtrl"
         })
+            .when("/viewclients", {
+            templateUrl: "app/html/ViewClients.html",
+            controller: "viewClientsCtrl"
+        })
             .otherwise({
             redirectTo: "/home"
         });

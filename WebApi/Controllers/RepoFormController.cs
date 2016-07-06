@@ -38,10 +38,18 @@ namespace WebApi.Controllers
 
 
         [HttpGet]
-        public List<RepoFormViewModel> GetForms()
+        public IHttpActionResult GetForms()
         {
             var formViewModels = _mapper.Map<List<RepoFormViewModel>>(_ctx.RepoForms.ToList());
-            return formViewModels;
+
+            var results = new
+            {
+                List = formViewModels,
+                CloseTypeOptions = _mapper.Map<List<CloseTypeViewModel>>(_ctx.CloseTypes),
+                ClientOptions = _mapper.Map<List<ClientViewModel>>(_ctx.Clients)
+            };
+
+            return Ok(results);
         }
 
         [HttpGet]
@@ -114,7 +122,7 @@ namespace WebApi.Controllers
             var filtered = from a in list
                 group a by a.veh_vin
                 into g
-                where g.Skip(1).Any()
+                where g.Any()
                 from f in g.OrderByDescending(r => r.account_last_activity).Take(1)
                 select f;
 
@@ -128,9 +136,13 @@ namespace WebApi.Controllers
 
             var repoFormModel = _mapper.Map<RepoForm>(formViewModel);
             var user = UpdateUser(repoFormModel);
+            repoFormModel.ModifiedDate = DateTime.Now;
+            repoFormModel.ModifiedByUserId = user.Id;
 
-            // https://msdn.microsoft.com/en-us/data/jj592676.aspx
-            _ctx.Entry(repoFormModel).State = EntityState.Modified;
+
+            var repoFormTarget = _ctx.RepoForms.First(r => r.Id == repoFormModel.Id);
+            Common.MergeObjects(repoFormModel, repoFormTarget);
+
             _ctx.SaveChanges();
 
             return repoFormModel;
@@ -143,6 +155,10 @@ namespace WebApi.Controllers
             var user = UpdateUser(repoFormModel);
 
             repoFormModel.CreatorUserId = user.Id;
+            repoFormModel.ModifiedDate = DateTime.Now;
+            repoFormModel.CreatedDate = DateTime.Now;
+            repoFormModel.ModifiedByUserId = user.Id;
+
 
             _ctx.RepoForms.Add(repoFormModel);
 
@@ -160,7 +176,7 @@ namespace WebApi.Controllers
         private User UpdateUser(RepoForm repoFormModel)
         {
             // save the input values.. 
-            var user = GetExistingUser() ?? new User()
+            var user = GetLoggedUser() ?? new User()
             {
                 WinAuthName = User.Identity.Name,
                 FirstLoggedIn = DateTime.Now
@@ -176,7 +192,7 @@ namespace WebApi.Controllers
             return user;
         }
 
-        private User GetExistingUser()
+        private User GetLoggedUser()
         {
             var matchUser = _ctx.Users.FirstOrDefault(r => r.WinAuthName == User.Identity.Name);
             return matchUser;

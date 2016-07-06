@@ -18,11 +18,11 @@ namespace Data
         public User()
         {
             this.Departments = new HashSet<Department>();
-            this.RepoForms = new HashSet<RepoForm>();
-            this.RepoForms1 = new HashSet<RepoForm>();
             this.User1 = new HashSet<User>();
             this.User11 = new HashSet<User>();
             this.X_User_Role = new HashSet<X_User_Role>();
+            this.RepoForms = new HashSet<RepoForm>();
+            this.RepoForms1 = new HashSet<RepoForm>();
         }
     
         public int Id { get; set; }
@@ -48,10 +48,6 @@ namespace Data
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Department> Departments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RepoForm> RepoForms { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RepoForm> RepoForms1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> User1 { get; set; }
         public virtual User User2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -59,5 +55,9 @@ namespace Data
         public virtual User User3 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<X_User_Role> X_User_Role { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RepoForm> RepoForms { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RepoForm> RepoForms1 { get; set; }
     }
 }

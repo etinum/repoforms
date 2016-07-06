@@ -45,6 +45,10 @@
             $location.path('/viewusers');
         }
 
+        $scope.ViewClients = () => {
+            $location.path('/viewclients');
+        }
+
         $scope.Tbd = () => {
             alert("If you build it, they will come");
         };
@@ -59,6 +63,14 @@
 (app => {
     var controller = ($scope, $dataService, $window, $routeParams, $uibModal, $location, $anchorScroll, $q) => {
 
+
+        var closeTypeOptions = {
+            'REPO': 'REPO',
+            'PAID': 'PAID',
+            'LOCATE': 'LOCATE',
+            'BK': 'BK',
+            'FORWARD': 'FORWARD'   
+        }
 
 
         // Input constrain variables..
@@ -103,9 +115,7 @@
             }
         };
 
-
-
-        $scope.searchVin = (searchString: string) : modeltypings.AccountVinClientViewModel[] => {
+        $scope.searchVin = (searchString: string): modeltypings.AccountVinClientViewModel[] => {
 
             var deferred = $q.defer();
 
@@ -114,7 +124,7 @@
                     .then(data => {
                         return deferred.resolve(data);
                     });
-            }  else {
+            } else {
                 deferred.resolve(null);
             }
 
@@ -127,22 +137,53 @@
 
         }
 
+        $scope.onCloseTypeSelect = () => {
+            $scope.rf.closeTypeId = $scope.rf.closeType.id;
+        }
+
         $scope.onVinSelect = (data: modeltypings.AccountVinClientViewModel) => {
             $scope.rf.notes = 'Client Account #: ' + data.accountClientAccountNum + ' (' + data.financeClientName + ')';
             $scope.rf.customerName = data.roName;
             $scope.rf.accountNumber = data.vehVin;
 
+            var option;
+            switch (data.accountType) {
+                case 'repo':
+                    option = <modeltypings.CloseTypeViewModel>$dataService
+                        .arrayGetObject($scope.rf.closeTypeOptions, closeTypeOptions.REPO, 'name');
+                    if (option != null) {
+                        $scope.rf.closeType = { 'id': option.id };
+                    }
+                    break;
+                case 'bankruptcy':
+                    option = <modeltypings.CloseTypeViewModel>$dataService
+                        .arrayGetObject($scope.rf.closeTypeOptions, closeTypeOptions.BK, 'name');
+                    if (option != null) {
+                        $scope.rf.closeType = { 'id': option.id };
+                    }
+                    break;
+                case 'paid-current':
+                case 'paid-down':
+                case 'paid-off':
+                    option = <modeltypings.CloseTypeViewModel>$dataService
+                        .arrayGetObject($scope.rf.closeTypeOptions, closeTypeOptions.PAID, 'name');
+                    if (option != null) {
+                        $scope.rf.closeType = { 'id': option.id };
+                    }
+                    break;
+                case 'forward':
+                    option = <modeltypings.CloseTypeViewModel>$dataService
+                        .arrayGetObject($scope.rf.closeTypeOptions, closeTypeOptions.FORWARD, 'name');
+                    if (option != null) {
+                        $scope.rf.closeType = { 'id': option.id };
+                    }
+                    break;
+            default:
+            }
 
-            //$scope.rf.closeType
+            if ($scope.rf.closeType != null)
+                $scope.rf.closeTypeId = $scope.rf.closeType.id;
 
-            //switch (data.accountType) {
-            //    case 'bankruptcy':
-                    
-            //        break;
-                
-            //default:
-            //}
-        
 
         };
 
@@ -150,11 +191,6 @@
 
         $scope.submitted = false;
 
-        // Dropdown configuration
-        //$scope.closeTypeOptions = $dataService.closeTypeOptions;
-
-        // Type ahead configuration
-        $scope.clientOptions = $dataService.clientOptions;
 
         // DATE configurations
 
@@ -220,33 +256,43 @@
         //    alert('hi: ' + newval.winAuthName);
         //});
 
-        $dataService.initiateRoles()
-            .then((userData) => {
 
-                if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id)) {
-                    //$scope.id = parseInt($routeParams.id);
-                    $scope.load = $dataService.getForm($routeParams.id)
-                        .then(data => {
-                            $scope.rf = <modeltypings.RepoFormViewModel>data;
-                            $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
-                        });
-                } else {
 
-                    $scope.load = $dataService.getForm(0)
-                        .then(data => {
-                            $scope.rf = <modeltypings.RepoFormViewModel>data;
+        if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id)) {
+            //$scope.id = parseInt($routeParams.id);
+            $scope.load = $dataService.getForm($routeParams.id)
+                .then(data => {
+                    $scope.rf = <modeltypings.RepoFormViewModel>data;
+
+                    // Update the customer and close type based onthe ID. 
+                    $scope.rf.client = $dataService.arrayGetObject($scope.rf.clientOptions, $scope.rf.clientId, 'id').name;
+                    $scope.rf.closeType = {
+                        'id': $scope.rf.closeTypeId
+                    }
+
+                    $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
+                });
+        } else {
+
+            $scope.load = $dataService.getForm(0)
+                .then(data => {
+                    $scope.rf = <modeltypings.RepoFormViewModel>data;
+
+
+
+                    $dataService.getLoggedUserData()
+                        .then((userData) => {
 
                             if (userData.first == null || userData.first === "") {
                                 $scope.rf.investigator = userData.winAuthName.toLowerCase().split("\\")[1];
                             } else {
                                 $scope.rf.investigator = userData.first + " " + userData.last;
                             }
-
-                            $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
                         });
 
-                }
-            });
+                    $scope.orf = angular.copy($scope.rf); // original repo form, shouldn't be changed...
+                });
+        }
 
 
         $scope.open = () => {
@@ -255,7 +301,14 @@
                 animation: true,
                 templateUrl: 'modalSubmittedCtrl.html',
                 controller: 'modalSubmittedCtrl',
-                size: 'sm'
+                size: 'sm',
+                resolve: {
+                    data: () => {
+                        return {
+                            'endpoint': 'submissions'
+                        };
+                    }
+                }
             });
 
             modalInstance.result.then(() => {
@@ -292,9 +345,18 @@
         var hub = $.connection.repoHub;
 
 
-        $scope.processData = () => {
+        $scope.processData = (data : modeltypings.RepoFormViewModel[]) => {
 
-            $scope.addAdminVerified($scope.allItems);
+
+            data.forEach(item => {
+
+                // Update the customer and close type based onthe ID. 
+                item.client = $dataService.arrayGetObject($scope.clientOptions, item.clientId, 'id').name;
+                item.closeType = $dataService.arrayGetObject($scope.closeTypeOptions, item.closeTypeId, 'id').name;
+
+            });
+
+            $scope.addAdminVerified(data);
             $scope.filter();
 
         }
@@ -308,8 +370,10 @@
         $scope.getForms = () => {
             $scope.load = $dataService.getForms()
                 .then(data => {
-                    $scope.allItems = <modeltypings.RepoFormViewModel[]>data;
-                    $scope.processData();
+                    $scope.allItems = <modeltypings.RepoFormViewModel[]>data.list;
+                    $scope.clientOptions = data.clientOptions;
+                    $scope.closeTypeOptions = data.closeTypeOptions;
+                    $scope.processData($scope.allItems);
                 });
         };
 
@@ -329,27 +393,27 @@
 
         $scope.requestDelete = (row) => {
 
-                var modalInstance = $uibModal.open({
-                    animation: true,
-                    templateUrl: 'modalConfirmDeleteCtrl.html',
-                    controller: 'modalConfirmDeleteCtrl',
-                    size: 'sm',
-                    resolve: {
-                        row() {
-                            return row;
-                        }
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'modalConfirmDeleteCtrl.html',
+                controller: 'modalConfirmDeleteCtrl',
+                size: 'sm',
+                resolve: {
+                    row() {
+                        return row;
                     }
-                });
+                }
+            });
 
-                modalInstance.result.then((id) => {
-                    $scope.load = $dataService.deleteForm(id)
-                        .then(() => {
-                            $scope.getForms();
-                        });
-                }, (id) => {
-                    // handling when cancel, you can get the value... 
-                    // alert('row is cancelled: ' + id);
-                });
+            modalInstance.result.then((id) => {
+                $scope.load = $dataService.deleteForm(id)
+                    .then(() => {
+                        $scope.getForms();
+                    });
+            }, (id) => {
+                // handling when cancel, you can get the value... 
+                // alert('row is cancelled: ' + id);
+            });
 
         };
 
@@ -362,7 +426,7 @@
 
         $scope.filterOptions = [
             {
-                'label':'All',
+                'label': 'All',
                 'id': $scope.enumFilterType.ALL
             },
             {
@@ -425,7 +489,7 @@
             if (index === -1) {
                 $scope.$evalAsync(() => {
                     $scope.allItems.push(updatedForm);
-                    $scope.addAdminVerified($scope.allItems);
+                    $scope.processData($scope.allItems);
                     $scope.filter();
                 });
             } else {
@@ -443,7 +507,8 @@
             alert('hello value: ' + value);
         };
 
-        hub.client.test2 = () => {;
+        hub.client.test2 = () => {
+            ;
             alert("first testing?");
         };
 
@@ -462,15 +527,25 @@
     app.controller('viewRepoFormCtrl', controller);
 })(angular.module("repoFormsApp"));
 
+/* app.controller('submissionsCtrl', controller); */
 (app => {
     var controller = ($scope, $dataService, $location, $window) => {
 
 
         var hub = $.connection.repoHub;
 
-        $scope.processData = () => {
+        $scope.processData = (data: modeltypings.RepoFormViewModel[]) => {
 
-            $scope.addAdminVerified($scope.allItems);
+
+            data.forEach(item => {
+
+                // Update the customer and close type based onthe ID. 
+                item.client = $dataService.arrayGetObject($scope.clientOptions, item.clientId, 'id').name;
+                item.closeType = $dataService.arrayGetObject($scope.closeTypeOptions, item.closeTypeId, 'id').name;
+
+            });
+
+            $scope.addAdminVerified(data);
             $scope.filter();
 
         }
@@ -484,8 +559,10 @@
         $scope.getForms = () => {
             $scope.load = $dataService.getForms()
                 .then(data => {
-                    $scope.allItems = <modeltypings.RepoFormViewModel[]>data;
-                    $scope.processData();
+                    $scope.allItems = <modeltypings.RepoFormViewModel[]>data.list;
+                    $scope.clientOptions = data.clientOptions;
+                    $scope.closeTypeOptions = data.closeTypeOptions;
+                    $scope.processData($scope.allItems);
                 });
         };
 
@@ -531,7 +608,7 @@
             if (index === -1) {
                 $scope.$evalAsync(() => {
                     $scope.allItems.push(updatedForm);
-                    $scope.addAdminVerified($scope.allItems);
+                    $scope.processData($scope.allItems);
                     $scope.filter();
                 });
             } else {
@@ -572,49 +649,9 @@
     app.controller('submissionsCtrl', controller);
 })(angular.module("repoFormsApp"));
 
-//All our wonderful modals will stay at the bottom here... 
+/* app.controller('userCtrl', controller); */
 (app => {
-    var controller = ($scope, $uibModalInstance, $timeout, $window, $location) => {
-
-        var timer = $timeout(() => {
-            $scope.close();
-        },
-            3000);
-
-
-        $scope.close = () => {
-            $timeout.cancel(timer);
-            $uibModalInstance.dismiss();
-            $location.path('/submissions');
-        };
-
-    };
-    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window', '$location'];
-    app.controller('modalSubmittedCtrl', controller);
-})(angular.module("repoFormsApp"));
-
-(app => {
-    var controller = ($scope, $uibModalInstance, $timeout, $window, row) => {
-
-
-        $scope.row = row;
-
-        $scope.delete = () => {
-            $uibModalInstance.close(row.id);
-        };
-
-
-        $scope.cancel = () => {
-            $uibModalInstance.dismiss(row.id);
-        };
-
-    };
-    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window', 'row'];
-    app.controller('modalConfirmDeleteCtrl', controller);
-})(angular.module("repoFormsApp"));
-
-(app => {
-    var controller = ($scope, $window, $dataService, $routeParams) => {
+    var controller = ($scope, $window, $dataService, $routeParams, $uibModal) => {
 
 
         //TODO: In this controller we will need to populate the user foreign key elements as needed... 
@@ -622,7 +659,7 @@
         // Private Methods
         $scope.processOptionIds = (data) => {
             data.department = data.departmentOptions.filter(item => item.id === data.departmentId)[0];
-            
+
             data.directReportUser = data.directReportUserId != null ? data.userOptions.filter(item => item.id === data.directReportUserId)[0].label : data.directReportUserId;
             data.dottedLineReportUser = data.dottedLineReportUserId != null
                 ? data.userOptions.filter(item => item.id === data.dottedLineReportUserId)[0].label
@@ -647,9 +684,9 @@
 
             // process
             if ($scope.uf.department != null) {
-                $scope.uf.departmentId = $scope.uf.department.id;    
+                $scope.uf.departmentId = $scope.uf.department.id;
             }
-            
+
 
             $scope.$broadcast('show-errors-event');
             if ($scope.myForm.$invalid)
@@ -657,7 +694,7 @@
 
 
             $scope.load = $dataService.saveUser($scope.uf).then(() => {
-                //$scope.open();
+                $scope.open();
             });
 
         };
@@ -669,14 +706,36 @@
         };
 
 
+        $scope.open = () => {
 
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'modalSubmittedCtrl.html',
+                controller: 'modalSubmittedCtrl',
+                size: 'sm',
+                resolve: {
+                    data: () => {
+                        return {
+                            'endpoint': 'viewusers'
+                        };
+                    }
+                }
+            });
+
+            modalInstance.result.then(() => {
+                // handing when close, you can get the parameter...
+            }, () => {
+                // handling when cancel, you can get the value... 
+            });
+
+        };
 
 
         if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id) && $routeParams.id > -1) {
             //$scope.id = parseInt($routeParams.id);
 
             if ($routeParams.id === 0) {
-                
+
             } else {
                 $scope.load = $dataService.getUser($routeParams.id)
                     .then(data => {
@@ -692,17 +751,18 @@
 
 
     };
-    controller.$inject = ['$scope', '$window', 'dataService', '$routeParams'];
+    controller.$inject = ['$scope', '$window', 'dataService', '$routeParams', '$uibModal'];
     app.controller('userCtrl', controller);
 })(angular.module("repoFormsApp"));
 
+/* app.controller('viewUsersCtrl', controller); */
 (app => {
     var controller = ($scope, $window, $dataService, $location) => {
 
         $scope.getUsers = () => {
             $scope.load = $dataService.getAllUsers()
-                .then(data => {
-                    $scope.fms = <modeltypings.UserViewModel[]>data;
+                .then((data : modeltypings.UserViewModel[]) => {
+                    $scope.fms = data;
                     $scope.totalItems = $scope.fms.length;
 
                 });
@@ -732,3 +792,146 @@
     controller.$inject = ['$scope', '$window', 'dataService', '$location'];
     app.controller('viewUsersCtrl', controller);
 })(angular.module("repoFormsApp"));
+
+/* app.controller('viewClientsCtrl', controller); */
+(app => {
+    var controller = ($scope, $window, $dataService, $location) => {
+
+
+        var rowEdit = <modeltypings.ClientViewModel>{};
+
+        $scope.getClients = () => {
+            $scope.load = $dataService.getClients()
+                .then((data : modeltypings.ClientViewModel[]) => {
+                    $scope.fms = data;
+                    updateCounts($scope.fms);
+                });
+        };
+
+        // Helper method
+        function updateCounts(data: modeltypings.ClientViewModel[]) {
+            $scope.totalItems = data.length;
+            data.forEach(item => {
+                if (item.isEditMode == null) {
+                    item.isEditMode = false;
+                }
+            });
+        }
+
+        $scope.refresh = () => {
+            $scope.getClients();
+        };
+
+
+        $scope.save = (client: modeltypings.ClientViewModel) => {
+
+            if (!client.name) {
+                alert("Name field cannot be empty");
+                return;
+            }
+
+            $scope.load = $dataService.saveClient(client)
+                .then((id: number) => {
+                    client.id = id;
+                    client.isEditMode = false;
+                });
+        };
+
+        $scope.cancel = (data: modeltypings.ClientViewModel) => {
+
+
+            $dataService.arrayDeleteMatchingObject($scope.fms, 0, 'id');
+
+            data.isEditMode = false;
+            data.name = rowEdit.name;
+            data.isTieredPoints = rowEdit.isTieredPoints;
+        };
+
+        $scope.edit = (data: modeltypings.ClientViewModel) => {
+
+            rowEdit = angular.copy(data);
+            data.isEditMode = true;
+            $scope.fms.forEach(item => {
+                if (item.id !== data.id && item.id !== 0) {
+                    item.isEditMode = false;
+                }
+            });
+        };
+
+
+        $scope.addField = () => {
+
+            if ($dataService.arrayGetObject($scope.fms, 0, 'id') !== null) {
+                return;
+            }
+
+            var item = <modeltypings.ClientViewModel>{};
+            item.id = 0;
+            item.name = "";
+            item.isTieredPoints = false;
+            item.active = true;
+            item.isEditMode = true;
+
+            $scope.fms.splice(0, 0, item);
+
+            updateCounts($scope.fms);
+
+        };
+
+
+        // Paging variables.
+        $scope.itemsPerPage = 12;
+        $scope.currentPage = 1;
+        $scope.maxSize = 5;
+
+        $scope.refresh();
+
+    };
+    controller.$inject = ['$scope', '$window', 'dataService', '$location'];
+    app.controller('viewClientsCtrl', controller);
+})(angular.module("repoFormsApp"));
+
+//All our wonderful modals will stay at the bottom here... 
+/* app.controller('modalSubmittedCtrl', controller); */
+(app => {
+    var controller = ($scope, $uibModalInstance, $timeout, $window, $location, data) => {
+
+
+        var timer = $timeout(() => {
+            $scope.close();
+        },
+            3000);
+
+
+        $scope.close = () => {
+            $timeout.cancel(timer);
+            $uibModalInstance.dismiss();
+            $location.path('/' + data.endpoint);
+        };
+
+    };
+    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window', '$location', 'data'];
+    app.controller('modalSubmittedCtrl', controller);
+})(angular.module("repoFormsApp"));
+
+/* app.controller('modalConfirmDeleteCtrl', controller); */
+(app => {
+    var controller = ($scope, $uibModalInstance, $timeout, $window, row) => {
+
+
+        $scope.row = row;
+
+        $scope.delete = () => {
+            $uibModalInstance.close(row.id);
+        };
+
+
+        $scope.cancel = () => {
+            $uibModalInstance.dismiss(row.id);
+        };
+
+    };
+    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window', 'row'];
+    app.controller('modalConfirmDeleteCtrl', controller);
+})(angular.module("repoFormsApp"));
+

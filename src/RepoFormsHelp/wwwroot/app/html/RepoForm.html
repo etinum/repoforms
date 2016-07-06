@@ -8,7 +8,7 @@
                 <div class="panel-heading">General</div>
                 <div class="panel-body">
 
-                    <div class="form-group" show-errors>
+                    <div class="form-group">
                         <div>
                             <label class="col-sm-3 control-label">Date</label>
                             <div class="col-sm-6">
@@ -58,7 +58,7 @@
                         <label for="closeType" class="col-sm-3 control-label">Close Type</label>
                         <div class="col-sm-9">
                             <select id="closeType" name="closeType" class="form-control" data-ng-options="item.name for item in rf.closeTypeOptions track by item.id"
-                                    data-ng-model="rf.closeType" ng-required="true">
+                                    data-ng-model="rf.closeType" ng-required="true" ng-change="onCloseTypeSelect()">
                                 <option value="">---Please select---</option>
                             </select>
                             <div class="help-block" ng-messages="myForm.closeType.$error" ng-show="myForm.closeType.$touched || submitted">

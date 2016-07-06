@@ -1,5 +1,5 @@
 (function (app) {
-    var service = function ($http, $q, $envService, $window, $rootScope, $timeout) {
+    var service = function ($http, $q, $envService, $window, $rootScope, $interval) {
         var userData = null;
         var arrayUnique = function (array) {
             var a = array.concat();
@@ -11,12 +11,53 @@
             }
             return a;
         };
+        function arrayDeleteMatchingObject(myArray, searchTerm, property) {
+            for (var i = 0, len = myArray.length; i < len; i++) {
+                var value = myArray[i][property];
+                if (value === parseInt(value, 10)) {
+                    if (parseInt(value, 10) === searchTerm) {
+                        myArray.splice(i, 1);
+                        return true;
+                    }
+                }
+                else {
+                    if (value.toLowerCase() === searchTerm.toLowerCase()) {
+                        myArray.splice(i, 1);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        ;
         function arrayObjectIndexOf(myArray, searchTerm, property) {
             for (var i = 0, len = myArray.length; i < len; i++) {
-                if (myArray[i][property] === searchTerm)
-                    return i;
+                var value = myArray[i][property];
+                if (value === parseInt(value, 10)) {
+                    if (parseInt(value, 10) === searchTerm)
+                        return i;
+                }
+                else {
+                    if (value.toLowerCase() === searchTerm.toLowerCase())
+                        return i;
+                }
             }
             return -1;
+        }
+        ;
+        function arrayGetObject(myArray, searchTerm, property) {
+            for (var i = 0, len = myArray.length; i < len; i++) {
+                var value = myArray[i][property];
+                if (value === parseInt(value, 10)) {
+                    if (parseInt(value, 10) === parseInt(searchTerm, 10))
+                        return myArray[i];
+                }
+                else {
+                    if (value.toLowerCase() === searchTerm.toString().toLowerCase())
+                        return myArray[i];
+                }
+            }
+            return null;
         }
         ;
         function isFalse(obj) {
@@ -116,13 +157,19 @@
         }
         var getLoggedUserData = function () {
             var deferred = $q.defer();
-            if (userData == null) {
-                $timeout(function () {
-                    if (userData != null) {
-                        deferred.resolve(userData);
-                    }
-                }, 500);
+            var check = $interval(function () {
+                checkUserData();
+            }, 250);
+            function checkUserData() {
+                if (userData != null) {
+                    deferred.resolve(userData);
+                }
+                if (angular.isDefined(check)) {
+                    $interval.cancel(check);
+                    check = undefined;
+                }
             }
+            ;
             return deferred.promise;
         };
         var initiateRoles = function () {
@@ -172,12 +219,36 @@
             });
             return deferred.promise;
         };
+        var getClients = function () {
+            var url = baseWebApiUrl + 'api/Client/GetClients';
+            var deferred = $q.defer();
+            $http.get(url)
+                .then(function (response) {
+                deferred.resolve(response.data);
+            }, function (response) {
+                alertFailed(response);
+                deferred.reject(response);
+            });
+            return deferred.promise;
+        };
+        var saveClient = function (formdata) {
+            var url = baseWebApiUrl + 'api/Client/SaveClient';
+            var deferred = $q.defer();
+            $http.post(url, formdata)
+                .then(function (response) {
+                deferred.resolve(response.data);
+            }, function (response) {
+                alertFailed(response);
+                deferred.reject(response);
+            });
+            return deferred.promise;
+        };
         var saveUser = function (formdata) {
             var url = baseWebApiUrl + 'api/User/SaveUser';
             var deferred = $q.defer();
             $http.post(url, formdata)
-                .then(function () {
-                deferred.resolve();
+                .then(function (response) {
+                deferred.resolve(response);
             }, function (response) {
                 alertFailed(response);
                 deferred.reject(response);
@@ -217,6 +288,7 @@
             initiateRoles: initiateRoles,
             getLoggedUserData: getLoggedUserData,
             getAllUsers: getAllUsers,
+            getClients: getClients,
             getTypeAheadData: getTypeAheadData,
             searchVin: searchVin,
             saveForm: saveForm,
@@ -225,8 +297,11 @@
             getForms: getForms,
             getForm: getForm,
             saveUser: saveUser,
+            saveClient: saveClient,
             arrayUnique: arrayUnique,
             arrayObjectIndexOf: arrayObjectIndexOf,
+            arrayGetObject: arrayGetObject,
+            arrayDeleteMatchingObject: arrayDeleteMatchingObject,
             isFalse: isFalse,
             isTrue: isTrue,
             closeTypeOptions: ['BK', 'PAID', 'FORWARD', 'LOCATE', 'REPO'],
@@ -235,7 +310,7 @@
             states: ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming']
         };
     };
-    service.$inject = ['$http', '$q', 'envService', '$window', '$rootScope', '$timeout'];
+    service.$inject = ['$http', '$q', 'envService', '$window', '$rootScope', '$interval'];
     app.factory("dataService", service);
 })(angular.module("repoFormsApp"));
 //# sourceMappingURL=Services.js.map

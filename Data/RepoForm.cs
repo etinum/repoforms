@@ -25,7 +25,7 @@ namespace Data
         public Nullable<int> Points { get; set; }
         public string Notes { get; set; }
         public Nullable<int> CreatorUserId { get; set; }
-        public string ModifiedByUserId { get; set; }
+        public Nullable<int> ModifiedByUserId { get; set; }
         public Nullable<int> AdminUserId { get; set; }
         public Nullable<int> AdminOtherUserId { get; set; }
     

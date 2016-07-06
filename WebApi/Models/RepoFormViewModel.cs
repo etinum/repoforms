@@ -16,7 +16,7 @@ namespace WebApi.Models
         public int? Points { get; set; }
         public string Notes { get; set; }
         public int? CreatorUserId { get; set; }
-        public string ModifiedByUserId { get; set; }
+        public int? ModifiedByUserId { get; set; }
         public int? AdminUserId { get; set; }
         public int? AdminOtherUserId { get; set; }
         public IEnumerable<CloseTypeViewModel> CloseTypeOptions { get; set; }
