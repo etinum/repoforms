@@ -77,10 +77,17 @@ angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'enviro
     app.config(config);
 })(angular.module("repoFormsApp"));
 (function (app) {
-    var runner = function ($rootScope, $dataService) {
+    var runner = function ($rootScope, $dataService, $templateCache) {
         $rootScope.load = $dataService.initiateRoles();
+        $templateCache.put('template/smart-table/pagination.html', '<nav ng-if="numPages && pages.length >= 2"><ul class="pagination">' +
+            '<li ng-class=""><a ng-click="selectPage(1)">First</a></li>' +
+            '<li ng-class=""><a ng-click="selectPage(currentPage-1)"><i class="fa fa-fw fa-angle-double-left"></i></a></li>' +
+            '<li ng-repeat="page in pages" ng-class="{active: page==currentPage}"><a ng-click="selectPage(page)">{{page}}</a></li>' +
+            '<li ng-class=""><a ng-click="selectPage(currentPage+1)"><i class="fa fa-fw fa-angle-double-right"></i></a></li>' +
+            '<li ng-class=""><a ng-click="selectPage(numPages)">Last</a></li>' +
+            '</ul></nav>');
     };
-    runner.$inject = ['$rootScope', 'dataService'];
+    runner.$inject = ['$rootScope', 'dataService', '$templateCache'];
     app.run(runner);
 })(angular.module("repoFormsApp"));
 //# sourceMappingURL=App.js.map

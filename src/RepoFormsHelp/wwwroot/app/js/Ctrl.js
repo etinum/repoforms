@@ -542,7 +542,6 @@
             $scope.load = $dataService.getAllUsers()
                 .then(function (data) {
                 $scope.fms = data;
-                $scope.totalItems = $scope.fms.length;
             });
         };
         $scope.update = function () {
@@ -552,15 +551,10 @@
             $location.path('/userform/' + 0);
         };
         $scope.edit = function (row) {
-            setPage(2);
+            var rowee = row;
+            $location.path('/userform/' + rowee.id);
         };
-        function setPage(pageNumber) {
-            angular
-                .element($('#pagerId'))
-                .isolateScope()
-                .selectPage(pageNumber);
-        }
-        $scope.itemsPerPage = 12;
+        $scope.itemsByPage = 12;
         $scope.displayedPagesMax = 5;
         $scope.update();
     };

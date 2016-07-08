@@ -103,6 +103,14 @@
         };
 
 
+        function gotoPage(page: number) {
+            angular
+                .element($('#pagerId'))
+                .isolateScope()
+                .selectPage(page);
+        }
+
+
         var baseWebApiUrl = $envService.read('apiUrl');
 
         // Error messages
@@ -409,6 +417,7 @@
             arrayDeleteMatchingObject: arrayDeleteMatchingObject,
             isFalse: isFalse,
             isTrue: isTrue,
+            gotoPage: gotoPage,
             // Static list 
             closeTypeOptions: ['BK', 'PAID', 'FORWARD', 'LOCATE', 'REPO'],
             clientOptions: ['UTOTRAKK', 'ALLY FINANCIAL', 'BAY ENTERPRISE GROUP', 'BHFC', 'C & F FINANCE', 'CARMAX AUTO FINANCE', 'CFAM', 'CHRYSLER CAPITAL-2', 'CHRYSLER CAPITAL-3', 'CITY WIDE INVESTIGATIONS', 'CLA', 'CONSUMER PORTFOLIO', 'EXETER', 'FORD MOTOR CREDIT', 'HYUNDAI MOTOR FINANCE', 'NISSAN MOTOR ACCEPTANCE ', 'NMAC LOSS RECOVERY IGS', 'SAFCO', 'SANTANDER-1', 'SANTANDER-2', 'SANTANDER-3', 'VW CREDIT-PSC', 'VW CREDIT-CSC', 'WELLS FARGO', 'WESTLAKE FINANCIAL', 'UNIVERSAL ACCEPTANCE CORP', 'TURBO TITLE LOANS', 'PRA RECEIVABLE MANAGEMENT', 'SANTANDER-4', 'PRA RECEIVABLES', 'CHRYSLER CAPITAL-1', 'VW CREDIT', 'SST'],

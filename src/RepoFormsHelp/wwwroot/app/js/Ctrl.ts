@@ -764,7 +764,6 @@
             $scope.load = $dataService.getAllUsers()
                 .then((data : modeltypings.UserViewModel[]) => {
                     $scope.fms = data;
-                    $scope.totalItems = $scope.fms.length;
 
                 });
         };
@@ -779,23 +778,14 @@
         }
 
         $scope.edit = (row) => {
-            setPage(2);
-            //var rowee = <modeltypings.UserViewModel>row;
-            //$location.path('/userform/' + rowee.id);
+            var rowee = <modeltypings.UserViewModel>row;
+            $location.path('/userform/' + rowee.id);
 
         };
 
 
-        function setPage(pageNumber) {
-            angular
-                .element($('#pagerId'))
-                .isolateScope()
-                .selectPage(pageNumber);
-        }
-
-
         // Paging variables.
-        $scope.itemsPerPage = 12;
+        $scope.itemsByPage = 12;
         $scope.displayedPagesMax = 5;
 
         $scope.update();
