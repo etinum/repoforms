@@ -4,6 +4,7 @@
 		winAuthName: string;
 		departmentId: number;
 		departmentName: string;
+		departmentOptionSelected: server.DepartmentOption;
 		position: string;
 		jobFunction: string;
 		picture: any[];
@@ -20,9 +21,9 @@
 		createdDate: Date;
 		modifiedDate: Date;
 		directReportUserId: number;
-		directReportUser: number;
+		directReportUser: string;
 		dottedLineReportUserId: number;
-		dottedLineReportUser: number;
+		dottedLineReportUser: string;
 		departmentOptions: server.DepartmentOption[];
 		userOptions: server.UserOption[];
 	}

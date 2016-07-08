@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
@@ -26,14 +27,11 @@ namespace WebApi.Utils
         }
 
 
-        public static void AssignmentWriteUp(string winUser, string investigator, string accountNumber)
+        public static void AssignmentWriteUp(string winUser, string investigator, string accountNumber, Boolean debug = true)
         {
 
-#if DEBUG
-            var emailString = WebConfigurationManager.AppSettings["RepoEmailsDev"];
-#else
-            var emailString = WebConfigurationManager.AppSettings["RepoEmails"];
-#endif
+
+            var emailString = debug ? WebConfigurationManager.AppSettings["RepoEmailsDev"] : WebConfigurationManager.AppSettings["RepoEmails"];
 
             var emails = emailString.Split(';').ToList();
 

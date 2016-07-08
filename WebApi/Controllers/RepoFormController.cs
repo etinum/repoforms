@@ -164,10 +164,10 @@ namespace WebApi.Controllers
 
             _ctx.SaveChanges();
 
-            if (!user.WinAuthName.Contains("ertran"))
-            {
-                Email.AssignmentWriteUp(user.WinAuthName, repoFormModel.Investigator, repoFormModel.AccountNumber);
-            }
+
+            var debugmode = !Request.RequestUri.ToString().Contains("plsf");
+
+            Email.AssignmentWriteUp(user.WinAuthName, repoFormModel.Investigator, repoFormModel.AccountNumber, debugmode);
 
             return repoFormModel;
         }

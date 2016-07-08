@@ -646,17 +646,27 @@
         //TODO: In this controller we will need to populate the user foreign key elements as needed... 
 
         // Private Methods
-        $scope.processOptionIds = (data) => {
-            data.department = data.departmentOptions.filter(item => item.id === data.departmentId)[0];
+        $scope.processOptionIds = (data : modeltypings.UserViewModel) => {
 
-            data.directReportUser = data.directReportUserId != null ? data.userOptions.filter(item => item.id === data.directReportUserId)[0].label : data.directReportUserId;
+            if (data.id === 0) {
+                data.winAuthName = "PRANT_1\\";
+                return;
+            }
+
+
+            data.departmentOptionSelected.id = data.departmentId;
+                //data.departmentOptions.filter(item => item.id === data.departmentId)[0].name;
+
+            data.directReportUser = data.directReportUserId != null ? data.userOptions.filter(item => item.id === data.directReportUserId)[0].label : null;
             data.dottedLineReportUser = data.dottedLineReportUserId != null
                 ? data.userOptions.filter(item => item.id === data.dottedLineReportUserId)[0].label
-                : data.dottedLineReportUserId;
+                : null;
         };
 
 
         // Handlers
+
+
 
         $scope.userSelect = ($item, $type) => {
             if ($type === 'direct') {
@@ -668,6 +678,11 @@
 
 
         $scope.submitForm = () => {
+
+            if ($scope.uf.winAuthName === "PRANT_1\\") {
+                alert("Please update the windows user name");
+                return; 
+            }
 
             $scope.submitted = true;
 
@@ -723,16 +738,13 @@
         if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id) && $routeParams.id > -1) {
             //$scope.id = parseInt($routeParams.id);
 
-            if ($routeParams.id === 0) {
+            $scope.load = $dataService.getUser($routeParams.id)
+                .then(data => {
+                    $scope.uf = <modeltypings.UserViewModel>data;
+                    $scope.processOptionIds($scope.uf);
 
-            } else {
-                $scope.load = $dataService.getUser($routeParams.id)
-                    .then(data => {
-                        $scope.uf = <modeltypings.UserViewModel>data;
-                        $scope.ouf = angular.copy($scope.uf);
-                        $scope.processOptionIds($scope.uf);
-                    });
-            }
+                    $scope.ouf = angular.copy($scope.uf);
+                });
 
         } else {
             alert("Error loading user");
@@ -761,6 +773,10 @@
             $scope.getUsers();
         };
 
+        $scope.createUser = () => {
+            $location.path('/userform/' + 0);
+
+        }
 
         $scope.edit = (row) => {
             var rowee = <modeltypings.UserViewModel>row;
@@ -858,6 +874,7 @@
 
 
         $scope.addField = () => {
+            $scope.currentPage = 1;
 
             if ($dataService.arrayGetObject($scope.fms, 0, 'id') !== null) {
                 return;

@@ -32,7 +32,8 @@
         id: number;
         winAuthName: string;
         departmentId: number;
-        departmentName: number;
+        departmentName: string;
+        departmentOptionSelected: DepartmentOption;
         position: string;
         jobFunction: string;
         picture: any[];
@@ -49,7 +50,9 @@
         createdDate: Date;
         modifiedDate: Date;
         directReportUserId: number;
+        directReportUser: string;
         dottedLineReportUserId: number;
+        dottedLineReportUser: string;
         departmentOptions: DepartmentOption[];
         userOptions: UserOption[];
     }

@@ -7,7 +7,7 @@
             <label for="winAuthName" class="col-sm-3 control-label">Windows User Name</label>
             <div class="col-sm-9">
                 <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="winAuthName" name="winAuthName" class="form-control"
-                       ng-model="uf.winAuthName" ng-required="false" autocomplete="off" />
+                       ng-model="uf.winAuthName" ng-required="true" autocomplete="off" placeholder="ie: PRANT_1\ertran"/>
                 <div class="help-block" ng-messages="myForm.winAuthName.$error" ng-show="myForm.winAuthName.$touched || submitted">
                     <div ng-messages-include="app/html/error-messages.html"></div>
                 </div>
@@ -46,7 +46,7 @@
             <label for="department" class="col-sm-3 control-label">Department</label>
             <div class="col-sm-9">
                 <select id="department" name="department" class="form-control" data-ng-options="item.name for item in uf.departmentOptions track by item.id"
-                        data-ng-model="uf.department" ng-required="false">
+                        data-ng-model="uf.departmentOptionSelected" ng-required="false">
                     <option value="">---Please select---</option>
                 </select>
                 <div class="help-block" ng-messages="myForm.department.$error" ng-show="myForm.department.$touched || submitted">

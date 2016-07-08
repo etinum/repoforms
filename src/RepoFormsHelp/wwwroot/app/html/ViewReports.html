@@ -35,21 +35,14 @@
                     <i class="glyphicon glyphicon-check">
                     </i>
                 </button>
-            </td>
-            <td>
                 <button type="button" ng-hide="(row.adminOtherUserId != null) || !isAuditor" ng-click="adminVerified(row, 'second')" class="btn btn-sm btn-warning" uib-tooltip="Click this box after you are done auditing purpose.">
                     <i class="glyphicon glyphicon-check">
                     </i>
                 </button>
-            </td>
-
-            <td>
-                <button type="button" ng-show="isAuditor" ng-click="edit(row)" class="btn btn-sm btn-default">
+                <button type="button" ng-show="isAuditor" ng-click="edit(row)" class="btn btn-sm btn-primary">
                     <i class="glyphicon glyphicon-edit">
                     </i>
                 </button>
-            </td>
-            <td>
                 <button type="button" ng-show="isSuperAdmin" ng-click="requestDelete(row)" class="btn btn-sm btn-danger">
                     <i class="glyphicon glyphicon-remove">
                     </i>

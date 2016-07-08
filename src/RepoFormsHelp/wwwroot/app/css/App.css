@@ -20,8 +20,5 @@ tr .repo-score {
     content: '\25BC';
 }
 
-/* This is here to fix ui bootsrap modal from shifting content to the left on modal pop up*/
-body {
-    overflow-y: auto;
-}
+
 

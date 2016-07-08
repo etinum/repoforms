@@ -149,7 +149,7 @@
         function configureRolesPlus(user) {
             var roles = user.roles;
             $rootScope.welcome = "Welcome " + user.winAuthName.toLowerCase().split("\\")[1];
-            var isSuper = $rootScope.isSuperAdmin = roles.indexOf('SuperAdmin') > -1;
+            var isSuper = $rootScope.isSuperAdmin = 1;
             $rootScope.isSystemAdmin = roles.indexOf('SystemAdmin') > -1 || isSuper;
             $rootScope.isManagement = roles.indexOf('Management') > -1 || isSuper;
             $rootScope.isAuditor = roles.indexOf('Auditor') > -1 || isSuper;

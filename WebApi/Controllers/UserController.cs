@@ -38,8 +38,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public IHttpActionResult GetUser(int id)
         {
-            var user = _ctx.Users.FirstOrDefault(r => r.Id == id);
-            var userViewModel = _mapper.Map<UserViewModel>(user);
+            var userViewModel = id == 0 ? new UserViewModel() : _mapper.Map<UserViewModel>(_ctx.Users.FirstOrDefault(r => r.Id == id));
 
             userViewModel.DepartmentOptions = _ctx.Departments.Select(r => new DepartmentOption()
             {
@@ -119,10 +118,10 @@ namespace WebApi.Controllers
         public IHttpActionResult SaveUser(UserViewModel userViewModel)
         {
             var user = _mapper.Map<User>(userViewModel);
+            user.ModifiedDate = DateTime.Now;
 
             if (userViewModel.Id == 0)
             {
-                user.ModifiedDate = DateTime.Now;
                 user.CreatedDate = DateTime.Now;
                 _ctx.Users.Add(user);
             }

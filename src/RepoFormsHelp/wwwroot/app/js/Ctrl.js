@@ -463,11 +463,15 @@
 (function (app) {
     var controller = function ($scope, $window, $dataService, $routeParams, $uibModal) {
         $scope.processOptionIds = function (data) {
-            data.department = data.departmentOptions.filter(function (item) { return item.id === data.departmentId; })[0];
-            data.directReportUser = data.directReportUserId != null ? data.userOptions.filter(function (item) { return item.id === data.directReportUserId; })[0].label : data.directReportUserId;
+            if (data.id === 0) {
+                data.winAuthName = "PRANT_1\\";
+                return;
+            }
+            data.departmentOptionSelected.id = data.departmentId;
+            data.directReportUser = data.directReportUserId != null ? data.userOptions.filter(function (item) { return item.id === data.directReportUserId; })[0].label : null;
             data.dottedLineReportUser = data.dottedLineReportUserId != null
                 ? data.userOptions.filter(function (item) { return item.id === data.dottedLineReportUserId; })[0].label
-                : data.dottedLineReportUserId;
+                : null;
         };
         $scope.userSelect = function ($item, $type) {
             if ($type === 'direct') {
@@ -478,6 +482,10 @@
             }
         };
         $scope.submitForm = function () {
+            if ($scope.uf.winAuthName === "PRANT_1\\") {
+                alert("Please update the windows user name");
+                return;
+            }
             $scope.submitted = true;
             if ($scope.uf.department != null) {
                 $scope.uf.departmentId = $scope.uf.department.id;
@@ -514,16 +522,12 @@
             });
         };
         if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id) && $routeParams.id > -1) {
-            if ($routeParams.id === 0) {
-            }
-            else {
-                $scope.load = $dataService.getUser($routeParams.id)
-                    .then(function (data) {
-                    $scope.uf = data;
-                    $scope.ouf = angular.copy($scope.uf);
-                    $scope.processOptionIds($scope.uf);
-                });
-            }
+            $scope.load = $dataService.getUser($routeParams.id)
+                .then(function (data) {
+                $scope.uf = data;
+                $scope.processOptionIds($scope.uf);
+                $scope.ouf = angular.copy($scope.uf);
+            });
         }
         else {
             alert("Error loading user");
@@ -543,6 +547,9 @@
         };
         $scope.update = function () {
             $scope.getUsers();
+        };
+        $scope.createUser = function () {
+            $location.path('/userform/' + 0);
         };
         $scope.edit = function (row) {
             var rowee = row;
@@ -609,6 +616,7 @@
             rowEdit = angular.copy(data);
         };
         $scope.addField = function () {
+            $scope.currentPage = 1;
             if ($dataService.arrayGetObject($scope.fms, 0, 'id') !== null) {
                 return;
             }

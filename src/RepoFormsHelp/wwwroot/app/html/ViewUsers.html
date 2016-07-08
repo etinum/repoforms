@@ -1,6 +1,14 @@
 <div cg-busy="load">
 
 
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary" ng-click="createUser()">
+            <i class="glyphicon glyphicon-save-file">
+                Create
+            </i>
+        </button>
+    </div>
+
     <table st-table="displayCollection" st-safe-src="fms" class="table table-striped">
         <thead>
             <tr>
@@ -29,17 +37,17 @@
                 <td>{{row.departmentName}}</td>
 
                 <td>
-                    <button type="button" ng-show="isSystemAdmin" ng-click="edit(row)" class="btn btn-sm btn-default">
+                    <button type="button" ng-show="isSystemAdmin" ng-click="edit(row)" class="btn btn-sm btn-primary">
                         <i class="glyphicon glyphicon-edit">
                         </i>
                     </button>
                 </td>
-                <td>
+                <!--<td>
                     <button type="button" ng-show="isSystemAdmin" ng-click="requestDelete(row)" class="btn btn-sm btn-danger">
                         <i class="glyphicon glyphicon-remove">
                         </i>
                     </button>
-                </td>
+                </td>-->
             </tr>
         </tbody>
     </table>
