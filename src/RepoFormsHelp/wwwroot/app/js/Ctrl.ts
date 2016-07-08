@@ -281,12 +281,12 @@
 
 
                     $dataService.getLoggedUserData()
-                        .then((userData) => {
+                        .then((userData : modeltypings.UserViewModel) => {
 
                             if (userData.first == null || userData.first === "") {
                                 $scope.rf.investigator = userData.winAuthName.toLowerCase().split("\\")[1];
                             } else {
-                                $scope.rf.investigator = userData.first + " "  + userData.last;
+                                $scope.rf.investigator = userData.fullName;
                             }
                         });
 

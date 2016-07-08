@@ -219,7 +219,7 @@
                         $scope.rf.investigator = userData.winAuthName.toLowerCase().split("\\")[1];
                     }
                     else {
-                        $scope.rf.investigator = userData.first + " " + userData.last;
+                        $scope.rf.investigator = userData.fullName;
                     }
                 });
                 $scope.orf = angular.copy($scope.rf);

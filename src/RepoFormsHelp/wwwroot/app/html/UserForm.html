@@ -28,6 +28,17 @@
         </div>
 
 
+        <div class="form-group" show-errors>
+            <label for="middle" class="col-sm-3 control-label">Middle Name</label>
+            <div class="col-sm-9">
+                <input type="text" ng-maxlength="ng_maxLength" maxlength={{maxLength}} id="middle" name="middle" class="form-control"
+                       ng-model="uf.middle" ng-required="false" autocomplete="off" />
+                <div class="help-block" ng-messages="myForm.middle.$error" ng-show="myForm.middle.$touched || submitted">
+                    <div ng-messages-include="app/html/error-messages.html"></div>
+                </div>
+            </div>
+        </div>
+
         <!-- *************** HTML TEMPLATE (last) **************** -->
         <div class="form-group" show-errors>
             <label for="last" class="col-sm-3 control-label">Last Name</label>

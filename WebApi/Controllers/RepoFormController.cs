@@ -182,8 +182,6 @@ namespace WebApi.Controllers
                 FirstLoggedIn = DateTime.Now
             };
 
-            user.LastLoggedIn = DateTime.Now;
-
             // If userid = 0, meaning they are new, we need to create a new user in the databse
             if (user.Id == 0)
             {

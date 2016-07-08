@@ -13,8 +13,7 @@
         <thead>
             <tr>
                 <th st-sort="winAuthName">Windows User Name</th>
-                <th st-sort="first" st-sort-default="true">First</th>
-                <th st-sort="last">Last</th>
+                <th st-sort="fullName" st-sort-default="true">Name</th>
                 <th st-sort="email">Email</th>
                 <th st-sort="extension">Extension</th>
                 <th st-sort="position">Position</th>
@@ -27,8 +26,7 @@
         <tbody>
         <tr ng-repeat="row in displayCollection">
             <td>{{row.winAuthName}}</td>
-            <td>{{row.first}}</td>
-            <td>{{row.last}}</td>
+            <td>{{row.fullName}}</td>
             <td><a ng-href="mailto:{{row.email}}">{{row.email}}</a></td>
             <td>{{row.extension}}</td>
             <td>{{row.position}}</td>

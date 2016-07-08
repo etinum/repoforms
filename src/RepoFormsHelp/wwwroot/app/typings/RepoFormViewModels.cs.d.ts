@@ -38,6 +38,7 @@
         jobFunction: string;
         picture: any[];
         first: string;
+        middle: string;
         last: string;
         email: string;
         extension: string;
@@ -53,6 +54,7 @@
         directReportUser: string;
         dottedLineReportUserId: number;
         dottedLineReportUser: string;
+        fullName: string;
         departmentOptions: DepartmentOption[];
         userOptions: UserOption[];
     }

@@ -47,7 +47,7 @@ namespace WebApi.Controllers
                 Name = r.Name
             }).ToList();
 
-            userViewModel.UserOptions = _ctx.Users.Select(r => new UserOption()
+            userViewModel.UserOptions = _ctx.Users.Where(r => r.Active.Value).Select(r => new UserOption()
             {
                 Id = r.Id,
                 First = r.First,

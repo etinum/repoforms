@@ -15,6 +15,7 @@ namespace WebApi.Models
         public string JobFunction { get; set; }
         public byte[] Picture { get; set; }
         public string First { get; set; }
+        public string Middle { get; set; }
         public string Last { get; set; }
         public string Email { get; set; }
         public string Extension { get; set; }
@@ -30,6 +31,15 @@ namespace WebApi.Models
         public string DirectReportUser { get; set; }
         public int? DottedLineReportUserId { get; set; }
         public string DottedLineReportUser { get; set; }
+
+
+        public string FullName
+        {
+            get
+            {
+                return string.IsNullOrEmpty(Middle) ? $"{First} {Last}" : $"{First} {Middle} {Last}";
+            }
+        }
 
         public List<DepartmentOption> DepartmentOptions { get; set; }
         public List<UserOption> UserOptions { get; set; }
