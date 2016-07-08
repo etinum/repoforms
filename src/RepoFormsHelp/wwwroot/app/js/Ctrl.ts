@@ -286,7 +286,7 @@
                             if (userData.first == null || userData.first === "") {
                                 $scope.rf.investigator = userData.winAuthName.toLowerCase().split("\\")[1];
                             } else {
-                                $scope.rf.investigator = userData.first + " " + userData.last;
+                                $scope.rf.investigator = userData.first + " "  + userData.last;
                             }
                         });
 
@@ -623,8 +623,11 @@
                 return;
             }
 
-
-            data.departmentOptionSelected.id = data.departmentId;
+            if (data.departmentId > 0) {
+                data.departmentOptionSelected = <modeltypings.DepartmentOption>{};
+                data.departmentOptionSelected.id = data.departmentId;
+            }
+                
                 //data.departmentOptions.filter(item => item.id === data.departmentId)[0].name;
 
             data.directReportUser = data.directReportUserId != null ? data.userOptions.filter(item => item.id === data.directReportUserId)[0].label : null;
@@ -635,9 +638,6 @@
 
 
         // Handlers
-
-
-
         $scope.userSelect = ($item, $type) => {
             if ($type === 'direct') {
                 $scope.uf.directReportUserId = $item.id;
@@ -657,8 +657,8 @@
             $scope.submitted = true;
 
             // process
-            if ($scope.uf.department != null) {
-                $scope.uf.departmentId = $scope.uf.department.id;
+            if ($scope.uf.departmentOptionSelected != null) {
+                $scope.uf.departmentId = $scope.uf.departmentOptionSelected.id;
             }
 
 

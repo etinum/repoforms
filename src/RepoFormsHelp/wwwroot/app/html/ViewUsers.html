@@ -12,13 +12,12 @@
     <table st-table="displayCollection" st-safe-src="fms" class="table table-striped">
         <thead>
             <tr>
-                <th st-sort="createdDate">Creation Date</th>
                 <th st-sort="winAuthName">Windows User Name</th>
                 <th st-sort="first" st-sort-default="true">First</th>
                 <th st-sort="last">Last</th>
                 <th st-sort="email">Email</th>
                 <th st-sort="extension">Extension</th>
-                <th st-sort="lastLoggedIn">Last Logged In</th>
+                <th st-sort="position">Position</th>
                 <th st-sort="departmentName">Department</th>
             </tr>
             <tr>
@@ -27,13 +26,12 @@
         </thead>
         <tbody>
         <tr ng-repeat="row in displayCollection">
-            <td>{{row.createdDate | date:'MM/dd/yyyy' }}</td>
             <td>{{row.winAuthName}}</td>
             <td>{{row.first}}</td>
             <td>{{row.last}}</td>
-            <td>{{row.email}}</td>
+            <td><a ng-href="mailto:{{row.email}}">{{row.email}}</a></td>
             <td>{{row.extension}}</td>
-            <td>{{row.lastLoggedIn | date:'MM/dd/yyyy' }}</td>
+            <td>{{row.position}}</td>
             <td>{{row.departmentName}}</td>
 
             <td>

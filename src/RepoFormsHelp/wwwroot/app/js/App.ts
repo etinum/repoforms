@@ -112,11 +112,11 @@ angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'enviro
     var runner = ($rootScope, $dataService, $templateCache) => {
         $rootScope.load = $dataService.initiateRoles();
 
+        // global pagination properties
         $rootScope.itemsByPage = 10;
         $rootScope.displayedPagesMax = 5;
 
-
-        // template
+        // template for smart table pagination
         $templateCache.put('template/smart-table/pagination.html',
             '<nav ng-if="numPages && pages.length >= 2"><ul class="pagination">' +
             '<li ng-class=""><a ng-click="selectPage(1)">First</a></li>' +

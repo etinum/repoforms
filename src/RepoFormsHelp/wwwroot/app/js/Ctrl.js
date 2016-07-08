@@ -449,7 +449,10 @@
                 data.winAuthName = "PRANT_1\\";
                 return;
             }
-            data.departmentOptionSelected.id = data.departmentId;
+            if (data.departmentId > 0) {
+                data.departmentOptionSelected = {};
+                data.departmentOptionSelected.id = data.departmentId;
+            }
             data.directReportUser = data.directReportUserId != null ? data.userOptions.filter(function (item) { return item.id === data.directReportUserId; })[0].label : null;
             data.dottedLineReportUser = data.dottedLineReportUserId != null
                 ? data.userOptions.filter(function (item) { return item.id === data.dottedLineReportUserId; })[0].label
@@ -469,8 +472,8 @@
                 return;
             }
             $scope.submitted = true;
-            if ($scope.uf.department != null) {
-                $scope.uf.departmentId = $scope.uf.department.id;
+            if ($scope.uf.departmentOptionSelected != null) {
+                $scope.uf.departmentId = $scope.uf.departmentOptionSelected.id;
             }
             $scope.$broadcast('show-errors-event');
             if ($scope.myForm.$invalid)
