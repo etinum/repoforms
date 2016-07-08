@@ -552,12 +552,16 @@
             $location.path('/userform/' + 0);
         };
         $scope.edit = function (row) {
-            var rowee = row;
-            $location.path('/userform/' + rowee.id);
+            setPage(2);
         };
+        function setPage(pageNumber) {
+            angular
+                .element($('#pagerId'))
+                .isolateScope()
+                .selectPage(pageNumber);
+        }
         $scope.itemsPerPage = 12;
-        $scope.currentPage = 1;
-        $scope.maxSize = 5;
+        $scope.displayedPagesMax = 5;
         $scope.update();
     };
     controller.$inject = ['$scope', '$window', 'dataService', '$location'];

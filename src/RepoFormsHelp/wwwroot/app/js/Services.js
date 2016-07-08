@@ -219,6 +219,18 @@
             });
             return deferred.promise;
         };
+        var deleteUser = function (id) {
+            var url = baseWebApiUrl + 'api/User/DeleteUser';
+            var deferred = $q.defer();
+            $http.post(url, id)
+                .then(function () {
+                deferred.resolve();
+            }, function (response) {
+                alertFailed(response);
+                deferred.reject(response);
+            });
+            return deferred.promise;
+        };
         var getClients = function () {
             var url = baseWebApiUrl + 'api/Client/GetClients';
             var deferred = $q.defer();

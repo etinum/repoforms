@@ -556,7 +556,9 @@ declare namespace angular {
         $$phase: any;
     }
 
-    interface IScope extends IRootScopeService { }
+    interface IScope extends IRootScopeService {
+        selectPage(pageNumber);
+    }
 
     /**
      * $scope for ngRepeat directive.

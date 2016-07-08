@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.Results;
 using AutoMapper;
 using Data;
 using WebApi.Mapper;
@@ -134,6 +135,23 @@ namespace WebApi.Controllers
             _ctx.SaveChanges();
             return Ok(user.Id);
 
+        }
+
+        [HttpPost]
+        public IHttpActionResult DeleteUser([FromBody]int id)
+        {
+            try
+            {
+                var uf = new User() { Id = id };
+                _ctx.Users.Attach(uf);
+                _ctx.Users.Remove(uf);
+                _ctx.SaveChanges();
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return new ExceptionResult(e, this);
+            }
         }
 
 

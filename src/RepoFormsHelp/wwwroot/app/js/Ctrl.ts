@@ -779,17 +779,24 @@
         }
 
         $scope.edit = (row) => {
-            var rowee = <modeltypings.UserViewModel>row;
-            $location.path('/userform/' + rowee.id);
+            setPage(2);
+            //var rowee = <modeltypings.UserViewModel>row;
+            //$location.path('/userform/' + rowee.id);
 
         };
 
 
+        function setPage(pageNumber) {
+            angular
+                .element($('#pagerId'))
+                .isolateScope()
+                .selectPage(pageNumber);
+        }
+
 
         // Paging variables.
         $scope.itemsPerPage = 12;
-        $scope.currentPage = 1;
-        $scope.maxSize = 5;
+        $scope.displayedPagesMax = 5;
 
         $scope.update();
 

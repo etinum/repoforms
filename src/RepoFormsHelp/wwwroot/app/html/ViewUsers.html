@@ -26,33 +26,38 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="row in displayCollection.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
-                <td>{{row.createdDate | date:'MM/dd/yyyy' }}</td>
-                <td>{{row.winAuthName}}</td>
-                <td>{{row.first}}</td>
-                <td>{{row.last}}</td>
-                <td>{{row.email}}</td>
-                <td>{{row.extension}}</td>
-                <td>{{row.lastLoggedIn  | date:'MM/dd/yyyy' }}</td>
-                <td>{{row.departmentName}}</td>
+        <tr ng-repeat="row in displayCollection">
+            <td>{{row.createdDate | date:'MM/dd/yyyy' }}</td>
+            <td>{{row.winAuthName}}</td>
+            <td>{{row.first}}</td>
+            <td>{{row.last}}</td>
+            <td>{{row.email}}</td>
+            <td>{{row.extension}}</td>
+            <td>{{row.lastLoggedIn | date:'MM/dd/yyyy' }}</td>
+            <td>{{row.departmentName}}</td>
 
-                <td>
-                    <button type="button" ng-show="isSystemAdmin" ng-click="edit(row)" class="btn btn-sm btn-primary">
-                        <i class="glyphicon glyphicon-edit">
-                        </i>
-                    </button>
-                </td>
-                <!--<td>
-                    <button type="button" ng-show="isSystemAdmin" ng-click="requestDelete(row)" class="btn btn-sm btn-danger">
-                        <i class="glyphicon glyphicon-remove">
-                        </i>
-                    </button>
-                </td>-->
-            </tr>
+            <td>
+                <button type="button" ng-show="isSystemAdmin" ng-click="edit(row)" class="btn btn-sm btn-primary">
+                    <i class="glyphicon glyphicon-edit">
+                    </i>
+                </button>
+            </td>
+            <!--<td>
+                <button type="button" ng-show="isSystemAdmin" ng-click="requestDelete(row)" class="btn btn-sm btn-danger">
+                    <i class="glyphicon glyphicon-remove">
+                    </i>
+                </button>
+            </td>-->
+        </tr>
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5" class="text-center">
+                    <div id="pagerId" st-pagination="" st-items-by-page="itemsPerPage" st-displayed-pages="displayedPagesMax"></div>
+                </td>
+            </tr>
+        </tfoot>
     </table>
-    <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true" items-per-page="itemsPerPage"></uib-pagination>
-
 </div>
 
 
