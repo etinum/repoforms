@@ -11,12 +11,10 @@
             <th st-sort="points">Points</th>
         </tr>
         <tr>
-            <th colspan="4"><input st-search="" class="form-control" placeholder="global search ..." type="text"/></th>
+            <th colspan="4"><input st-search="" class="form-control" placeholder="Global search" type="text"/></th>
             <th colspan="5">
-
                 <select ng-model="filterSelected" ng-change="filter()" class="form-control" ng-options="filter as filter.label for filter in filterOptions track by filter.id">
                 </select>
-
             </th>
         </tr>
         </thead>
@@ -31,22 +29,24 @@
             <td ng-class="{'repo-admin': row.adminOtherUserId == null, 'repo-score': row.adminUserId == null}">{{row.points}}</td>
 
             <td>
-                <button type="button" ng-hide="(row.adminUserId != null) || !isAuditor" ng-click="adminVerified(row, 'first')" class="btn btn-sm btn-info" uib-tooltip="Click this box after you are done recording for scoring purpose.">
-                    <i class="glyphicon glyphicon-check">
-                    </i>
-                </button>
-                <button type="button" ng-hide="(row.adminOtherUserId != null) || !isAuditor" ng-click="adminVerified(row, 'second')" class="btn btn-sm btn-warning" uib-tooltip="Click this box after you are done auditing purpose.">
-                    <i class="glyphicon glyphicon-check">
-                    </i>
-                </button>
-                <button type="button" ng-show="isAuditor" ng-click="edit(row)" class="btn btn-sm btn-primary">
-                    <i class="glyphicon glyphicon-edit">
-                    </i>
-                </button>
-                <button type="button" ng-show="isSuperAdmin" ng-click="requestDelete(row)" class="btn btn-sm btn-danger">
-                    <i class="glyphicon glyphicon-remove">
-                    </i>
-                </button>
+                <div class="btn-group" role="group">
+                    <button type="button" ng-hide="(row.adminUserId != null) || !isAuditor" ng-click="adminVerified(row, 'first')" class="btn btn-sm btn-info" uib-tooltip="Click this box after you are done recording for scoring purpose.">
+                        <i class="glyphicon glyphicon-check">
+                        </i>
+                    </button>
+                    <button type="button" ng-hide="(row.adminOtherUserId != null) || !isAuditor" ng-click="adminVerified(row, 'second')" class="btn btn-sm btn-warning" uib-tooltip="Click this box after you are done auditing purpose.">
+                        <i class="glyphicon glyphicon-check">
+                        </i>
+                    </button>
+                    <button type="button" ng-show="isAuditor" ng-click="edit(row)" class="btn btn-sm btn-primary">
+                        <i class="glyphicon glyphicon-pencil">
+                        </i>
+                    </button>
+                    <button type="button" ng-show="isSuperAdmin" ng-click="requestDelete(row)" class="btn btn-sm btn-danger">
+                        <i class="glyphicon glyphicon-remove">
+                        </i>
+                    </button>
+                </div>
             </td>
         </tr>
         </tbody>

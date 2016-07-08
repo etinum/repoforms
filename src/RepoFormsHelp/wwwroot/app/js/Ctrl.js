@@ -183,6 +183,40 @@
             repo: false,
             signed: false
         };
+        $scope.requestCancel = function () {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'modalConfirmCtrl.html',
+                controller: 'modalConfirmFormButtonCtrl',
+                size: 'sm',
+                resolve: {
+                    input: function () {
+                        return 'cancel';
+                    }
+                }
+            });
+            modalInstance.result.then(function () {
+                cancelForm();
+            }, function () {
+            });
+        };
+        $scope.requestReset = function () {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'modalConfirmCtrl.html',
+                controller: 'modalConfirmFormButtonCtrl',
+                size: 'sm',
+                resolve: {
+                    input: function () {
+                        return 'reset';
+                    }
+                }
+            });
+            modalInstance.result.then(function () {
+                resetForm();
+            }, function () {
+            });
+        };
         $scope.submitForm = function () {
             $scope.submitted = true;
             $scope.$broadcast('show-errors-event');
@@ -192,12 +226,14 @@
                 $scope.open();
             });
         };
-        $scope.cancelForm = function () {
+        function cancelForm() {
             $window.history.back();
-        };
-        $scope.resetForm = function () {
+        }
+        ;
+        function resetForm() {
             location.reload();
-        };
+        }
+        ;
         if (!angular.isUndefined($routeParams.id) && !isNaN($routeParams.id)) {
             $scope.load = $dataService.getForm($routeParams.id)
                 .then(function (data) {
@@ -296,7 +332,7 @@
         $scope.requestDelete = function (row) {
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: 'modalConfirmDeleteCtrl.html',
+                templateUrl: 'modalConfirmCtrl.html',
                 controller: 'modalConfirmDeleteCtrl',
                 size: 'sm',
                 resolve: {
@@ -630,8 +666,12 @@
 })(angular.module("repoFormsApp"));
 (function (app) {
     var controller = function ($scope, $uibModalInstance, $timeout, $window, row) {
+        $scope
+            .bodyString =
+            "Are you sure you want to delete account# " + row.accountNumber + " for investigator: " + row.investigator + "?";
+        $scope.buttonString = "Delete";
         $scope.row = row;
-        $scope.delete = function () {
+        $scope.confirm = function () {
             $uibModalInstance.close(row.id);
         };
         $scope.cancel = function () {
@@ -640,5 +680,21 @@
     };
     controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window', 'row'];
     app.controller('modalConfirmDeleteCtrl', controller);
+})(angular.module("repoFormsApp"));
+(function (app) {
+    var controller = function ($scope, $uibModalInstance, $timeout, $window, $input) {
+        $scope
+            .bodyString =
+            "Are you sure you want to " + $input + "?";
+        $scope.buttonString = "Ok";
+        $scope.confirm = function () {
+            $uibModalInstance.close();
+        };
+        $scope.cancel = function () {
+            $uibModalInstance.dismiss();
+        };
+    };
+    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window', 'input'];
+    app.controller('modalConfirmFormButtonCtrl', controller);
 })(angular.module("repoFormsApp"));
 //# sourceMappingURL=Ctrl.js.map

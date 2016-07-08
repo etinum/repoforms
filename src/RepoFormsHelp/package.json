@@ -3,8 +3,5 @@
   "name": "mypackage",
   "private": true,
   "devDependencies": {
-    "gulp": "3.9.1",
-    "del": "2.2.0",
-    "lodash": "4.12.0"
   }
 }

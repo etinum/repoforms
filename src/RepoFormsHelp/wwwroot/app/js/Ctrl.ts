@@ -226,6 +226,51 @@
         };
 
         // Form button handling
+        $scope.requestCancel = () => {
+
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'modalConfirmCtrl.html',
+                controller: 'modalConfirmFormButtonCtrl',
+                size: 'sm',
+                resolve: {
+                    input() {
+                        return 'cancel';
+                    }
+                }
+            });
+
+            modalInstance.result.then(() => {
+                cancelForm();
+            }, () => {
+                // handling when cancel, you can get the value... 
+            });
+
+        };
+
+        $scope.requestReset = () => {
+
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'modalConfirmCtrl.html',
+                controller: 'modalConfirmFormButtonCtrl',
+                size: 'sm',
+                resolve: {
+                    input() {
+                        return 'reset';
+                    }
+                }
+            });
+
+            modalInstance.result.then(() => {
+                resetForm();
+            }, () => {
+                // handling when cancel, you can get the value... 
+            });
+
+        };
+
+
         $scope.submitForm = () => {
 
             $scope.submitted = true;
@@ -239,10 +284,12 @@
             });
 
         };
-        $scope.cancelForm = () => {
+
+        function cancelForm () {
             $window.history.back();
         };
-        $scope.resetForm = () => {
+
+        function resetForm()  {
             location.reload();
 
         };
@@ -405,7 +452,7 @@
 
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: 'modalConfirmDeleteCtrl.html',
+                templateUrl: 'modalConfirmCtrl.html',
                 controller: 'modalConfirmDeleteCtrl',
                 size: 'sm',
                 resolve: {
@@ -892,10 +939,15 @@
 (app => {
     var controller = ($scope, $uibModalInstance, $timeout, $window, row) => {
 
+        $scope
+            .bodyString =
+            "Are you sure you want to delete account# " + row.accountNumber + " for investigator: " + row.investigator + "?";
+
+        $scope.buttonString = "Delete";
 
         $scope.row = row;
 
-        $scope.delete = () => {
+        $scope.confirm = () => {
             $uibModalInstance.close(row.id);
         };
 
@@ -909,3 +961,28 @@
     app.controller('modalConfirmDeleteCtrl', controller);
 })(angular.module("repoFormsApp"));
 
+/* app.controller('modalConfirmFormButtonCtrl', controller); */
+(app => {
+    var controller = ($scope, $uibModalInstance, $timeout, $window, $input) => {
+
+
+        $scope
+            .bodyString =
+            "Are you sure you want to " + $input +"?";
+ 
+        $scope.buttonString = "Ok";
+
+
+        $scope.confirm = () => {
+            $uibModalInstance.close();
+        };
+
+
+        $scope.cancel = () => {
+            $uibModalInstance.dismiss();
+        };
+
+    };
+    controller.$inject = ['$scope', '$uibModalInstance', '$timeout', '$window', 'input'];
+    app.controller('modalConfirmFormButtonCtrl', controller);
+})(angular.module("repoFormsApp"));
