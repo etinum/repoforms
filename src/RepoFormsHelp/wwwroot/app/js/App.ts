@@ -112,6 +112,8 @@ angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'enviro
     var runner = ($rootScope, $dataService, $templateCache) => {
         $rootScope.load = $dataService.initiateRoles();
 
+        $rootScope.itemsByPage = 12;
+        $rootScope.displayedPagesMax = 5;
 
 
         // template

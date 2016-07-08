@@ -554,8 +554,6 @@
             var rowee = row;
             $location.path('/userform/' + rowee.id);
         };
-        $scope.itemsByPage = 12;
-        $scope.displayedPagesMax = 5;
         $scope.update();
     };
     controller.$inject = ['$scope', '$window', 'dataService', '$location'];
@@ -614,7 +612,7 @@
             rowEdit = angular.copy(data);
         };
         $scope.addField = function () {
-            $scope.currentPage = 1;
+            $dataService.gotoPage(1);
             if ($dataService.arrayGetObject($scope.fms, 0, 'id') !== null) {
                 return;
             }
@@ -627,9 +625,6 @@
             $scope.fms.splice(0, 0, item);
             updateCounts($scope.fms);
         };
-        $scope.itemsPerPage = 12;
-        $scope.currentPage = 1;
-        $scope.maxSize = 5;
         $scope.refresh();
     };
     controller.$inject = ['$scope', '$window', 'dataService', '$location'];

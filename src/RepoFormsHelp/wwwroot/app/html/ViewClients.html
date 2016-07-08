@@ -36,64 +36,66 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="row in displayCollection.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
-                <td>
-                    <div ng-show="row.isEditMode">
-                        <input type="text" ng-maxlength=50 maxlength=50 class="form-control"
-                               ng-model="row.name" autocomplete="off"
-                               placeholder="New Client" />
-                    </div>
-                    <div ng-show="!row.isEditMode">
-                        {{row.name}}
-                    </div>
-                </td>
-                <td>
-                    <div ng-show="row.isEditMode">
-                        <input type="checkbox" ng-model="row.isTieredPoints"> {{row.isTieredPoints}}
-                    </div>
-                    <div ng-show="!row.isEditMode">
-                        {{row.isTieredPoints}}
-                    </div>
-                </td>
-                <td>
-                    <div ng-show="row.isEditMode">
-                        <input type="checkbox" ng-model="row.active"> {{row.active}}
-                    </div>
-                    <div ng-show="!row.isEditMode">
-                        {{row.active}}
-                    </div>
-                </td>
+        <tr ng-repeat="row in displayCollection">
+            <td>
+                <div ng-show="row.isEditMode">
+                    <input type="text" ng-maxlength=50 maxlength=50 class="form-control"
+                           ng-model="row.name" autocomplete="off"
+                           placeholder="New Client"/>
+                </div>
+                <div ng-show="!row.isEditMode">
+                    {{row.name}}
+                </div>
+            </td>
+            <td>
+                <div ng-show="row.isEditMode">
+                    <input type="checkbox" ng-model="row.isTieredPoints"> {{row.isTieredPoints}}
+                </div>
+                <div ng-show="!row.isEditMode">
+                    {{row.isTieredPoints}}
+                </div>
+            </td>
+            <td>
+                <div ng-show="row.isEditMode">
+                    <input type="checkbox" ng-model="row.active"> {{row.active}}
+                </div>
+                <div ng-show="!row.isEditMode">
+                    {{row.active}}
+                </div>
+            </td>
 
-
-
-
-                <td>
-                    <button type="button" ng-show="isSystemAdmin && row.isEditMode" ng-click="save(row)" class="btn btn-sm btn-success">
-                        <i class="glyphicon glyphicon-floppy-save">
-                            Save
-                        </i>
-                    </button>
-                    <button type="button" ng-show="isSystemAdmin && !row.isEditMode" ng-click="edit(row)" class="btn btn-sm btn-primary">
-                        <i class="glyphicon glyphicon-edit">
-                            Edit
-                        </i>
-                    </button>
-                    <button type="button" ng-show="isSystemAdmin && row.isEditMode" ng-click="cancel(row)" class="btn btn-sm btn-warning">
-                        <i class="glyphicon glyphicon-floppy-save">
-                            Cancel
-                        </i>
-                    </button>
-                    <!--<button type="button" ng-show="isSystemAdmin" ng-click="requestDelete(row)" class="btn btn-sm btn-danger">
-                        <i class="glyphicon glyphicon-remove">
-                            Delete
-                        </i>
-                    </button>-->
+            <td>
+                <button type="button" ng-show="isSystemAdmin && row.isEditMode" ng-click="save(row)" class="btn btn-sm btn-success">
+                    <i class="glyphicon glyphicon-floppy-save">
+                        Save
+                    </i>
+                </button>
+                <button type="button" ng-show="isSystemAdmin && !row.isEditMode" ng-click="edit(row)" class="btn btn-sm btn-primary">
+                    <i class="glyphicon glyphicon-edit">
+                        Edit
+                    </i>
+                </button>
+                <button type="button" ng-show="isSystemAdmin && row.isEditMode" ng-click="cancel(row)" class="btn btn-sm btn-warning">
+                    <i class="glyphicon glyphicon-floppy-save">
+                        Cancel
+                    </i>
+                </button>
+                <!--<button type="button" ng-show="isSystemAdmin" ng-click="requestDelete(row)" class="btn btn-sm btn-danger">
+                    <i class="glyphicon glyphicon-remove">
+                        Delete
+                    </i>
+                </button>-->
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5" class="text-left">
+                    <div id="pagerId" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="displayedPagesMax"></div>
                 </td>
             </tr>
-        </tbody>
+        </tfoot>
     </table>
-    <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true" items-per-page="itemsPerPage"></uib-pagination>
-
 </div>
 
 

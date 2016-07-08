@@ -784,9 +784,6 @@
         };
 
 
-        // Paging variables.
-        $scope.itemsByPage = 12;
-        $scope.displayedPagesMax = 5;
 
         $scope.update();
 
@@ -871,7 +868,8 @@
 
 
         $scope.addField = () => {
-            $scope.currentPage = 1;
+
+            $dataService.gotoPage(1);
 
             if ($dataService.arrayGetObject($scope.fms, 0, 'id') !== null) {
                 return;
@@ -890,11 +888,6 @@
 
         };
 
-
-        // Paging variables.
-        $scope.itemsPerPage = 12;
-        $scope.currentPage = 1;
-        $scope.maxSize = 5;
 
         $scope.refresh();
 
