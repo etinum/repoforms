@@ -462,14 +462,7 @@
                 default:
             }
 
-            $scope.totalItems = $scope.fms.length;
-
         };
-
-        // Paging variables.
-        $scope.itemsPerPage = 12;
-        $scope.currentPage = 1;
-        $scope.maxSize = 5;
 
 
         hub.client.UpdateList = (updatedForm: modeltypings.RepoFormViewModel) => {
@@ -578,16 +571,8 @@
 
 
         $scope.filter = () => {
-
             $scope.fms = $scope.allItems;
-            $scope.totalItems = $scope.fms.length;
-
         };
-
-        // Paging variables.
-        $scope.itemsPerPage = 12;
-        $scope.currentPage = 1;
-        $scope.maxSize = 5;
 
 
         hub.client.UpdateList = (updatedForm: modeltypings.RepoFormViewModel) => {
@@ -610,21 +595,6 @@
 
             }
 
-        };
-
-
-        // Testing signalR
-        hub.client.SendAlert = (value) => {
-            alert('hello value: ' + value);
-        };
-
-        hub.client.test2 = () => {
-            ;
-            alert("first testing?");
-        };
-
-        hub.client.test = () => {
-            alert("testing works");
         };
 
 
@@ -809,7 +779,6 @@
 
         // Helper method
         function updateCounts(data: modeltypings.ClientViewModel[]) {
-            $scope.totalItems = data.length;
             data.forEach(item => {
                 if (item.isEditMode == null) {
                     item.isEditMode = false;

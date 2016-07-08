@@ -21,7 +21,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="row in displayCollection.slice(((currentPage-1)*itemsPerPage), ((currentPage)*itemsPerPage))">
+        <tr ng-repeat="row in displayCollection">
             <td ng-class="{'repo-admin': row.adminOtherUserId == null, 'repo-score': row.adminUserId == null}">{{row.createdDate | date:'MM/dd/yyyy' }}</td>
             <td ng-class="{'repo-admin': row.adminOtherUserId == null, 'repo-score': row.adminUserId == null}">{{row.accountNumber}}</td>
             <td ng-class="{'repo-admin': row.adminOtherUserId == null, 'repo-score': row.adminUserId == null}">{{row.investigator}}</td>
@@ -50,8 +50,14 @@
             </td>
         </tr>
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5" class="text-left">
+                    <div id="pagerId" st-pagination="" st-items-by-page="itemsByPage" st-displayed-pages="displayedPagesMax"></div>
+                </td>
+            </tr>
+        </tfoot>
     </table>
-    <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" class="pagination-sm" boundary-link-numbers="true" items-per-page="itemsPerPage"></uib-pagination>
 
 </div>
 

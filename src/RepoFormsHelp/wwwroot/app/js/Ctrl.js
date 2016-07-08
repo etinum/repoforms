@@ -340,11 +340,7 @@
                     break;
                 default:
             }
-            $scope.totalItems = $scope.fms.length;
         };
-        $scope.itemsPerPage = 12;
-        $scope.currentPage = 1;
-        $scope.maxSize = 5;
         hub.client.UpdateList = function (updatedForm) {
             var index = $dataService.arrayObjectIndexOf($scope.allItems, updatedForm.id, "id");
             if (index === -1) {
@@ -420,11 +416,7 @@
         };
         $scope.filter = function () {
             $scope.fms = $scope.allItems;
-            $scope.totalItems = $scope.fms.length;
         };
-        $scope.itemsPerPage = 12;
-        $scope.currentPage = 1;
-        $scope.maxSize = 5;
         hub.client.UpdateList = function (updatedForm) {
             var index = $dataService.arrayObjectIndexOf($scope.allItems, updatedForm.id, "id");
             if (index === -1) {
@@ -441,16 +433,6 @@
                     $scope.filter();
                 });
             }
-        };
-        hub.client.SendAlert = function (value) {
-            alert('hello value: ' + value);
-        };
-        hub.client.test2 = function () {
-            ;
-            alert("first testing?");
-        };
-        hub.client.test = function () {
-            alert("testing works");
         };
         $.connection.hub.start()
             .done(function () {
@@ -570,7 +552,6 @@
             });
         };
         function updateCounts(data) {
-            $scope.totalItems = data.length;
             data.forEach(function (item) {
                 if (item.isEditMode == null) {
                     item.isEditMode = false;

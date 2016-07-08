@@ -112,7 +112,7 @@ angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'enviro
     var runner = ($rootScope, $dataService, $templateCache) => {
         $rootScope.load = $dataService.initiateRoles();
 
-        $rootScope.itemsByPage = 12;
+        $rootScope.itemsByPage = 10;
         $rootScope.displayedPagesMax = 5;
 
 
@@ -120,12 +120,11 @@ angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'enviro
         $templateCache.put('template/smart-table/pagination.html',
             '<nav ng-if="numPages && pages.length >= 2"><ul class="pagination">' +
             '<li ng-class=""><a ng-click="selectPage(1)">First</a></li>' +
-            '<li ng-class=""><a ng-click="selectPage(currentPage-1)"><i class="fa fa-fw fa-angle-double-left"></i></a></li>' +
+            '<li ng-class=""><a ng-click="selectPage(currentPage-1)"><i class="glyphicon glyphicon-menu-left"></i></i></a></li>' +
             '<li ng-repeat="page in pages" ng-class="{active: page==currentPage}"><a ng-click="selectPage(page)">{{page}}</a></li>' +
-            '<li ng-class=""><a ng-click="selectPage(currentPage+1)"><i class="fa fa-fw fa-angle-double-right"></i></a></li>' +
+            '<li ng-class=""><a ng-click="selectPage(currentPage+1)"><i class="glyphicon glyphicon-menu-right"></i></i></a></li>' +
             '<li ng-class=""><a ng-click="selectPage(numPages)">Last</a></li>' +
             '</ul></nav>');
-
 
 
     };
