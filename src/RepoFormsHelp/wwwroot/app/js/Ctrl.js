@@ -396,16 +396,6 @@
                 });
             }
         };
-        hub.client.SendAlert = function (value) {
-            alert('hello value: ' + value);
-        };
-        hub.client.test2 = function () {
-            ;
-            alert("first testing?");
-        };
-        hub.client.test = function () {
-            alert("testing works");
-        };
         $.connection.hub.start()
             .done(function () {
             $scope.update();

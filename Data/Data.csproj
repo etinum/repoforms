@@ -51,7 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Client.cs">
       <DependentUpon>Forms.tt</DependentUpon>
     </Compile>
@@ -76,6 +75,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Forms.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Log.cs">
+      <DependentUpon>Forms.tt</DependentUpon>
+    </Compile>
     <Compile Include="MasterQueueDw.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -92,9 +94,15 @@
       <DependentUpon>MasterQueueDw.edmx</DependentUpon>
     </Compile>
     <Compile Include="ModelExt\ClientExt.cs" />
+    <Compile Include="ModelExt\CloseTypeExt.cs" />
+    <Compile Include="ModelExt\DepartmentExt.cs" />
     <Compile Include="ModelExt\IAuditedEntity.cs" />
+    <Compile Include="ModelExt\RepoClientFormulaExt.cs" />
+    <Compile Include="ModelExt\RepoFormExt.cs" />
+    <Compile Include="ModelExt\RoleExt.cs" />
     <Compile Include="ModelExt\UserExt.cs" />
-    <Compile Include="PLSFormsDBEntitiesExt.cs" />
+    <Compile Include="ModelExt\PLSFormsDBEntitiesExt.cs" />
+    <Compile Include="ModelExt\X_User_RoleExt.cs" />
     <Compile Include="pra_accountsStoreProc_Result.cs">
       <DependentUpon>MasterQueueDw.tt</DependentUpon>
     </Compile>

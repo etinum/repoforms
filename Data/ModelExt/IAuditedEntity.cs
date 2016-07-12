@@ -6,5 +6,9 @@ namespace Data
     {
         DateTime? CreatedDate { get; set; }
         DateTime? ModifiedDate { get; set; }
+        int? CreatedByUserId { get; set; }
+        int? ModifiedByUserId { get; set; }
+
     }
 }
+

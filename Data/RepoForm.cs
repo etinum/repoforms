@@ -15,8 +15,6 @@ namespace Data
     public partial class RepoForm
     {
         public int Id { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<System.DateTime> ModifiedDate { get; set; }
         public string AccountNumber { get; set; }
         public string Investigator { get; set; }
         public Nullable<int> ClientId { get; set; }
@@ -24,10 +22,12 @@ namespace Data
         public string CustomerName { get; set; }
         public Nullable<int> Points { get; set; }
         public string Notes { get; set; }
-        public Nullable<int> CreatorUserId { get; set; }
-        public Nullable<int> ModifiedByUserId { get; set; }
         public Nullable<int> AdminUserId { get; set; }
         public Nullable<int> AdminOtherUserId { get; set; }
+        public Nullable<int> CreatorUserId { get; set; }
+        public Nullable<int> ModifiedByUserId { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> ModifiedDate { get; set; }
     
         public virtual Client Client { get; set; }
         public virtual CloseType CloseType { get; set; }

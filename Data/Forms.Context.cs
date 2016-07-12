@@ -29,9 +29,10 @@ namespace Data
         public virtual DbSet<CloseType> CloseTypes { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<RepoClientFormula> RepoClientFormulas { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<X_User_Role> X_User_Role { get; set; }
         public virtual DbSet<RepoForm> RepoForms { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<X_User_Role> X_User_Role { get; set; }
+        public virtual DbSet<Log> Logs { get; set; }
     }
 }

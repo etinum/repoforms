@@ -416,7 +416,7 @@
 
         $scope.getForms = () => {
             $scope.load = $dataService.getForms()
-                .then((data : modeltypings.RepoFormViewModel[]) => {
+                .then((data : any) => {
                     $scope.allItems = <modeltypings.RepoFormViewModel[]>data.list;
                     $scope.clientOptions = data.clientOptions;
                     $scope.closeTypeOptions = data.closeTypeOptions;
@@ -534,20 +534,6 @@
                     $scope.filter();
                 });
             }
-        };
-
-        // Testing signalR
-        hub.client.SendAlert = (value) => {
-            alert('hello value: ' + value);
-        };
-
-        hub.client.test2 = () => {
-            ;
-            alert("first testing?");
-        };
-
-        hub.client.test = () => {
-            alert("testing works");
         };
 
 

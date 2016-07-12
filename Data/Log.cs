@@ -12,13 +12,14 @@ namespace Data
     using System;
     using System.Collections.Generic;
     
-    public partial class X_User_Role
+    public partial class Log
     {
-        public int RoleId { get; set; }
-        public int UserId { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-    
-        public virtual Role Role { get; set; }
-        public virtual User User { get; set; }
+        public int Id { get; set; }
+        public System.DateTime Date { get; set; }
+        public string Thread { get; set; }
+        public string Level { get; set; }
+        public string Logger { get; set; }
+        public string Message { get; set; }
+        public string Exception { get; set; }
     }
 }

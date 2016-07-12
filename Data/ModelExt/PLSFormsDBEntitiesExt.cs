@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Data
 {
+    // ReSharper disable once InconsistentNaming
     public partial class PLSFormsDBEntities
     {
         public override int SaveChanges()
@@ -19,7 +20,7 @@ namespace Data
               .Where(p => p.State == EntityState.Added)
               .Select(p => p.Entity);
 
-            var modifiedAuditedEntities = ChangeTracker.Entries<IAuditedEntity>()
+            var modifiedAuditedEntities = ChangeTracker.Entries<ITest>()
               .Where(p => p.State == EntityState.Modified)
               .Select(p => p.Entity);
 
@@ -34,6 +35,7 @@ namespace Data
             foreach (var entity in modifiedAuditedEntities)
             {
                 entity.ModifiedDate = DateTime.Now;
+                entity.CreatedBy = 5;
             }
 
 
