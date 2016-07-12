@@ -153,7 +153,7 @@
             return deferred.promise;
         };
         function configureRolesPlus(user) {
-            var roles = user.roles;
+            var roles = user.roles.map(function (r) { return r.name; });
             $rootScope.welcome = "Welcome " + user.winAuthName.toLowerCase().split("\\")[1];
             var isSuper = $rootScope.isSuperAdmin = 1;
             $rootScope.isSystemAdmin = roles.indexOf('SystemAdmin') > -1 || isSuper;
@@ -213,8 +213,8 @@
             });
             return deferred.promise;
         };
-        var getAllUsers = function () {
-            var url = baseWebApiUrl + 'api/User/GetAllUsers';
+        var getUsers = function () {
+            var url = baseWebApiUrl + 'api/User/GetUsers';
             var deferred = $q.defer();
             $http.get(url)
                 .then(function (response) {
@@ -305,7 +305,7 @@
             getUser: getUser,
             initiateRoles: initiateRoles,
             getLoggedUserData: getLoggedUserData,
-            getAllUsers: getAllUsers,
+            getUsers: getUsers,
             getClients: getClients,
             getTypeAheadData: getTypeAheadData,
             searchVin: searchVin,

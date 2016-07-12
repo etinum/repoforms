@@ -71,8 +71,8 @@ namespace WebApi.Controllers
                     WinAuthName = User.Identity.Name,
                     FirstLoggedIn = DateTime.Now,
                     LastLoggedIn = DateTime.Now,
-                    CreatedDate = DateTime.Now,
-                    ModifiedDate = DateTime.Now,
+                    //CreatedDate = DateTime.Now,
+                    //ModifiedDate = DateTime.Now,
                     Active = true
                 };
 
@@ -95,7 +95,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetAllUsers()
+        public IHttpActionResult GetUsers()
         {
 
             var users = _ctx.Users.ToList();
@@ -119,11 +119,11 @@ namespace WebApi.Controllers
         public IHttpActionResult SaveUser(UserViewModel userViewModel)
         {
             var user = _mapper.Map<User>(userViewModel);
-            user.ModifiedDate = DateTime.Now;
+            //user.ModifiedDate = DateTime.Now;
 
             if (userViewModel.Id == 0)
             {
-                user.CreatedDate = DateTime.Now;
+                //user.CreatedDate = DateTime.Now;
                 _ctx.Users.Add(user);
             }
             else
@@ -157,14 +157,20 @@ namespace WebApi.Controllers
 
         #region help methods
 
-        private List<string> GetRoles(int userId)
+        private List<RoleViewModel> GetRoles(int userId)
         {
 
             var roles =
                 (from r in _ctx.Roles
                     join x in _ctx.X_User_Role on r.Id equals x.RoleId
                     where x.UserId == userId
-                    select r.Name);
+                    select new RoleViewModel()
+                    {
+                        Id = r.Id,
+                        Name = r.Name, 
+                        Assignable = r.Assignable
+                    });
+                    
 
             return roles.ToList();
 

@@ -15,6 +15,9 @@
         $scope.ViewSubmissions = function () {
             $location.path('/submissions');
         };
+        $scope.ViewUserRoles = function () {
+            $location.path('/viewuserroles');
+        };
         $scope.goContacts = function () {
             window.location.href = 'contacts.pdf';
         };
@@ -560,7 +563,7 @@
 (function (app) {
     var controller = function ($scope, $window, $dataService, $location) {
         $scope.getUsers = function () {
-            $scope.load = $dataService.getAllUsers()
+            $scope.load = $dataService.getUsers()
                 .then(function (data) {
                 $scope.fms = data;
             });
@@ -579,6 +582,29 @@
     };
     controller.$inject = ['$scope', '$window', 'dataService', '$location'];
     app.controller('viewUsersCtrl', controller);
+})(angular.module("repoFormsApp"));
+(function (app) {
+    var controller = function ($scope, $window, $dataService, $location) {
+        $scope.getUsers = function () {
+            $scope.load = $dataService.getUsers()
+                .then(function (data) {
+                $scope.fms = data;
+            });
+        };
+        $scope.update = function () {
+            $scope.getUsers();
+        };
+        $scope.createUser = function () {
+            $location.path('/userform/' + 0);
+        };
+        $scope.edit = function (row) {
+            var rowee = row;
+            $location.path('/userform/' + rowee.id);
+        };
+        $scope.update();
+    };
+    controller.$inject = ['$scope', '$window', 'dataService', '$location'];
+    app.controller('viewUserRolesCtrl', controller);
 })(angular.module("repoFormsApp"));
 (function (app) {
     var controller = function ($scope, $window, $dataService, $location) {

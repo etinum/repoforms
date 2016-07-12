@@ -91,6 +91,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MasterQueueDw.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ModelExt\ClientExt.cs" />
+    <Compile Include="ModelExt\IAuditedEntity.cs" />
+    <Compile Include="ModelExt\UserExt.cs" />
+    <Compile Include="PLSFormsDBEntitiesExt.cs" />
     <Compile Include="pra_accountsStoreProc_Result.cs">
       <DependentUpon>MasterQueueDw.tt</DependentUpon>
     </Compile>

@@ -25,6 +25,10 @@ angular.module('repoFormsApp', ['ngRoute', 'ngMessages', 'ui.bootstrap', 'enviro
             templateUrl: "app/html/ViewUsers.html",
             controller: "viewUsersCtrl"
         })
+            .when("/viewuserroles", {
+            templateUrl: "app/html/ViewUserRoles.html",
+            controller: "viewUserRolesCtrl"
+        })
             .when("/admin", {
             templateUrl: "app/html/ViewReports.html",
             controller: "viewRepoFormCtrl"

@@ -37,6 +37,11 @@
             $location.path('/submissions');
         };
 
+
+        $scope.ViewUserRoles = () => {
+            $location.path('/viewuserroles');
+        };
+
         $scope.goContacts = () => {
             window.location.href = 'contacts.pdf';
         };
@@ -778,7 +783,7 @@
     var controller = ($scope, $window, $dataService, $location) => {
 
         $scope.getUsers = () => {
-            $scope.load = $dataService.getAllUsers()
+            $scope.load = $dataService.getUsers()
                 .then((data : modeltypings.UserViewModel[]) => {
                     $scope.fms = data;
 
@@ -808,6 +813,43 @@
     controller.$inject = ['$scope', '$window', 'dataService', '$location'];
     app.controller('viewUsersCtrl', controller);
 })(angular.module("repoFormsApp"));
+
+
+/* app.controller('viewUserRolesCtrl', controller); */
+(app => {
+    var controller = ($scope, $window, $dataService, $location) => {
+
+        $scope.getUsers = () => {
+            $scope.load = $dataService.getUsers()
+                .then((data: modeltypings.UserViewModel[]) => {
+                    $scope.fms = data;
+
+                });
+        };
+
+        $scope.update = () => {
+            $scope.getUsers();
+        };
+
+        $scope.createUser = () => {
+            $location.path('/userform/' + 0);
+
+        }
+
+        $scope.edit = (row) => {
+            var rowee = <modeltypings.UserViewModel>row;
+            $location.path('/userform/' + rowee.id);
+
+        };
+
+        $scope.update();
+
+    };
+    controller.$inject = ['$scope', '$window', 'dataService', '$location'];
+    app.controller('viewUserRolesCtrl', controller);
+})(angular.module("repoFormsApp"));
+
+
 
 /* app.controller('viewClientsCtrl', controller); */
 (app => {

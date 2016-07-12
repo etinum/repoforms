@@ -1,4 +1,6 @@
-﻿declare module server {
+﻿/// <reference path="RoleViewModel.cs.d.ts" />
+
+declare module server {
 	interface UserViewModel {
 		id: number;
 		winAuthName: string;
@@ -18,7 +20,6 @@
 		lastLoggedIn: Date;
 		firstLoggedIn: Date;
 		active: boolean;
-		roles: string[];
 		createdDate: Date;
 		modifiedDate: Date;
 		directReportUserId: number;
@@ -26,6 +27,7 @@
 		dottedLineReportUserId: number;
 		dottedLineReportUser: string;
 		fullName: string;
+		roles: server.RoleViewModel[];
 		departmentOptions: server.DepartmentOption[];
 		userOptions: server.UserOption[];
 	}

@@ -52,8 +52,8 @@ namespace WebApi.Controllers
             if (clientViewModel.Id == 0)
             {
                 client.IsTieredPoints = client.IsTieredPoints ?? false;
-                client.ModifiedDate = DateTime.Now;
-                client.CreatedDate = DateTime.Now;
+                //client.ModifiedDate = DateTime.Now;
+                //client.CreatedDate = DateTime.Now;
                 _ctx.Clients.Add(client);
             }
             else

@@ -49,6 +49,9 @@ namespace WebApi.Mapper
             this.CreateMap<ClientViewModel, Client>();
             this.CreateMap<Client, ClientViewModel>();
 
+            this.CreateMap<RoleViewModel, Role>();
+            this.CreateMap<Role, RoleViewModel>();
+
 
 
 

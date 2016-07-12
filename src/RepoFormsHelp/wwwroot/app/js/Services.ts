@@ -212,7 +212,7 @@
 
         function configureRolesPlus(user: modeltypings.UserViewModel) {
 
-            var roles = user.roles;
+            var roles = user.roles.map(r => r.name);
             $rootScope.welcome = "Welcome " + user.winAuthName.toLowerCase().split("\\")[1];
 
             //TODO: remove this when the system is ready.
@@ -287,8 +287,8 @@
             return deferred.promise;
         };
 
-        var getAllUsers = () => {
-            var url = baseWebApiUrl + 'api/User/GetAllUsers';
+        var getUsers = () => {
+            var url = baseWebApiUrl + 'api/User/GetUsers';
             var deferred = $q.defer();
 
             $http.get(url)
@@ -399,7 +399,7 @@
             getUser: getUser,
             initiateRoles: initiateRoles,
             getLoggedUserData: getLoggedUserData,
-            getAllUsers: getAllUsers,
+            getUsers: getUsers,
             getClients: getClients,
             getTypeAheadData: getTypeAheadData,
             searchVin: searchVin,

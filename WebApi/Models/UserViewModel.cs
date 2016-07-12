@@ -24,7 +24,6 @@ namespace WebApi.Models
         public DateTime? LastLoggedIn { get; set; }
         public DateTime? FirstLoggedIn { get; set; }
         public bool? Active { get; set; }
-        public List<string> Roles { get; set; }
         public DateTime? CreatedDate { get; set; }
         public DateTime? ModifiedDate { get; set; }
         public int? DirectReportUserId { get; set; }
@@ -41,6 +40,7 @@ namespace WebApi.Models
             }
         }
 
+        public List<RoleViewModel> Roles { get; set; }
         public List<DepartmentOption> DepartmentOptions { get; set; }
         public List<UserOption> UserOptions { get; set; }
 

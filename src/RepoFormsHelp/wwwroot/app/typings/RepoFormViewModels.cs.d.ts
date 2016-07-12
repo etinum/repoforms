@@ -47,7 +47,7 @@
         lastLoggedIn: Date;
         firstLoggedIn: Date;
         active: boolean;
-        roles: string[];
+        roles: RoleViewModel[];
         createdDate: Date;
         modifiedDate: Date;
         directReportUserId: number;
@@ -94,6 +94,20 @@
         defaultPointValue: number;
     }
 
+    interface UserRolesViewModel {
+        id: number;
+        winAuthName: string;
+        first: string;
+        middle: string;
+        last: string;
+        fullName: string;
+        roles: string[];
+    }
+    interface RoleViewModel {
+        id: number;
+        name: string;
+        assignable: boolean;
+    }
 }
 
 
